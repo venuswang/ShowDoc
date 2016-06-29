@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 配置全局变量，比如二级缓存或者延迟加载等等 -->
+	<!--<settings></settings> -->
+	<!-- 配置包的类名扫描     -->
+	<typeAliases>
+		<package name="cn.scau.edu.ssm.showdoc.po"/>
+	</typeAliases>
+</configuration>

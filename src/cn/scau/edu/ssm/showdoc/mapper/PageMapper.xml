@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.scau.edu.ssm.showdoc.mapper.PageMapper" >
+  <resultMap id="BaseResultMap" type="cn.scau.edu.ssm.showdoc.po.Page" >
+    <id column="pageid" property="pageid" jdbcType="INTEGER" />
+    <result column="pageprojectid" property="pageprojectid" jdbcType="INTEGER" />
+    <result column="pagesubprejectid" property="pagesubprejectid" jdbcType="INTEGER" />
+    <result column="pageprojectpassword" property="pageprojectpassword" jdbcType="VARCHAR" />
+    <result column="pagestatu" property="pagestatu" jdbcType="INTEGER" />
+    <result column="pagedate" property="pagedate" jdbcType="DATE" />
+    <result column="pagetitle" property="pagetitle" jdbcType="VARCHAR" />
+    <result column="pagesortid" property="pagesortid" jdbcType="INTEGER" />
+    <result column="pageauthorname" property="pageauthorname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.scau.edu.ssm.showdoc.po.Page" extends="BaseResultMap" >
+    <result column="pagecontext" property="pagecontext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pageid, pageprojectid, pagesubprejectid, pageprojectpassword, pagestatu, pagedate, 
+    pagetitle, pagesortid, pageauthorname
+  </sql>
+  <sql id="Blob_Column_List" >
+    pagecontext
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.scau.edu.ssm.showdoc.po.PageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from page
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.scau.edu.ssm.showdoc.po.PageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from page
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from page
+    where pageid = #{pageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from page
+    where pageid = #{pageid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.scau.edu.ssm.showdoc.po.PageExample" >
+    delete from page
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.scau.edu.ssm.showdoc.po.Page" >
+    insert into page (pageid, pageprojectid, pagesubprejectid, 
+      pageprojectpassword, pagestatu, pagedate, 
+      pagetitle, pagesortid, pageauthorname, 
+      pagecontext)
+    values (#{pageid,jdbcType=INTEGER}, #{pageprojectid,jdbcType=INTEGER}, #{pagesubprejectid,jdbcType=INTEGER}, 
+      #{pageprojectpassword,jdbcType=VARCHAR}, #{pagestatu,jdbcType=INTEGER}, #{pagedate,jdbcType=DATE}, 
+      #{pagetitle,jdbcType=VARCHAR}, #{pagesortid,jdbcType=INTEGER}, #{pageauthorname,jdbcType=VARCHAR}, 
+      #{pagecontext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.scau.edu.ssm.showdoc.po.Page" >
+    insert into page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pageid != null" >
+        pageid,
+      </if>
+      <if test="pageprojectid != null" >
+        pageprojectid,
+      </if>
+      <if test="pagesubprejectid != null" >
+        pagesubprejectid,
+      </if>
+      <if test="pageprojectpassword != null" >
+        pageprojectpassword,
+      </if>
+      <if test="pagestatu != null" >
+        pagestatu,
+      </if>
+      <if test="pagedate != null" >
+        pagedate,
+      </if>
+      <if test="pagetitle != null" >
+        pagetitle,
+      </if>
+      <if test="pagesortid != null" >
+        pagesortid,
+      </if>
+      <if test="pageauthorname != null" >
+        pageauthorname,
+      </if>
+      <if test="pagecontext != null" >
+        pagecontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pageid != null" >
+        #{pageid,jdbcType=INTEGER},
+      </if>
+      <if test="pageprojectid != null" >
+        #{pageprojectid,jdbcType=INTEGER},
+      </if>
+      <if test="pagesubprejectid != null" >
+        #{pagesubprejectid,jdbcType=INTEGER},
+      </if>
+      <if test="pageprojectpassword != null" >
+        #{pageprojectpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="pagestatu != null" >
+        #{pagestatu,jdbcType=INTEGER},
+      </if>
+      <if test="pagedate != null" >
+        #{pagedate,jdbcType=DATE},
+      </if>
+      <if test="pagetitle != null" >
+        #{pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pagesortid != null" >
+        #{pagesortid,jdbcType=INTEGER},
+      </if>
+      <if test="pageauthorname != null" >
+        #{pageauthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="pagecontext != null" >
+        #{pagecontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.scau.edu.ssm.showdoc.po.PageExample" resultType="java.lang.Integer" >
+    select count(*) from page
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update page
+    <set >
+      <if test="record.pageid != null" >
+        pageid = #{record.pageid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageprojectid != null" >
+        pageprojectid = #{record.pageprojectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pagesubprejectid != null" >
+        pagesubprejectid = #{record.pagesubprejectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageprojectpassword != null" >
+        pageprojectpassword = #{record.pageprojectpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagestatu != null" >
+        pagestatu = #{record.pagestatu,jdbcType=INTEGER},
+      </if>
+      <if test="record.pagedate != null" >
+        pagedate = #{record.pagedate,jdbcType=DATE},
+      </if>
+      <if test="record.pagetitle != null" >
+        pagetitle = #{record.pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagesortid != null" >
+        pagesortid = #{record.pagesortid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageauthorname != null" >
+        pageauthorname = #{record.pageauthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagecontext != null" >
+        pagecontext = #{record.pagecontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update page
+    set pageid = #{record.pageid,jdbcType=INTEGER},
+      pageprojectid = #{record.pageprojectid,jdbcType=INTEGER},
+      pagesubprejectid = #{record.pagesubprejectid,jdbcType=INTEGER},
+      pageprojectpassword = #{record.pageprojectpassword,jdbcType=VARCHAR},
+      pagestatu = #{record.pagestatu,jdbcType=INTEGER},
+      pagedate = #{record.pagedate,jdbcType=DATE},
+      pagetitle = #{record.pagetitle,jdbcType=VARCHAR},
+      pagesortid = #{record.pagesortid,jdbcType=INTEGER},
+      pageauthorname = #{record.pageauthorname,jdbcType=VARCHAR},
+      pagecontext = #{record.pagecontext,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update page
+    set pageid = #{record.pageid,jdbcType=INTEGER},
+      pageprojectid = #{record.pageprojectid,jdbcType=INTEGER},
+      pagesubprejectid = #{record.pagesubprejectid,jdbcType=INTEGER},
+      pageprojectpassword = #{record.pageprojectpassword,jdbcType=VARCHAR},
+      pagestatu = #{record.pagestatu,jdbcType=INTEGER},
+      pagedate = #{record.pagedate,jdbcType=DATE},
+      pagetitle = #{record.pagetitle,jdbcType=VARCHAR},
+      pagesortid = #{record.pagesortid,jdbcType=INTEGER},
+      pageauthorname = #{record.pageauthorname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.scau.edu.ssm.showdoc.po.Page" >
+    update page
+    <set >
+      <if test="pageprojectid != null" >
+        pageprojectid = #{pageprojectid,jdbcType=INTEGER},
+      </if>
+      <if test="pagesubprejectid != null" >
+        pagesubprejectid = #{pagesubprejectid,jdbcType=INTEGER},
+      </if>
+      <if test="pageprojectpassword != null" >
+        pageprojectpassword = #{pageprojectpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="pagestatu != null" >
+        pagestatu = #{pagestatu,jdbcType=INTEGER},
+      </if>
+      <if test="pagedate != null" >
+        pagedate = #{pagedate,jdbcType=DATE},
+      </if>
+      <if test="pagetitle != null" >
+        pagetitle = #{pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pagesortid != null" >
+        pagesortid = #{pagesortid,jdbcType=INTEGER},
+      </if>
+      <if test="pageauthorname != null" >
+        pageauthorname = #{pageauthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="pagecontext != null" >
+        pagecontext = #{pagecontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pageid = #{pageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.scau.edu.ssm.showdoc.po.Page" >
+    update page
+    set pageprojectid = #{pageprojectid,jdbcType=INTEGER},
+      pagesubprejectid = #{pagesubprejectid,jdbcType=INTEGER},
+      pageprojectpassword = #{pageprojectpassword,jdbcType=VARCHAR},
+      pagestatu = #{pagestatu,jdbcType=INTEGER},
+      pagedate = #{pagedate,jdbcType=DATE},
+      pagetitle = #{pagetitle,jdbcType=VARCHAR},
+      pagesortid = #{pagesortid,jdbcType=INTEGER},
+      pageauthorname = #{pageauthorname,jdbcType=VARCHAR},
+      pagecontext = #{pagecontext,jdbcType=LONGVARCHAR}
+    where pageid = #{pageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.scau.edu.ssm.showdoc.po.Page" >
+    update page
+    set pageprojectid = #{pageprojectid,jdbcType=INTEGER},
+      pagesubprejectid = #{pagesubprejectid,jdbcType=INTEGER},
+      pageprojectpassword = #{pageprojectpassword,jdbcType=VARCHAR},
+      pagestatu = #{pagestatu,jdbcType=INTEGER},
+      pagedate = #{pagedate,jdbcType=DATE},
+      pagetitle = #{pagetitle,jdbcType=VARCHAR},
+      pagesortid = #{pagesortid,jdbcType=INTEGER},
+      pageauthorname = #{pageauthorname,jdbcType=VARCHAR}
+    where pageid = #{pageid,jdbcType=INTEGER}
+  </update>
+</mapper>
