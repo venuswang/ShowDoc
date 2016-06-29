@@ -1,0 +1,213 @@
+@charset "UTF-8";
+body {
+  background-color: #fff;
+}
+
+@font-face {
+  font-family: 'icomoon';
+  src: url("../fonts/icomoon.eot?xvh4s");
+  src: url("../fonts/icomoon.eot?xvh4s#iefix") format("embedded-opentype"), url("../fonts/icomoon.ttf?xvh4s") format("truetype"), url("../fonts/icomoon.woff?xvh4s") format("woff"), url("../fonts/icomoon.svg?xvh4s#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#header {
+  position: relative;
+  line-height: 100px;
+}
+#header .common-left {
+  position: absolute;
+  left: 20%;
+}
+#header .common-left .left-title {
+  color: #76EAE4;
+  letter-spacing: 0.1em;
+  font-size: 36px;
+  text-shadow: 0 0 0 #76EAE4, 0 0 1px #76EAE4, 0 0 2px #76EAE4, 0 0 3px #76EAE4, 0 0 4px #76EAE4;
+}
+#header .common-middle {
+  text-align: center;
+}
+#header .common-middle .title {
+  letter-spacing: 1em;
+  color: #666;
+  font-size: 26px;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px #B8B2B2, 2px 2px 3px #B3ABAB, 3px 3px 3px #F6EFEF;
+}
+#header .common-middle .title .appearence1 {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  transform: rotate(-30deg);
+}
+#header .common-middle .title .appearence2 {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  transform: rotate(30deg);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+/* 清除IE下的叉叉 */
+input::-ms-clear, input::-ms-reveal {
+  display: none;
+}
+
+#main {
+  width: 110%;
+  margin-top: 15px;
+  box-shadow: 0 1px 0 #ccc inset, 0 2px 2px #ccc inset, 0 3px 3px #ccc inset, 0 4px 4px #ccc inset, 0 5px 4px #ccc inset;
+  padding-top: 50px;
+}
+#main .register-form {
+  width: 600px;
+  margin: 20px auto;
+  padding: 1px 20px 20px 20px;
+  box-shadow: 0 0 0 #E6E5E5, 0 0 1px #E6E5E5, 0 0 2px #E6E5E5, 0 0 3px #E6E5E5, 0 0 4px #E6E5E5, 0 0 5px #E6E5E5, 0 0 6px #E6E5E5, 0 0 7px #E6E5E5, 0 0 8px #E6E5E5, 0 0 9px #E6E5E5, 0 0 10px #E6E5E5, 0 0 11px #E6E5E5, 0 0 12px #E6E5E5;
+  border-radius: 8px;
+}
+#main .register-item {
+  margin: 25px auto;
+  font-size: 0;
+  letter-spacing: -3px;
+  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
+  padding: 5px;
+  border-radius: 5px;
+}
+#main .register-item .register-label {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 24px;
+  font-family: "icomoon" !important;
+  background-color: #888;
+  color: #EFEAEA;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  position: relative;
+  z-index: 10;
+  left: 0;
+  border-radius: 3px;
+}
+#main .register-item .register-label:hover {
+  background-color: #333;
+  color: #FFF;
+}
+#main .register-item .register-content-text {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 18px;
+  padding: 0 5px;
+  background-color: rgba(255, 255, 255, 0);
+  line-height: 40px;
+  width: 300px;
+  vertical-align: middle;
+}
+#main .register-logo-item {
+  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
+  padding: 10px;
+  border-radius: 5px;
+}
+#main .register-logo-item .register-label {
+  color: #999;
+  font-size: 16px;
+}
+#main .register-logo-item .item-img-content {
+  margin-top: 5px;
+  width: 160px;
+  height: 140px;
+  border: 1px dashed #dedede;
+  position: relative;
+  text-align: center;
+}
+#main .register-logo-item .item-img-content .item-upimg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  z-index: 2;
+  opacity: 0;
+}
+#main .register-logo-item .item-img-content .item-upimg-logo {
+  font-family: "icomoon" !important;
+  font-size: 40px;
+  color: #eee;
+  line-height: 140px;
+}
+#main .register-item-select {
+  margin-top: 25px;
+  line-height: 26px;
+  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
+  padding: 10px;
+  border-radius: 5px;
+}
+#main .register-item-select .register-label-select {
+  vertical-align: .5em;
+  margin-right: 25px;
+}
+#main .register-content-index {
+  margin-top: 20px;
+  text-align: right;
+  padding-right: 10px;
+}
+#main .register-content-index .btn {
+  color: #80EAC9;
+  font-size: 16px;
+}
+#main .register-content-index .btn:hover {
+  color: #2EDCDE;
+}
+#main .register-content-opera {
+  text-align: center;
+  border: none;
+  margin-top: 20px;
+}
+#main .register-content-opera .form-opera {
+  background-color: #0AE;
+  height: 50px;
+  width: 100%;
+  border-radius: 3px;
+  color: #EBEDED;
+  cursor: pointer;
+}
+#main .register-content-opera .form-opera:hover {
+  background-color: #1C9BCE;
+  color: #FFFFFF;
+}
+
+#register-form .loginError, #register-form .loginPass {
+  font-size: 1.2rem;
+  padding-left: 1rem;
+  font-family: 'icomoon' !important;
+  font-style: normal;
+  font-weight: normal;
+}
+#register-form .loginError {
+  color: #BF6F6F;
+}
+#register-form .loginError:before {
+  content: '\e901';
+  padding-right: 1rem;
+}
+#register-form .loginPass + i {
+  color: #41B15C;
+  display: inline-block !important;
+}
+#register-form .loginPass + i:before {
+  content: '\e900';
+  padding-right: 1rem;
+}
