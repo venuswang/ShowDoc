@@ -34,6 +34,9 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 	public Integer insertVoucherInfo(VoucherVO voucherVO) throws Exception {
 		VoucherExtendClass record = voucherVO.getVoucher();
 		VoucherInfoExtendClass vif = voucherVO.getVoucherInfo();
+		Integer resultId = this.queryVoucherByName(record.getUsername());
+		if(resultId == 1)
+			throw new MyException("错误编号10004:用户账号已经存在数据库中...");
 		voucherExtendMapper.insertSelectiveExtend(record);
 		Integer voucherid = record.getId();
 		if(voucherid == null)
@@ -66,6 +69,19 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 			return 0;  //此账号可以注册
 		else
 			return 1;  //此账号已经注册过
+	}
+	
+	/**
+	 * 通过用户ID、username、password来更新用户的账户信息,成功返回true
+	 */
+	@Override
+	public boolean updateById(int id, VoucherExtendClass voucher) throws Exception {
+		boolean updateSuccess = true;
+		Integer resultId = voucherExtendMapper.selectVoucherExtend(voucher);
+		if(resultId == null || id != resultId)
+			updateSuccess = false;
+		voucherExtendMapper.updateVoucherExtend(voucher);
+		return updateSuccess;
 	}
 
 }

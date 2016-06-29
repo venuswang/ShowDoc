@@ -2,45 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.scau.edu.ssm.showdoc.mapper.VoucherExtendMapper" >
 	 <insert id="insertSelectiveExtend" parameterType="cn.scau.edu.ssm.showdoc.po.Voucher">
-	 <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-	 </selectKey>
-    insert into voucher
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-      <if test="statu != null" >
-        statu,
-      </if>
-      <if test="loginmethod != null" >
-        loginmethod,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="statu != null" >
-        #{statu,jdbcType=INTEGER},
-      </if>
-      <if test="loginmethod != null" >
-        #{loginmethod,jdbcType=INTEGER},
-      </if>
-    </trim>
+		 <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+				SELECT LAST_INSERT_ID()
+		 </selectKey>
+	    insert into voucher
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="id != null" >
+	        id,
+	      </if>
+	      <if test="username != null" >
+	        username,
+	      </if>
+	      <if test="password != null" >
+	        password,
+	      </if>
+	      <if test="statu != null" >
+	        statu,
+	      </if>
+	      <if test="loginmethod != null" >
+	        loginmethod,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="id != null" >
+	        #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="username != null" >
+	        #{username,jdbcType=VARCHAR},
+	      </if>
+	      <if test="password != null" >
+	        #{password,jdbcType=VARCHAR},
+	      </if>
+	      <if test="statu != null" >
+	        #{statu,jdbcType=INTEGER},
+	      </if>
+	      <if test="loginmethod != null" >
+	        #{loginmethod,jdbcType=INTEGER},
+	      </if>
+	    </trim>
   </insert>
   
+  <select id="selectVoucherExtend" parameterType="voucherExtendClass" resultType="int">
+  	 select id from voucher where username = #{username} and password = #{password}
+  </select>
+  
+  <update id="updateVoucherExtend" parameterType="voucherExtendClass">
+  	 update voucher set password = #{newPassword} where id = #{id} and username = #{username} and password = #{password}
+  </update>
   
 </mapper>

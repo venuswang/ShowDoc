@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.scau.edu.ssm.showdoc.po.Voucher;
+import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
 import cn.scau.edu.ssm.showdoc.service.VoucherInfoService;
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup1;
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup2;
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup3;
 
 /**
  * 用户信息维护类
@@ -102,7 +104,7 @@ public class VoucherInfoController {
 	@RequestMapping("/queryByName.action")
 	public void queryByName(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup2.class}) Voucher voucher, BindingResult result) throws Exception
 	{
-		String message;
+		String message = "";
 		if(result.hasErrors())
 		{
 //			throw new MyException("错误编号10004:用户账号检验有没有注册过时要求非空且在6-15字符内...");
@@ -113,6 +115,34 @@ public class VoucherInfoController {
 				message = "success";
 			else
 				message = "fail";
+		}
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = null;
+        out = response.getWriter();
+        out.println(message);
+	}
+	
+	/**
+	 * 用户更新个人的密码
+	 * @param response
+	 * @param voucherExtendClass
+	 * @param result
+	 * @throws Exception
+	 */
+	@RequestMapping("/updatePassword.action")
+	public void updatePassword(HttpServletResponse response,@Validated(value={ValidGroup3.class}) VoucherExtendClass voucherExtendClass, BindingResult result) throws Exception
+	{
+		String message = "";
+		if(result.hasErrors())
+		{
+			message="illegal";  //账户或密码的格式不对
+		} else {
+			boolean updateResult = voucherInfoService.updateById(voucherExtendClass.getId(), voucherExtendClass);
+			if(updateResult == false)
+				message = "fail";  //账户和原始密码不匹配或者该账户和密码不是自己的
+			else
+				message = "success";
 		}
 		response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");

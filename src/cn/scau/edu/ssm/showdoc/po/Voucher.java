@@ -7,16 +7,17 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup1;
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup2;
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup3;
 
 public class Voucher {
     private Integer id;
 
-    @NotBlank(message="{voucher.name.null.error}",groups={ValidGroup1.class,ValidGroup2.class})
-    @Size(min=6,max=15,message="{voucher.name.length.error}",groups={ValidGroup1.class,ValidGroup2.class})  //
+    @NotBlank(message="{voucher.name.null.error}",groups={ValidGroup1.class,ValidGroup2.class,ValidGroup3.class})
+    @Size(min=6,max=15,message="{voucher.name.length.error}",groups={ValidGroup1.class,ValidGroup2.class,ValidGroup3.class})  //
     private String username;
 
-    @NotBlank(message="{voucher.password.null.error}",groups={ValidGroup1.class})
-    @Size(min=6,max=50,message="{voucher.password.length.error}",groups={ValidGroup1.class}) //
+    @NotBlank(message="{voucher.password.null.error}",groups={ValidGroup1.class,ValidGroup3.class})
+    @Size(min=6,max=50,message="{voucher.password.length.error}",groups={ValidGroup1.class,ValidGroup3.class}) //
     private String password;
 
     private Integer statu;
