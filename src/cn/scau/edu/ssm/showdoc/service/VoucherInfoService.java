@@ -6,4 +6,5 @@ public interface VoucherInfoService {
 	
 	public Integer insertVoucherInfo(VoucherVO voucherVO) throws Exception;
 	
+	public Integer queryVoucherByName(String username) throws Exception;
 }

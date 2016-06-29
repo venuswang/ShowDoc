@@ -1,6 +1,7 @@
 package cn.scau.edu.ssm.showdoc.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,6 +9,9 @@ import cn.scau.edu.ssm.showdoc.exception.MyException;
 import cn.scau.edu.ssm.showdoc.mapper.VoucherExtendMapper;
 import cn.scau.edu.ssm.showdoc.mapper.VoucherInfoMapper;
 import cn.scau.edu.ssm.showdoc.mapper.VoucherMapper;
+import cn.scau.edu.ssm.showdoc.po.Voucher;
+import cn.scau.edu.ssm.showdoc.po.VoucherExample;
+import cn.scau.edu.ssm.showdoc.po.VoucherExample.Criteria;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
@@ -18,8 +22,14 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 	private VoucherExtendMapper voucherExtendMapper;
 	
 	@Autowired
-	private VoucherInfoMapper voucherInfoMapper; 
+	private VoucherInfoMapper voucherInfoMapper;
 	
+	@Autowired
+	private VoucherMapper voucherMapper;
+	
+	/**
+	 * 用户账户信息注册动作
+	 */
 	@Override
 	public Integer insertVoucherInfo(VoucherVO voucherVO) throws Exception {
 		VoucherExtendClass record = voucherVO.getVoucher();
@@ -41,6 +51,21 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 		vif.setRegistdate(new Date());
 		voucherInfoMapper.insertSelective(vif);
 		return voucherid;
+	}
+
+	/**
+	 * 用于前端异步检验用户名是否已经注册
+	 */
+	@Override
+	public Integer queryVoucherByName(String username) throws Exception {
+		VoucherExample example = new VoucherExample();
+		Criteria criteral = example.createCriteria();
+		criteral.andUsernameEqualTo(username);
+		List<Voucher> vouchers = voucherMapper.selectByExample(example);
+		if(vouchers == null || vouchers.size() == 0)
+			return 0;  //此账号可以注册
+		else
+			return 1;  //此账号已经注册过
 	}
 
 }

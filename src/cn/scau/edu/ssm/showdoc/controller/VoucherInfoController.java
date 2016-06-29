@@ -2,11 +2,13 @@ package cn.scau.edu.ssm.showdoc.controller;
 
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
 import cn.scau.edu.ssm.showdoc.service.VoucherInfoService;
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup1;
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup2;
 
 /**
  * 用户信息维护类
@@ -34,6 +38,16 @@ public class VoucherInfoController {
 	@Autowired
 	private VoucherInfoService voucherInfoService;
 	
+	/**
+	 * 用户账号信息注册
+	 * @param model
+	 * @param request
+	 * @param voucherVO
+	 * @param result
+	 * @param pic
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/insertVoucherInfo.action",method={RequestMethod.GET,RequestMethod.POST})
 	public String insertVoucherInfo(Model model,HttpServletRequest request,@Validated(value={ValidGroup1.class}) VoucherVO voucherVO,BindingResult result,@RequestParam(value="picture",required=true) MultipartFile pic) throws Exception // 
 	{
@@ -47,7 +61,7 @@ public class VoucherInfoController {
 			}
 			model.addAttribute("errors", errorInfos);
 			model.addAttribute("voucherVO", voucherVO);
-			return "login/regist";
+			return "login/register";
 		}
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
@@ -75,5 +89,35 @@ public class VoucherInfoController {
 		request.getSession().setAttribute("username",voucherVO.getVoucher().getUsername());
 		request.getSession().setAttribute("userid", userid);
 		return "success";
+	}
+	
+	/**
+	 * 检验用户的账号是否已经被注册，存在了数据库中
+	 * @param request
+	 * @param response
+	 * @param voucher
+	 * @param result
+	 * @throws Exception
+	 */
+	@RequestMapping("/queryByName.action")
+	public void queryByName(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup2.class}) Voucher voucher, BindingResult result) throws Exception
+	{
+		String message;
+		if(result.hasErrors())
+		{
+//			throw new MyException("错误编号10004:用户账号检验有没有注册过时要求非空且在6-15字符内...");
+			message="illegal";
+		} else {
+			Integer daoResult = voucherInfoService.queryVoucherByName(voucher.getUsername());
+			if(daoResult == 0) 
+				message = "success";
+			else
+				message = "fail";
+		}
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = null;
+        out = response.getWriter();
+        out.println(message);
 	}
 }

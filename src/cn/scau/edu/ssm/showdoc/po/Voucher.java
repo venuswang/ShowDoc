@@ -6,12 +6,13 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup1;
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup2;
 
 public class Voucher {
     private Integer id;
 
-    @NotBlank(message="{voucher.name.null.error}",groups={ValidGroup1.class})
-    @Size(min=6,max=15,message="{voucher.name.length.error}",groups={ValidGroup1.class})  //
+    @NotBlank(message="{voucher.name.null.error}",groups={ValidGroup1.class,ValidGroup2.class})
+    @Size(min=6,max=15,message="{voucher.name.length.error}",groups={ValidGroup1.class,ValidGroup2.class})  //
     private String username;
 
     @NotBlank(message="{voucher.password.null.error}",groups={ValidGroup1.class})
