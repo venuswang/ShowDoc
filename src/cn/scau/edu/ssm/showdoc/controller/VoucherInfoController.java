@@ -37,7 +37,6 @@ public class VoucherInfoController {
 	@RequestMapping(value="/insertVoucherInfo.action",method={RequestMethod.GET,RequestMethod.POST})
 	public String insertVoucherInfo(Model model,HttpServletRequest request,@Validated(value={ValidGroup1.class}) VoucherVO voucherVO,BindingResult result,@RequestParam(value="picture",required=true) MultipartFile pic) throws Exception // 
 	{
-//		System.out.println(request.getAttribute("username"));
 		if(result.hasErrors())
 		{
 			List<ObjectError> errors = result.getAllErrors();
