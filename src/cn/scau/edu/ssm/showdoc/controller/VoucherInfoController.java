@@ -3,12 +3,12 @@ package cn.scau.edu.ssm.showdoc.controller;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
@@ -56,14 +57,15 @@ public class VoucherInfoController {
 		if(result.hasErrors())
 		{
 			List<ObjectError> errors = result.getAllErrors();
-			List<String> errorInfos = new ArrayList<String>();
+		//	List<String> errorInfos = new ArrayList<String>();
+			StringBuffer errorInfos = new StringBuffer();
 			for(ObjectError error : errors)
 			{
-				errorInfos.add(error.getDefaultMessage());
+				errorInfos.append(error.getDefaultMessage()).append(',');
 			}
-			model.addAttribute("errors", errorInfos);
+			model.addAttribute("errors", errorInfos.toString());
 			model.addAttribute("voucherVO", voucherVO);
-			return "login/register";
+			return "login/regist";
 		}
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
@@ -101,13 +103,13 @@ public class VoucherInfoController {
 	 * @param result
 	 * @throws Exception
 	 */
-	@RequestMapping("/queryByName.action")
+	@RequestMapping(value="/queryByName.action",method={RequestMethod.GET,RequestMethod.POST})
 	public void queryByName(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup2.class}) Voucher voucher, BindingResult result) throws Exception
 	{
 		String message = "";
 		if(result.hasErrors())
 		{
-//			throw new MyException("错误编号10004:用户账号检验有没有注册过时要求非空且在6-15字符内...");
+			//throw new MyException("错误编号10004:用户账号检验有没有注册过时要求非空且在6-15字符内...");
 			message="illegal";
 		} else {
 			Integer daoResult = voucherInfoService.queryVoucherByName(voucher.getUsername());
@@ -130,7 +132,7 @@ public class VoucherInfoController {
 	 * @param result
 	 * @throws Exception
 	 */
-	@RequestMapping("/updatePassword.action")
+	@RequestMapping(value="/updatePassword.action",method={RequestMethod.GET,RequestMethod.POST})
 	public void updatePassword(HttpServletResponse response,@Validated(value={ValidGroup3.class}) VoucherExtendClass voucherExtendClass, BindingResult result) throws Exception
 	{
 		String message = "";
@@ -149,5 +151,60 @@ public class VoucherInfoController {
         PrintWriter out = null;
         out = response.getWriter();
         out.println(message);
+	}
+	
+	/**
+	 * 修改用户的基本信息
+	 */
+	
+	
+	/**
+	 * 通过ID来查询用户的个人信息
+	 */
+	@RequestMapping(value="/queryVoucherById.action",method={RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView queryVoucherById() throws Exception
+	{
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
+	}
+	
+	/**
+	 * 检验用户登录
+	 */
+	@RequestMapping(value="/checkVoucher.action",method={RequestMethod.GET,RequestMethod.POST})
+	public void checkVoucher(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherExtendClass voucherExtendClass, BindingResult result) throws Exception
+	{
+		String message = "";
+		if(result.hasErrors())
+		{
+			message="illegal";  //账户或密码的格式不对
+		} else {
+			Integer checkResult = voucherInfoService.selectVoucherByNameAndPass(voucherExtendClass);
+			if(checkResult == null)
+				message = "fail";
+			else {
+				HttpSession session = request.getSession();
+				session.setAttribute("loginStatu", "login");
+				session.setAttribute("username",voucherExtendClass.getUsername());
+				session.setAttribute("userid", checkResult);
+				message = "success,/project/showProject.action";  //
+			}
+		}
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = null;
+        out = response.getWriter();
+        out.println(message);
+	}
+	
+	/**
+	 * 退出
+	 */
+	@RequestMapping(value="/exitVoucher.action",method={RequestMethod.GET,RequestMethod.POST})
+	public String exitVoucher(HttpServletRequest request) throws Exception 
+	{
+		request.getSession().invalidate();
+		return "forward:jsp/login/exit.jsp";
 	}
 }

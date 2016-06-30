@@ -16,6 +16,7 @@ public class VoucherExtendClass extends Voucher {
     @NotBlank(message="{voucher.password.null.error}",groups={ValidGroup3.class})
 	@Size(min=6,max=50,message="{voucher.password.length.error}",groups={ValidGroup3.class}) //
 	private String newPassword;
+    
 	private Integer number;
 	
 	

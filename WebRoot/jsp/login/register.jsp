@@ -11,13 +11,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>个人注册</title>
-	<link rel="stylesheet" href="../css/basic.min.css" />
-	<link rel="stylesheet" href="../css/register.min.css" />
-	<link rel="stylesheet" href="../css/sumoselect.min.css" />
-	<script src="../js/jquery-1.12.3.min.js"></script>
-	<script src="../js/jquery.sumoselect.min.js"></script>
-	<script src="../js/jquery.validate.min.js"></script>
-	<script src="../js/register.min.js"></script>
+	<link rel="stylesheet" href=<%=basePath + "css/basic.min.css" %> />
+	<link rel="stylesheet" href=<%=basePath + "css/register.min.css" %> />
+	<link rel="stylesheet" href=<%=basePath + "css/sumoselect.min.css" %> />
+	<script src=<%=basePath + "js/jquery-1.12.3.min.js" %>></script>
+	<script src=<%=basePath + "js/jquery.sumoselect.min.js" %>></script>
+	<script src=<%=basePath + "js/jquery.validate.min.js" %>></script>
+	<script src=<%=basePath + "js/register.min.js" %>></script>  
 </head>
 <body>
 	<div class="container">
@@ -58,6 +58,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input type="file" name="picture" class="item-upimg" id="register-picture" />
 						<s class="item-upimg-logo">&#xe010;</s>
 					</div>
+					<div class="item-img-show">
+						<span class="item-show-title">图片预览</span>
+						<img src="" alt="用户头像" class="item-img-result" />
+					</div>
 				</div>
 				<!-- skill -->
 				<div class="register-item-select">
@@ -79,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<!-- 已有账号的情况 -->
 				<div class="register-content-index">
-					<a href="../index.jsp" class="btn btn-back">返回首页</a>
+					<a href=<%=basePath + "index.jsp" %> class="btn btn-back">返回首页</a>
 				</div>
 				<!-- 表单操作 -->
 				<div class="register-content-opera">

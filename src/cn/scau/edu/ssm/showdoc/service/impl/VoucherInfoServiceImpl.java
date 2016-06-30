@@ -3,6 +3,7 @@ package cn.scau.edu.ssm.showdoc.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.scau.edu.ssm.showdoc.exception.MyException;
@@ -13,6 +14,7 @@ import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherExample;
 import cn.scau.edu.ssm.showdoc.po.VoucherExample.Criteria;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
+import cn.scau.edu.ssm.showdoc.po.VoucherInfo;
 import cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
 import cn.scau.edu.ssm.showdoc.service.VoucherInfoService;
@@ -47,8 +49,10 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 			StringBuffer sb = new StringBuffer();
 			for(String skill : vif.getSkills())
 			{
-				sb.append(skill);
+				sb.append(skill).append('-');
 			}
+			if(sb != null && sb.length() > 0)
+				sb.deleteCharAt(sb.length()-1);
 			vif.setSkill(sb.toString());
 		}
 		vif.setRegistdate(new Date());
@@ -82,6 +86,49 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 			updateSuccess = false;
 		voucherExtendMapper.updateVoucherExtend(voucher);
 		return updateSuccess;
+	}
+
+	/**
+	 * 检验用户登录，需要用户名和密码
+	 */
+	@Override
+	public Integer selectVoucherByNameAndPass(VoucherExtendClass voucher)
+			throws Exception {
+		VoucherExample example = new VoucherExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsernameEqualTo(voucher.getUsername()).andPasswordEqualTo(voucher.getPassword()).andStatuEqualTo(1);
+		List<Voucher> vouchers = voucherMapper.selectByExample(example);
+		if(vouchers == null || vouchers.size() == 0 || vouchers.size() > 1)
+			return null;
+		else
+			return vouchers.get(0).getId();
+	}
+
+	/**
+	 * 通过ID来查询用户的信息
+	 */
+	@Override
+	public VoucherVO queryVoucherById(Integer id) throws Exception {
+		if(id == null)
+			throw new MyException("错误编号10005:用户信息ID为空...");
+		//通过ID查询Voucher
+		Voucher voucher = voucherMapper.selectByPrimaryKey(id);
+		if(voucher == null)
+			throw new MyException("错误编号10006:用户不存在数据库中...");
+		//通过ID查询VoucherInfo
+		VoucherInfo voucherInfo = voucherInfoMapper.selectByPrimaryKey(id);
+		VoucherVO voucherVO = new VoucherVO();
+		VoucherExtendClass voucherExtend = new VoucherExtendClass();
+		VoucherInfoExtendClass voucherInfoExtend = null;
+		if(voucherInfo != null)
+		{
+			voucherInfoExtend = new VoucherInfoExtendClass();
+			BeanUtils.copyProperties(voucherInfo, voucherInfoExtend);
+		}
+		BeanUtils.copyProperties(voucher, voucherExtend);
+		voucherVO.setVoucher(voucherExtend);
+		voucherVO.setVoucherInfo(voucherInfoExtend);
+		return voucherVO;
 	}
 
 }

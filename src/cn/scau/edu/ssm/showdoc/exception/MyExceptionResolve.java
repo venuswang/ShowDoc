@@ -24,9 +24,9 @@ public class MyExceptionResolve implements HandlerExceptionResolver {
 		ModelAndView mav = new ModelAndView();
 		if(exception instanceof MaxUploadSizeExceededException)
 		{
-			String error = "文件应不大于 "+ ((MaxUploadSizeExceededException)exception).getMaxUploadSize()+" byte.";
-			List<String> errors = new ArrayList<String>();
-			errors.add(error);
+			String errors = "文件应不大于 "+ ((MaxUploadSizeExceededException)exception).getMaxUploadSize()+" byte.";
+			//List<String> errors = new ArrayList<String>();
+			//errors.add(error);
 			request.setAttribute("errors", errors);
 			try {
 				request.getRequestDispatcher("login/register.jsp").forward(request, response);

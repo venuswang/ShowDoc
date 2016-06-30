@@ -10,7 +10,9 @@
 
 </head>
 <body> 
-
+<c:forEach items="${errors}" var="error">
+	<c:out value="${error }"></c:out>
+</c:forEach>
 <form id="itemForm" action="${pageContext.request.contextPath }/voucher/insertVoucherInfo.action" method="post" enctype="multipart/form-data">
 
 <table width="100%" border=1>

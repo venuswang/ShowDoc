@@ -9,11 +9,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>ShowDoc首页</title>
-	<link rel="stylesheet" href="jsp/css/basic.min.css" />
-	<link rel="stylesheet" href="jsp/css/index.css" />
-	<script src="jsp/js/jquery-1.12.3.min.js"></script>
-	<script src="jsp/js/jquery-zcarousel.min.js"></script>
-	<script src="jsp/js/index.min.js"></script>
+	<link rel="stylesheet" href=<%=basePath + "css/basic.min.css" %> />
+	<link rel="stylesheet" href=<%=basePath + "css/index.css" %> />
+	<script src=<%=basePath + "js/jquery-1.12.3.min.js" %>></script>
+	<script src=<%=basePath + "js/jquery-zcarousel.min.js" %>></script>
+	<script src=<%=basePath + "js/index.min.js" %>></script>
 </head>
 <body>
 	<div id="container" data-setting='{"width":"100%","height":"100%","speed":5000,"autoPlay":true,
@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p class="simple-summary">帮你解决前端后端开发文档的烦恼</p>
 					<div class="login-operations">
 						<a href="javascript:void(0);" class="btn btn-login">登录</a>
-						<a href="jsp/login/register.jsp" class="btn btn-register">注册</a>
+						<a href=<%=basePath + "jsp/login/register.jsp" %> class="btn btn-register">注册</a>
 					</div>
 				</div>
 			</div>
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="login-form-pos">
 			<a href="javascript:void(0);" class="bnt btn-close">&#xe117;</a>
 			<h2 class="login-title">登录ShowDoc</h2>
-			<form action="userproject.html" method="post" accept-charset="utf-8" class="login-form">
+			<form action=<%=basePath + "voucher/checkVoucher.action" %> method="post" accept-charset="utf-8" class="login-form">
 				<div class="login-item">
 					<label for="login-username" class="login-label">&#xe908;</label>
 					<input type="text" name="username" placeholder="账号" id="login-username" class="item-content" />
@@ -107,8 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="submit" name="login" value="登录" class="form-submit" />
 				</div>
 				<div class="login-item login-form-other">
-					<a href="javascript:void(0);" class="btn btn-back">返回首页</a>
-					<a href="jsp/login/register.jsp" class="btn btn-register">注册</a>
+					<a href="index.jsp" class="btn btn-back">返回首页</a>
+					<a href=<%=basePath + "jsp/login/register.jsp" %> class="btn btn-register">注册</a>
 				</div>
 			</form>
 		</div>

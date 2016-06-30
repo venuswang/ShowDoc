@@ -104,7 +104,7 @@
     values (#{voucherid,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR}, 
       #{registdate,jdbcType=DATE})
   </insert>
-  <insert id="insertSelective" parameterType="cn.scau.edu.ssm.showdoc.po.VoucherInfo" >
+  <insert id="insertSelective" parameterType="cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass" >
     insert into voucher_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="voucherid != null" >
@@ -119,6 +119,9 @@
       <if test="registdate != null" >
         registdate,
       </if>
+      <if test="email != null" >
+        email,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="voucherid != null" >
@@ -132,6 +135,9 @@
       </if>
       <if test="registdate != null" >
         #{registdate,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

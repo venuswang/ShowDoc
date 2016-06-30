@@ -10,4 +10,8 @@ public interface VoucherInfoService {
 	public Integer queryVoucherByName(String username) throws Exception;
 	
 	public boolean updateById(int id,VoucherExtendClass voucher) throws Exception;
+	
+	public Integer selectVoucherByNameAndPass(VoucherExtendClass voucher) throws Exception;
+	
+	public VoucherVO queryVoucherById(Integer id) throws Exception;
 }

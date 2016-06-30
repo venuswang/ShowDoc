@@ -2,7 +2,10 @@ package cn.scau.edu.ssm.showdoc.mapper;
 
 import cn.scau.edu.ssm.showdoc.po.VoucherInfo;
 import cn.scau.edu.ssm.showdoc.po.VoucherInfoExample;
+import cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface VoucherInfoMapper {
@@ -14,7 +17,7 @@ public interface VoucherInfoMapper {
 
     int insert(VoucherInfo record);
 
-    int insertSelective(VoucherInfo record);
+    int insertSelective(VoucherInfoExtendClass record);
 
     List<VoucherInfo> selectByExample(VoucherInfoExample example);
 
