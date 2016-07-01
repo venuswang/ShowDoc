@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>ShowDoc首页</title>
 	<link rel="stylesheet" href=<%=basePath + "css/basic.min.css" %> />
-	<link rel="stylesheet" href=<%=basePath + "css/index.css" %> />
+	<link rel="stylesheet" href=<%=basePath + "css/index.min.css" %> />
 	<script src=<%=basePath + "js/jquery-1.12.3.min.js" %>></script>
 	<script src=<%=basePath + "js/jquery-zcarousel.min.js" %>></script>
 	<script src=<%=basePath + "js/index.min.js" %>></script>
@@ -90,6 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="login-form-container">
 		<div class="login-form-pos">
 			<a href="javascript:void(0);" class="bnt btn-close">&#xe117;</a>
+			<p class="login-error">账号或密码错误</p>
 			<h2 class="login-title">登录ShowDoc</h2>
 			<form action=<%=basePath + "voucher/checkVoucher.action" %> method="post" accept-charset="utf-8" class="login-form">
 				<div class="login-item">

@@ -41,7 +41,7 @@ $(function(){
 				itemStyle = $( this ).find(".item-content").data( "item" );
 
 			// 插入提示信息
-			if ( itemStyle && itemStyle != "" ) {
+			if ( itemStyle && itemStyle !== "" ) {
 
 				/**
 				 * 如果提示信息的类型不为空,则向提示框中插入相应的提示内容
@@ -104,6 +104,11 @@ $(function(){
 	$btnLogin.on("click", function() {
 		var $loginContainer = $( '.login-form-container' ),
 			$loginContent = $loginContainer.find( '.login-form-pos' ),
+			$loginSubmit = $loginContent.find( '.form-submit'),
+			$form = $loginContent.find( '.login-form' ),
+			$username = $form.find('#login-username'),
+			$password = $form.find('#login-password'),
+			$loginError = $loginContent.find('.login-error'),
 			offset = 0,
 			width = 0,
 			height = 0,
@@ -137,6 +142,48 @@ $(function(){
 		// 绑定 关闭按钮事件
 		$loginContainer.find( '.btn-close' ).on("click", function(){
 			$loginContainer.trigger("click");
+		});
+
+		// 绑定submit事件
+		$loginSubmit.on('click', function(){
+			$loginError.hide();
+			var action = $form.attr('action'),
+				username = $username.val(),
+				password = $password.val(),
+				url = action + "?username=" + username + "&password=" + password;
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function( data ){
+					var result = data.trim(),
+						results = result.split(",");
+					if ( results[0] === "success" ) {
+						/*results[1] = "jsp/project/userproject.jsp";*/
+						var nextUrl = window.location.href + results[1];
+						window.location.href = nextUrl;
+					} else if ( results[0] === "fail" || results[0] === "illegal") {
+						$loginError.show();
+					} else {
+						var nospace = data.replace(/\s/, ""),
+							leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
+							rightPos = nospace.lastIndexOf("<\/h3>"),
+							errorText = nospace.substring(leftPos, rightPos),
+							currentUrl = window.location.protocol + "\/\/" + window.location.host +
+										"\/ShowDoc\/",
+							errorUrl = currentUrl +	"exception\/operateVoucherHandle.action?message=" +
+										errorText;
+			
+						// 改变当前 url
+						window.location.href = errorUrl;
+					}
+				},
+				error: function( xhr ) {
+					console.log( xhr );
+					console.log( "error" );
+				}
+			});
+			return false;
 		});
 	});
 });

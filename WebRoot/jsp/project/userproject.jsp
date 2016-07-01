@@ -9,8 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>showdoc创建项目</title>
-	<link rel="stylesheet" href="../css/basic.min.css" />
-	<link rel="stylesheet" href="../css/userProject.min.css" />
+	<link rel="stylesheet" href=<%=basePath + "css/basic.min.css" %> />
+	<link rel="stylesheet" href=<%=basePath + "css/userProject.min.css" %> />
 </head>
 <body>
 	<header id="header">
@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a href="javascript:void(0);" class="nav-btn">分享主页</a>
 					</li>
 					<li class="nav-item">
-						<a href="javascript:void(0);" class="nav-btn">网站首页</a>
+						<a href=<%=basePath + "index.jsp" %> class="nav-btn">网站首页</a>
 					</li>
 					<li class="nav-item">
 						<a href="javascript:void(0);" class="nav-btn">退出</a>

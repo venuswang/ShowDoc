@@ -19,7 +19,7 @@ body {
 }
 #header .common-left {
   position: absolute;
-  left: 35px;
+  left: 10%;
 }
 #header .common-left .left-title {
   color: #76EAE4;
@@ -29,7 +29,7 @@ body {
 }
 #header .nav-list {
   text-align: right;
-  padding-right: 15%;
+  padding-right: 3%;
 }
 #header .nav-list .nav-item {
   display: inline-block;
@@ -54,7 +54,7 @@ body {
 }
 
 .main {
-  width: 90%;
+  width: 83%;
   margin: 30px auto;
 }
 .main .project-item {

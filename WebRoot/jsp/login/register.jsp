@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src=<%=basePath + "js/jquery-1.12.3.min.js" %>></script>
 	<script src=<%=basePath + "js/jquery.sumoselect.min.js" %>></script>
 	<script src=<%=basePath + "js/jquery.validate.min.js" %>></script>
-	<script src=<%=basePath + "js/register.min.js" %>></script>  
+ 	<script src=<%=basePath + "js/register.min.js" %>></script>   
 </head>
 <body>
 	<div class="container">
