@@ -16,7 +16,7 @@
 	
 	<context:component-scan base-package="cn.scau.edu.ssm.showdoc.controller"></context:component-scan>
 	
-	<mvc:annotation-driven conversion-service="conversionService" validator="validator"></mvc:annotation-driven>
+	<mvc:annotation-driven conversion-service="conversionServiceBySelf" validator="validator"></mvc:annotation-driven>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
@@ -25,7 +25,7 @@
 	</bean>
 	
 	<!-- 设置转换器 -->
-	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<bean id="conversionServiceBySelf" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
 				<bean class="cn.scau.edu.ssm.showdoc.converter.DateConverter"></bean>
@@ -67,4 +67,19 @@
 	
 	
 	<bean class="cn.scau.edu.ssm.showdoc.exception.MyExceptionResolve"></bean>
+	
+	<!-- 配置静态资源 -->
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/images/" mapping="/images/**"/>
+	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
+	
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="cn.scau.edu.ssm.showdoc.inteceptor.AuthorInteceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 </beans>

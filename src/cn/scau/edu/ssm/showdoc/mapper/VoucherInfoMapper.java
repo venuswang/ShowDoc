@@ -22,6 +22,8 @@ public interface VoucherInfoMapper {
     List<VoucherInfo> selectByExample(VoucherInfoExample example);
 
     VoucherInfo selectByPrimaryKey(Integer voucherid);
+    
+    VoucherInfoExtendClass selectExtendByPrimaryKey(Integer voucherid);
 
     int updateByExampleSelective(@Param("record") VoucherInfo record, @Param("example") VoucherInfoExample example);
 

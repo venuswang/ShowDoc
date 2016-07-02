@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.scau.edu.ssm.showdoc.exception.MyException;
 import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
@@ -65,7 +66,7 @@ public class VoucherInfoController {
 			}
 			model.addAttribute("errors", errorInfos.toString());
 			model.addAttribute("voucherVO", voucherVO);
-			return "login/regist";
+			return "login/register";
 		}
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
@@ -162,10 +163,14 @@ public class VoucherInfoController {
 	 * 通过ID来查询用户的个人信息
 	 */
 	@RequestMapping(value="/queryVoucherById.action",method={RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView queryVoucherById() throws Exception
+	public ModelAndView queryVoucherById(@RequestParam(required=true) Integer id) throws Exception
 	{
+		if(id == null)
+			throw new MyException("错误编号10005:用户信息ID为空...");
+		VoucherVO voucherVO = voucherInfoService.queryVoucherById(id);
 		ModelAndView mav = new ModelAndView();
-		
+		mav.addObject("voucherVO", voucherVO);
+		mav.setViewName("showVoucher");
 		return mav;
 	}
 	
@@ -188,7 +193,7 @@ public class VoucherInfoController {
 				session.setAttribute("loginStatu", "login");
 				session.setAttribute("username",voucherExtendClass.getUsername());
 				session.setAttribute("userid", checkResult);
-				message = "success,/project/showProject.action";  //
+				message = "success,project/showProject.action";  //
 			}
 		}
 		response.setContentType("text/html");

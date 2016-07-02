@@ -116,16 +116,16 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 		if(voucher == null)
 			throw new MyException("错误编号10006:用户不存在数据库中...");
 		//通过ID查询VoucherInfo
-		VoucherInfo voucherInfo = voucherInfoMapper.selectByPrimaryKey(id);
+//		VoucherInfo voucherInfo = voucherInfoMapper.selectByPrimaryKey(id);
 		VoucherVO voucherVO = new VoucherVO();
 		VoucherExtendClass voucherExtend = new VoucherExtendClass();
-		VoucherInfoExtendClass voucherInfoExtend = null;
-		if(voucherInfo != null)
-		{
-			voucherInfoExtend = new VoucherInfoExtendClass();
-			BeanUtils.copyProperties(voucherInfo, voucherInfoExtend);
-		}
 		BeanUtils.copyProperties(voucher, voucherExtend);
+		VoucherInfoExtendClass voucherInfoExtend = voucherInfoMapper.selectExtendByPrimaryKey(id);
+//		if(voucherInfo != null)
+//		{
+//			voucherInfoExtend = new VoucherInfoExtendClass();
+//			BeanUtils.copyProperties(voucherInfo, voucherInfoExtend);
+//		}
 		voucherVO.setVoucher(voucherExtend);
 		voucherVO.setVoucherInfo(voucherInfoExtend);
 		return voucherVO;

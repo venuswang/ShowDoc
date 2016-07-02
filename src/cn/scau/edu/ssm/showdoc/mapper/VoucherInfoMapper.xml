@@ -68,6 +68,9 @@
   <sql id="Base_Column_List" >
     voucherid, picture, skill, registdate
   </sql>
+  <sql id="Base_Column_list_extend">
+  	email
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.scau.edu.ssm.showdoc.po.VoucherInfoExample" >
     select
     <if test="distinct" >
@@ -88,6 +91,14 @@
     from voucher_info
     where voucherid = #{voucherid,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectExtendByPrimaryKey" resultType="cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />,<include refid="Base_Column_list_extend"/>
+    from voucher_info
+    where voucherid = #{voucherid,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from voucher_info
     where voucherid = #{voucherid,jdbcType=INTEGER}
