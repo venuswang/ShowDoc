@@ -43,7 +43,7 @@ public class MyExceptionResolve implements HandlerExceptionResolver {
 			//List<String> errors = new ArrayList<String>();
 			//errors.add(error);
 			//request.setAttribute("errors", errors);
-			String username = request.getParameter("voucher.username");
+			//String username = request.getParameter("voucher.username");
 			mav.addObject("errors", errors);
 			//mav.addObject("voucherVO", request.getParameter("voucherVO");
 			mav.setViewName("login/register");
