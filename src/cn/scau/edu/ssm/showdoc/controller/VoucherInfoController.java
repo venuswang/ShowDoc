@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -88,8 +89,15 @@ public class VoucherInfoController {
 		 */
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
+			
 			String path = "F:\\picture\\";
 			String pic_oriname = pic.getOriginalFilename();
+			String mimeType = request.getServletContext().getMimeType(pic_oriname);
+			if (!mimeType.startsWith("image/")) {
+				model.addAttribute("errors", "您上传的不是图片的类型，请选择jpg、png、jpeg等格式的图片...");
+				model.addAttribute("voucherVO", voucherVO);
+				return "login/register";
+			}
 			int index = pic_oriname.lastIndexOf(".");
 //			String suffix = "";
 			String pic_name = "";
@@ -175,8 +183,8 @@ public class VoucherInfoController {
 	/**
 	 * 修改用户的基本信息
 	 */
-	
-	
+//	@RequestMapping(value="/updateVoucherInfo.action",method={HttpMethod.POST,HttpMethod.GET})
+//	public void 
 	/**
 	 * 获取验证码
 	 */

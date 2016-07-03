@@ -29,6 +29,7 @@ public class MyExceptionResolve implements HandlerExceptionResolver {
 		if(exception != null) {
 			logger.error("error start ----------------" + new Date() + "--------------------\n");
 			logger.error(exception.getMessage());
+	
 			logger.error("\n error operating ----------------" + new Date() + "--------------------\n");
 			logger.error(exception.toString());
 			logger.error("error end ----------------" + new Date() + "--------------------");
@@ -41,8 +42,13 @@ public class MyExceptionResolve implements HandlerExceptionResolver {
 			String errors = "文件应不大于 "+ ((MaxUploadSizeExceededException)exception).getMaxUploadSize()+" byte.";
 			//List<String> errors = new ArrayList<String>();
 			//errors.add(error);
-			request.setAttribute("errors", errors);
-			try {
+			//request.setAttribute("errors", errors);
+			String username = request.getParameter("voucher.username");
+			mav.addObject("errors", errors);
+			//mav.addObject("voucherVO", request.getParameter("voucherVO");
+			mav.setViewName("login/register");
+			return mav;
+			/*try {
 				request.getRequestDispatcher("login/register.jsp").forward(request, response);
 			} catch (ServletException e) {
 				mav.addObject("message", "错误编号10001：因上传的图片太大而重回注册界面中Servlet出错...");
@@ -50,7 +56,7 @@ public class MyExceptionResolve implements HandlerExceptionResolver {
 			} catch (IOException e) {
 				mav.addObject("message", "错误编号10002：因上传的图片太大而重回注册界面中IO出错...");
 				mav.setViewName("error");
-			}
+			}*/
 		} else if(exception instanceof MyException) {
 			myException = (MyException)exception;
 		} else {
