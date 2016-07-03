@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: 'icomoon';
   src: url("../fonts/icomoon.eot?xvh4s");
@@ -12,14 +13,15 @@ body {
   background-color: #fff;
 }
 
+/* 头部导航栏 */
 #header {
   position: relative;
-  line-height: 60px;
+  line-height: 70px;
   background-color: #666;
 }
 #header .common-left {
   position: absolute;
-  left: 35px;
+  left: 10%;
 }
 #header .common-left .left-title {
   color: #76EAE4;
@@ -29,12 +31,76 @@ body {
 }
 #header .nav-list {
   text-align: right;
-  padding-right: 15%;
+  padding-right: 3%;
 }
 #header .nav-list .nav-item {
   display: inline-block;
   *display: inline;
   *zoom: 1;
+}
+#header .nav-list .nav-item .user-portraint {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 15px;
+  cursor: pointer;
+}
+#header .nav-list .nav-item .sub-nav {
+  display: none;
+  position: absolute;
+  line-height: normal;
+  margin-top: 10px;
+  margin-left: -18px;
+  box-shadow: 0 0 0 #F0EDED, 0 0 1px #F0EDED, 0 0 2px #F0EDED, 0 0 3px #F0EDED, 0 0 4px #F0EDED, 0 0 5px #F0EDED, 0 0 6px #F0EDED, 0 0 7px #F0EDED, 0 0 8px #F0EDED, 0 0 9px #F0EDED;
+  border-radius: 6px;
+}
+#header .nav-list .nav-item .sub-nav .sub-btn {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  padding: 10px 15px;
+  background-color: inherit;
+  color: inherit;
+}
+#header .nav-list .nav-item .sub-nav .sub-item {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #dedede;
+  color: #666;
+}
+#header .nav-list .nav-item .sub-nav .sub-item.active {
+  background-color: #EAE6E6;
+  color: #222;
+}
+#header .nav-list .nav-item .sub-nav .sub-item:hover {
+  background-color: #EAE6E6;
+  color: #222;
+}
+#header .nav-list .nav-item .sub-nav .sub-item:last-child {
+  border-bottom: none;
+  border-radius: 0 0 6px 6px;
+}
+#header .nav-list .nav-item .sub-nav .sub-item:last-child .sub-btn {
+  border-radius: 0 0 6px 6px;
+}
+#header .nav-list .nav-item .sub-nav .sub-item:first-child {
+  border-radius: 6px 6px 0 0;
+}
+#header .nav-list .nav-item .sub-nav .sub-item:first-child .sub-btn {
+  border-radius: 6px 6px 0 0;
+}
+#header .nav-list .nav-item .sub-nav:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-color: transparent transparent #FFF transparent;
+  border-style: none solid solid solid;
+  border-width: 0 10px 16px 10px;
+  margin-left: -10px;
+  margin-top: -16px;
 }
 #header .nav-list .nav-item .nav-btn {
   display: inline-block;
@@ -53,8 +119,9 @@ body {
   background-color: #FCDD13;
 }
 
+/* 用户项目 */
 .main {
-  width: 90%;
+  width: 83%;
   margin: 30px auto;
 }
 .main .project-item {
@@ -83,4 +150,270 @@ body {
 }
 .main .project-item .project-btn:hover {
   background-color: #F4F4F4;
+}
+
+/* 遮罩 */
+#mask-container {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(203, 203, 203, 0.5);
+}
+#mask-container #person-info, #mask-container #modify-person-info, #mask-container #modify-person-password {
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  width: 480px;
+  margin-left: -215px;
+  top: 30%;
+  box-shadow: 0 0 0 #C7C5C5, 0 0 1px #C7C5C5, 0 0 2px #C7C5C5, 0 0 3px #C7C5C5, 0 0 4px #C7C5C5, 0 0 5px #C7C5C5, 0 0 6px #C7C5C5, 0 0 7px #C7C5C5, 0 0 8px #C7C5C5, 0 0 9px #C7C5C5, 0 0 10px #C7C5C5;
+  border-radius: 10px;
+}
+#mask-container #person-info {
+  min-height: 300px;
+  display: none;
+}
+#mask-container #modify-person-info {
+  display: none;
+}
+#mask-container #modify-person-password {
+  display: none;
+}
+
+/* 个人信息模块 */
+#person-info {
+  padding: 10px;
+}
+#person-info .info-item {
+  margin: 20px;
+  color: #666;
+  line-height: 1.5;
+  letter-spacing: .05em;
+  font-size: 16px;
+}
+#person-info .info-item .item-name-title {
+  letter-spacing: 0.5em;
+}
+#person-info .info-item .item-email-title {
+  letter-spacing: 2em;
+}
+#person-info .info-item .item-name-content {
+  margin-left: 30px;
+}
+#person-info .info-item .item-email-content {
+  margin-left: 9px;
+}
+#person-info .info-item-portraint {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+#person-info .info-item-portraint .item-portraint-content {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+#person-info .item-skill-other {
+  line-height: 1.5;
+  color: #000;
+  padding: 10px;
+  display: none;
+}
+#person-info .item-skill-list {
+  padding-left: 113px;
+}
+#person-info .item-skill-list .item-skill-item {
+  width: 140px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  text-align: left;
+}
+#person-info .item-skill-list .item-skill-item .item-skill-content {
+  padding: 6px 10px;
+  background-color: #B3F8E2;
+  color: #666;
+  border-radius: 3px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  margin: 10px 10px 10px 0;
+}
+#person-info .person-info-operation {
+  text-align: right;
+  padding: 15px 50px 20px 20px;
+}
+#person-info .person-info-operation .btn-back {
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 0 0 #FFFFFF, inset 0 0 1px #FFFFFF, inset 0 0 2px #FFFFFF, inset 0 0 3px #FFFFFF, inset 0 0 4px #FFFFFF, 0 0 1px #FFFFFF, 0 0 1px #FFFFFF;
+}
+#person-info .person-info-operation .btn-back:hover {
+  background-color: #EBE9E9;
+}
+
+/* 修改个人信息模块 */
+#modify-person-info .modify-info-items {
+  margin: 30px;
+}
+#modify-person-info .modify-info-items .modify-label {
+  padding: 5px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+}
+#modify-person-info .modify-info-items .form-item {
+  color: #555;
+  line-height: 1.5;
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
+}
+#modify-person-info .modify-info-items .form-item:focus {
+  box-shadow: 0 0 0 #0ae, 0 0 1px #0ae, 0 0 2px #0ae, 0 0 3px #0ae, 0 0 4px #0ae, 0 0 5px #0ae;
+}
+#modify-person-info .modify-info-portraint {
+  margin: 30px;
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+#modify-person-info .modify-info-portraint .modify-label {
+  color: #999;
+  font-size: 16px;
+}
+#modify-person-info .modify-info-portraint .item-img-content {
+  margin-top: 5px;
+  width: 160px;
+  height: 140px;
+  border: 1px dashed #dedede;
+  position: relative;
+  text-align: center;
+}
+#modify-person-info .modify-info-portraint .item-img-content .item-upimg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  z-index: 2;
+  opacity: 0;
+}
+#modify-person-info .modify-info-portraint .item-img-content .item-upimg-logo {
+  font-family: "icomoon" !important;
+  font-size: 40px;
+  color: #eee;
+  line-height: 140px;
+}
+#modify-person-info .modify-info-portraint .item-img-show {
+  width: 150px;
+  height: 150px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 3px solid #CBC8C8;
+  padding: 5px;
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  margin-top: -75px;
+}
+#modify-person-info .modify-info-portraint .item-img-show .item-show-title {
+  position: absolute;
+  left: 50%;
+  margin-left: -25px;
+  top: 50%;
+  margin-top: -8px;
+}
+#modify-person-info .modify-info-portraint .item-img-show .item-img-result {
+  border-radius: 50%;
+  width: 134px;
+  height: 134px;
+  display: none;
+}
+#modify-person-info .modify-info-skill {
+  margin: 30px;
+  font-size: 16px;
+  line-height: 1.5;
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+#modify-person-info .modify-info-skill .modify-label {
+  vertical-align: .5em;
+}
+#modify-person-info .modify-form-operations {
+  text-align: justify;
+  position: relative;
+  margin: 30px;
+  height: 30px;
+}
+#modify-person-info .modify-form-operations .btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  background-color: #0ae;
+  color: #EFECEC;
+}
+#modify-person-info .modify-form-operations .btn:hover {
+  background-color: #09B7FD;
+  color: #fff;
+}
+#modify-person-info .modify-form-operations .btn.btn-submit {
+  position: absolute;
+  left: 100px;
+}
+#modify-person-info .modify-form-operations .btn.btn-cancel {
+  position: absolute;
+  right: 100px;
+}
+
+/* 修改密码模块 */
+#modify-person-password .update-form-items {
+  margin: 30px;
+}
+#modify-person-password .update-form-items .form-item {
+  line-height: 1.5;
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
+}
+#modify-person-password .update-form-items .form-item:focus {
+  box-shadow: 0 0 0 #0ae, 0 0 1px #0ae, 0 0 2px #0ae, 0 0 3px #0ae, 0 0 4px #0ae, 0 0 5px #0ae;
+}
+#modify-person-password .update-form-operations {
+  text-align: justify;
+  position: relative;
+  margin: 30px;
+  height: 30px;
+}
+#modify-person-password .update-form-operations .btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  background-color: #0ae;
+  color: #EFECEC;
+}
+#modify-person-password .update-form-operations .btn:hover {
+  background-color: #09B7FD;
+  color: #fff;
+}
+#modify-person-password .update-form-operations .btn.btn-submit {
+  position: absolute;
+  left: 100px;
+}
+#modify-person-password .update-form-operations .btn.btn-cancel {
+  position: absolute;
+  right: 100px;
 }

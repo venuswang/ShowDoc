@@ -241,6 +241,11 @@
   padding: 8px;
   border-radius: 2px;
 }
+.login-form-container .login-error {
+  text-align: center;
+  color: #20E7F2;
+  display: none;
+}
 .login-form-container .btn-close {
   font-family: 'icomoon' !important;
   font-size: 18px;
