@@ -2,7 +2,7 @@ $(function(){
 
 	// 初始化插件轮播组件
 	zCarousel.init( $( '#container' ) );
-
+    //dddd
 	var $container = $( '#container' ),
 		$funcitems = $container.find( '.function-container' ).find( '.list-item' ),
 		$tooltip = $container.find( '.tooltip' ),
