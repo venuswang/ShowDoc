@@ -282,6 +282,21 @@
   font-size: 18px;
   padding: 9px 3px 8px 3px;
   vertical-align: middle;
+  /* width: 88%; */
+}
+.login-form-container .login-item .item-content#login-checkImg {
+  /* width: 70%; */
+  border-radius: 3px 0 0 3px;
+}
+.login-form-container .login-item #show-checkImg {
+  height: 38px;
+  vertical-align: middle;
+  width: 30%;
+  border-radius: 0 3px 3px 0;
+  position: absolute;
+  right: 38px;
+  border: none;
+  cursor: pointer;
 }
 .login-form-container .login-reset-password {
   text-align: right;

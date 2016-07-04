@@ -39,7 +39,7 @@ public class AuthorInteceptor implements HandlerInterceptor {
 			Object object) throws Exception {
 		//用户权限验证
 		String url = request.getRequestURI();
-		if(url != null && (url.contains("operateVoucherHandle.action") || url.contains("queryByName.action") || url.contains("index.jsp") || url.contains("insertVoucherInfo.action") || url.contains("register.jsp") || url.contains("login.jsp") || url.contains("checkVoucher.action") || url.contains("/js/") || url.contains("/images/") || url.contains("/css/") || url.contains("/fonts/") || url.contains("getCaptchar.action")))
+		if(url != null && (url.contains("operateVoucherHandle.action") || url.contains("queryByName.action") || url.contains("index.jsp") || url.contains("insertVoucherInfo.action") || url.contains("register.jsp") || url.contains("login.jsp") || url.contains("checkVoucher.action") || url.contains("/js/") || url.contains("/images/") || url.contains("/css/") || url.contains("/fonts/") || url.contains("getCaptchar.action") || url.contains("getVcode.action")))
 			return true;
 		HttpSession session = request.getSession();
 		String loginStatu = (String)session.getAttribute("loginStatu");

@@ -108,17 +108,49 @@ $(function(){
 			$form = $loginContent.find( '.login-form' ),
 			$username = $form.find('#login-username'),
 			$password = $form.find('#login-password'),
+			$vCode = $form.find('#login-checkImg'),
+			$checkImg = $form.find('#show-checkImg'),
 			$loginError = $loginContent.find('.login-error'),
 			offset = 0,
 			width = 0,
 			height = 0,
 			left = 0,
-			top = 0;
+			top = 0,
+			srcUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+						(new Date().getTime().toString(36)),
+			codeUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getVcode.action",
+			$tmpImg = $('<img />'); 
 
+		// 禁止提交按钮
+		$loginSubmit.css("cursor","not-allowed");
+
+		// 如果点击的是遮罩层，则关闭登录UI
 		$loginContainer.css("display", "block").on("click", function(event) {
 			if ( this === event.target ) {
 				$( this ).hide();
 			}
+		});
+
+		// 去加载验证码
+		$tmpImg.on('load', function(){
+			$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来	
+		});
+		$tmpImg.attr('src', srcUrl);
+
+		// 点击图片时刷新验证码
+		$checkImg.on('click', function(){
+
+			// 点击时更新时间获取不同的验证码
+			srcUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+						(new Date().getTime().toString(36));
+
+			$tmpImg.on('load', function(){
+				$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来	
+			});
+			$tmpImg.attr('src', srcUrl);
 		});
 
 		// 特别注意当父元素为  display: none 时，获取的子元素的宽度高度都为0
@@ -142,6 +174,27 @@ $(function(){
 		// 绑定 关闭按钮事件
 		$loginContainer.find( '.btn-close' ).on("click", function(){
 			$loginContainer.trigger("click");
+		});
+
+		// 焦点离开验证码输入框时，检测验证输入是否正确
+		$vCode.on('blur', function(){
+			var inputCode = $vCode.val();
+
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					console.log( data );
+					if ( inputCode === result ) {
+						console.log( 'yes' );
+					} else {
+						$vCode.focus();
+					}
+				}
+			});
 		});
 
 		// 绑定submit事件

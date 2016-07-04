@@ -101,11 +101,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<label for="login-password" class="login-label">&#xe90a;</label>
 					<input type="password" name="password" placeholder="密码" id="login-password" class="item-content" /> 
 				</div>
+				<div class="login-item">
+					<input type="text" name="checkImg" placeholder="验证码" class="item-content" id="login-checkImg" />
+					<img src="" alt="验证码" name="checkImg" id="show-checkImg" />
+				</div>
 				<div class="login-item login-reset-password">
 					<a href="javascript:void(0);" class="btn btn-reset-password">忘记登录密码?</a>
 				</div>
 				<div class="login-item login-form-opeation">
-					<input type="submit" name="login" value="登录" class="form-submit" />
+					<input type="submit" name="login" value="登录" class="form-submit" disabled="disabled" />
 				</div>
 				<div class="login-item login-form-other">
 					<a href="index.jsp" class="btn btn-back">返回首页</a>
