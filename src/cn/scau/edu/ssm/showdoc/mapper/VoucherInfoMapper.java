@@ -30,6 +30,8 @@ public interface VoucherInfoMapper {
     int updateByExample(@Param("record") VoucherInfo record, @Param("example") VoucherInfoExample example);
 
     int updateByPrimaryKeySelective(VoucherInfo record);
+    
+    int updateExtendByPrimaryKeySelective(VoucherInfoExtendClass record);
 
     int updateByPrimaryKey(VoucherInfo record);
 }

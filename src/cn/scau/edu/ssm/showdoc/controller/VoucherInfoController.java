@@ -26,12 +26,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.scau.edu.ssm.showdoc.exception.MyException;
 import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
+import cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
 import cn.scau.edu.ssm.showdoc.service.VoucherInfoService;
 import cn.scau.edu.ssm.showdoc.validator.ValidGroup1;
@@ -78,19 +80,19 @@ public class VoucherInfoController {
 		/**
 		 * 使用后台自己的验证码
 		 */
-		/*
-		 * String code = request.getSession().getAttribute("vcode");
-		 * if(!code.equals(!request.getParameter("code")))
-		 * {
-		 * 		model.addAttribute("errors", "验证码出错");
-		 *		model.addAttribute("voucherVO", voucherVO);
-		 * 	    return "login/register";
-		 * }
-		 */
+		
+		  String code = (String)request.getSession().getAttribute("vcode");
+		  if(!code.equals(request.getParameter("code")))
+		  {
+		  		model.addAttribute("errors", "验证码出错");
+		 		model.addAttribute("voucherVO", voucherVO);
+		 	    return "login/register";
+		  }
+		 
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
 			
-			String path = "F:\\picture\\";
+			String path = "E:\\picture\\";
 			String pic_oriname = pic.getOriginalFilename();
 			String mimeType = request.getServletContext().getMimeType(pic_oriname);
 			if (!mimeType.startsWith("image/")) {
@@ -183,8 +185,54 @@ public class VoucherInfoController {
 	/**
 	 * 修改用户的基本信息
 	 */
-//	@RequestMapping(value="/updateVoucherInfo.action",method={HttpMethod.POST,HttpMethod.GET})
-//	public void 
+	@RequestMapping(value="/updateVoucherInfo.action",method={RequestMethod.POST,RequestMethod.GET})
+	public void updateVoucherInfo(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherInfoExtendClass voucherInfoExtendClass,BindingResult result,@RequestParam(value="picture",required=true) MultipartFile pic) throws Exception
+	{
+		String message = "";
+		if(result.hasErrors())
+		{
+			message="illegal,请输入正确的邮箱";  //账户或密码的格式不对
+		} else {
+			if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
+			{
+				
+				String path = "E:\\picture\\";
+				String pic_oriname = pic.getOriginalFilename();
+				String mimeType = request.getServletContext().getMimeType(pic_oriname);
+				if (!mimeType.startsWith("image/")) {
+					message = "illegal,您上传的不是图片的类型，请选择jpg、png、jpeg等格式的图片...";
+				}
+				int index = pic_oriname.lastIndexOf(".");
+//				String suffix = "";
+				String pic_name = "";
+				if(index == -1)
+				{
+					pic_name = "default.jpg";
+				} else{
+					pic_name = UUID.randomUUID()+pic_oriname.substring(index);
+					File file = new File(path+pic_name);
+					if(!file.exists())
+					{
+						file.createNewFile();
+					}
+					pic.transferTo(file);
+				}
+				voucherInfoExtendClass.setPicture("/pic/"+pic_name);
+			}
+			Integer voucherId = (Integer)request.getSession().getAttribute("userid");
+			boolean updateResult = voucherInfoService.updateVoucherInfoById(voucherId, voucherInfoExtendClass);
+			if(updateResult == false)
+				message = "fail";
+			else 
+				message = "success";
+		}
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = null;
+        out = response.getWriter();
+        out.println(message);
+	}
+	
 	/**
 	 * 获取验证码
 	 */
@@ -262,15 +310,15 @@ public class VoucherInfoController {
 	 * 通过ID来查询用户的个人信息
 	 */
 	@RequestMapping(value="/queryVoucherById.action",method={RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView queryVoucherById(@RequestParam(required=true) Integer id) throws Exception
+	public @ResponseBody VoucherVO queryVoucherById(@RequestParam(required=true) Integer id) throws Exception
 	{
 		if(id == null)
 			throw new MyException("错误编号10005:用户信息ID为空...");
 		VoucherVO voucherVO = voucherInfoService.queryVoucherById(id);
-		ModelAndView mav = new ModelAndView();
+	/*	ModelAndView mav = new ModelAndView();
 		mav.addObject("voucherVO", voucherVO);
-		mav.setViewName("showVoucher");
-		return mav;
+		mav.setViewName("showVoucher");*/
+		return voucherVO;
 	}
 	
 	/**
@@ -284,16 +332,22 @@ public class VoucherInfoController {
 		{
 			message="illegal";  //账户或密码的格式不对
 		} else {
-			Integer checkResult = voucherInfoService.selectVoucherByNameAndPass(voucherExtendClass);
-			if(checkResult == null)
-				message = "fail";
-			else {
-				HttpSession session = request.getSession();
-				session.setAttribute("loginStatu", "login");
-				session.setAttribute("username",voucherExtendClass.getUsername());
-				session.setAttribute("userid", checkResult);
-				message = "success,project/showProject.action";  //
-			}
+			 String code = (String)request.getSession().getAttribute("vcode");
+			  if(!code.equals(request.getParameter("code")))
+			  {
+			 	    message = "fail,验证码出错";
+			  } else {
+					Integer checkResult = voucherInfoService.selectVoucherByNameAndPass(voucherExtendClass);
+					if(checkResult == null)
+						message = "fail";
+					else {
+						HttpSession session = request.getSession();
+						session.setAttribute("loginStatu", "login");
+						session.setAttribute("username",voucherExtendClass.getUsername());
+						session.setAttribute("userid", checkResult);
+						message = "success,project/showProject.action";  //userproject.jsp
+					}
+			  }
 		}
 		response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");

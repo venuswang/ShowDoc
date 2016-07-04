@@ -41,6 +41,12 @@
 	</td>
 </tr>
 <tr>
+	<td>验证码</td>
+	<td>
+		<img src="${pageContext.request.contextPath }/voucher/getCaptchar.action" alt="验证码" name="checkImg" id="checkImg" style="position:relative; top:5px; left:20px; " onClick="document.getElementById('checkImg').src='${pageContext.request.contextPath }/voucher/getCaptchar.action?temp='+ (new Date().getTime().toString(36)); return false"/>  
+	</td>
+</tr>
+<tr>
 <td colspan="2" align="center"><input type="submit" value="提交"/>
 </td>
 </tr>

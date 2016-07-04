@@ -14,7 +14,6 @@ import cn.scau.edu.ssm.showdoc.po.Voucher;
 import cn.scau.edu.ssm.showdoc.po.VoucherExample;
 import cn.scau.edu.ssm.showdoc.po.VoucherExample.Criteria;
 import cn.scau.edu.ssm.showdoc.po.VoucherExtendClass;
-import cn.scau.edu.ssm.showdoc.po.VoucherInfo;
 import cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass;
 import cn.scau.edu.ssm.showdoc.po.VoucherVO;
 import cn.scau.edu.ssm.showdoc.service.VoucherInfoService;
@@ -129,6 +128,29 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 		voucherVO.setVoucher(voucherExtend);
 		voucherVO.setVoucherInfo(voucherInfoExtend);
 		return voucherVO;
+	}
+
+	@Override
+	public boolean updateVoucherInfoById(Integer id, VoucherInfoExtendClass voucherInfo) throws Exception
+	{
+		if(id == null)
+			throw new MyException("错误编号10007:用户唯一标识出错...");
+		boolean flag = true;
+		if(voucherInfo.getSkills() != null && voucherInfo.getSkills().length > 0)
+		{
+			StringBuffer sb = new StringBuffer();
+			for(String skill : voucherInfo.getSkills())
+			{
+				sb.append(skill).append('-');
+			}
+			if(sb != null && sb.length() > 0)
+				sb.deleteCharAt(sb.length()-1);
+			voucherInfo.setSkill(sb.toString());
+		}
+		int result = voucherInfoMapper.updateExtendByPrimaryKeySelective(voucherInfo);
+		if(result == 0)
+			flag = false;
+		return flag;
 	}
 
 }

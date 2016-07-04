@@ -203,6 +203,26 @@
     </set>
     where voucherid = #{voucherid,jdbcType=INTEGER}
   </update>
+  
+  <update id="updateExtendByPrimaryKeySelective" parameterType="cn.scau.edu.ssm.showdoc.po.VoucherInfoExtendClass" >
+    update voucher_info
+    <set >
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="registdate != null" >
+        registdate = #{registdate,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where voucherid = #{voucherid,jdbcType=INTEGER}
+  </update>
+  
   <update id="updateByPrimaryKey" parameterType="cn.scau.edu.ssm.showdoc.po.VoucherInfo" >
     update voucher_info
     set picture = #{picture,jdbcType=VARCHAR},
