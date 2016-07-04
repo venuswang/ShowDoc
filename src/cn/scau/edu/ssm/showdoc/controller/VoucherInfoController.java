@@ -82,7 +82,7 @@ public class VoucherInfoController {
 		 */
 		
 		  String code = (String)request.getSession().getAttribute("vcode");
-		  if(code == null || !code.equals(request.getParameter("code")))
+		  if(!code.equals(request.getParameter("code")))
 		  {
 		  		model.addAttribute("errors", "验证码出错");
 		 		model.addAttribute("voucherVO", voucherVO);
@@ -333,7 +333,7 @@ public class VoucherInfoController {
 			message="illegal";  //账户或密码的格式不对
 		} else {
 			 String code = (String)request.getSession().getAttribute("vcode");
-			  if(code == null || !code.equals(request.getParameter("code")))
+			  if(!code.equals(request.getParameter("code")))
 			  {
 			 	    message = "fail,验证码出错";
 			  } else {
