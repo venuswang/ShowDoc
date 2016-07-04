@@ -2,7 +2,7 @@ $(function(){
 
 	// 初始化插件轮播组件
 	zCarousel.init( $( '#container' ) );
-    //dddd
+
 	var $container = $( '#container' ),
 		$funcitems = $container.find( '.function-container' ).find( '.list-item' ),
 		$tooltip = $container.find( '.tooltip' ),
@@ -156,11 +156,14 @@ $(function(){
 				type: "post",
 				dataType: "text",
 				success: function( data ){
+					console.log( data );
 					var result = data.trim(),
 						results = result.split(",");
 					if ( results[0] === "success" ) {
 						/*results[1] = "jsp/project/userproject.jsp";*/
-						var nextUrl = window.location.href + results[1];
+						var nextUrl = window.location.protocol + "\/\/" + window.location.host +
+									"\/ShowDoc\/" + results[1];
+						/*console.log( nextUrl );*/
 						window.location.href = nextUrl;
 					} else if ( results[0] === "fail" || results[0] === "illegal") {
 						$loginError.show();

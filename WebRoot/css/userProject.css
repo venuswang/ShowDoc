@@ -45,6 +45,10 @@ body {
   vertical-align: middle;
   margin-right: 15px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+#header .nav-list .nav-item .user-portraint.rotate {
+  transform: rotate(360deg);
 }
 #header .nav-list .nav-item .sub-nav {
   display: none;
@@ -173,7 +177,7 @@ body {
   border-radius: 10px;
 }
 #mask-container #person-info {
-  min-height: 300px;
+  min-height: 230px;
   display: none;
 }
 #mask-container #modify-person-info {
@@ -201,7 +205,7 @@ body {
   letter-spacing: 2em;
 }
 #person-info .info-item .item-name-content {
-  margin-left: 30px;
+  margin-left: 33px;
 }
 #person-info .info-item .item-email-content {
   margin-left: 9px;
@@ -215,12 +219,17 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  transition: all 0.3s;
+}
+#person-info .info-item-portraint .item-portraint-content.rotate {
+  transform: rotate(360deg);
 }
 #person-info .item-skill-other {
   line-height: 1.5;
   color: #000;
   padding: 10px;
-  display: none;
+  margin-left: 37px;
+  color: #666;
 }
 #person-info .item-skill-list {
   padding-left: 113px;
@@ -244,7 +253,7 @@ body {
 }
 #person-info .person-info-operation {
   text-align: right;
-  padding: 15px 50px 20px 20px;
+  padding: 15px 50px 5px 20px;
 }
 #person-info .person-info-operation .btn-back {
   padding: 8px 12px;
@@ -299,6 +308,12 @@ body {
   position: relative;
   text-align: center;
 }
+#modify-person-info .modify-info-portraint .item-img-content p.valid-error {
+  position: absolute;
+  color: #F59B78;
+  margin: 15px 0 0 5px;
+  top: 100%;
+}
 #modify-person-info .modify-info-portraint .item-img-content .item-upimg {
   position: absolute;
   top: 50%;
@@ -348,10 +363,11 @@ body {
   line-height: 1.5;
   box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
   border-radius: 5px;
-  padding: 5px 0;
+  padding: 5px;
 }
 #modify-person-info .modify-info-skill .modify-label {
   vertical-align: .5em;
+  color: #666;
 }
 #modify-person-info .modify-form-operations {
   text-align: justify;
@@ -416,4 +432,10 @@ body {
 #modify-person-password .update-form-operations .btn.btn-cancel {
   position: absolute;
   right: 100px;
+}
+
+p.valid-error {
+  position: absolute;
+  color: #F59B78;
+  margin: 5px 0 0 5px;
 }

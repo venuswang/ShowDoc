@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -58,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div id="mask-container">
 		<!-- 个人信息 -->
-		<div id="person-info">
+		<div id="person-info" data-user="${sessionScope.userid}">
 			<ul class="info-list">
 				<li class="info-item">
 					<span class="item-name-title">用户名</span>
@@ -69,19 +70,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<span class="item-email-content">2456898390@qq.com</span>
 				</li>
 				<li class="info-item-portraint">
-					<img src="../../images/bg-1.jpg" alt="user portraint" class="item-portraint-content" />
+					<img src="" alt="user portraint" class="item-portraint-content" />
 				</li>
-				<li class="info-item">
-					<span class="item-skill-title">编程技能</span>
-					<span class="item-skill-other">无</span>
-					<ul class="item-skill-list">
-						<li class="item-skill-item"><span class="item-skill-content">Html</span></li>
-						<li class="item-skill-item"><span class="item-skill-content">Javascript</span></li>
-						<li class="item-skill-item"><span class="item-skill-content">Javascript</span></li>
-						<li class="item-skill-item"><span class="item-skill-content">Javascript</span></li>
-						<li class="item-skill-item"><span class="item-skill-content">Html</span></li>
-						<li class="item-skill-item"><span class="item-skill-content">Javascript</span></li>
-					</ul>
+				<li class="info-item info-item-skill">
+					
+					
 				</li>
 			</ul>
 			<div class="person-info-operation">
@@ -90,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 
 		<!-- 修改信息 -->
-		<div id="modify-person-info">
+		<div id="modify-person-info" data-user="${sessionScope.userid}">
 			<form action="#" method="get" accept-charset="utf-8" id="update-info-form">
 				<!-- 用户名 -->
 				<div class="modify-info-items">
@@ -101,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="modify-info-items">
 					<label for="modify-info-email" class="modify-label">邮箱</label>
 					<input type="email" name="email" placeholder="邮箱" 
-							id="modify-info-email" value="2456898390@qq.com" class="form-item" />	
+							id="modify-info-email" class="form-item" />	
 				</div>
 				<!-- 头像 -->
 				<div class="modify-info-portraint">
@@ -114,6 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<span class="item-show-title">图片预览</span>
 						<img src="" alt="用户头像" class="item-img-result" />
 					</div>
+					<p class="valid-error"></p>
 				</div>
 				<!-- 技能 -->
 				<div class="modify-info-skill">
@@ -125,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<option value="C">C</option>
 						<option value="Javascript">Javascript</option>
 						<option value="Html">Html</option>
-						<option value="CSS" selected="selected">CSS</option>
+						<option value="CSS">CSS</option>
 						<option value="PHP">PHP</option>
 						<option value="nodejs">Nodejs</option>
 						<option value="C#">C#</option>
