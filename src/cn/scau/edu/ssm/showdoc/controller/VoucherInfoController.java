@@ -62,7 +62,7 @@ public class VoucherInfoController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/insertVoucherInfo.action",method={RequestMethod.GET,RequestMethod.POST})
-	public String insertVoucherInfo(Model model,HttpServletRequest request,@Validated(value={ValidGroup1.class}) VoucherVO voucherVO,BindingResult result,@RequestParam(value="picture",required=true) MultipartFile pic) throws Exception // 
+	public String insertVoucherInfo(Model model,HttpServletRequest request,@Validated(value={ValidGroup1.class}) VoucherVO voucherVO,BindingResult result,@RequestParam(value="pictures",required=true) MultipartFile pic,@RequestParam(required=true) String vcode) throws Exception // 
 	{
 		if(result.hasErrors())
 		{
@@ -82,13 +82,14 @@ public class VoucherInfoController {
 		 */
 		
 		  String code = (String)request.getSession().getAttribute("vcode");
-		  if(code == null || !code.equals(request.getParameter("code")))
-		  {
+		  System.out.println(vcode);
+		  if(code == null || vcode == null || !code.equals(vcode))
+		  {  	
 		  		model.addAttribute("errors", "验证码出错");
 		 		model.addAttribute("voucherVO", voucherVO);
 		 	    return "login/register";
 		  }
-		 
+		String pic_name = "";
 		if(pic != null && pic.getOriginalFilename() != null && pic.getOriginalFilename().length() > 0) 
 		{
 			
@@ -102,7 +103,6 @@ public class VoucherInfoController {
 			}
 			int index = pic_oriname.lastIndexOf(".");
 //			String suffix = "";
-			String pic_name = "";
 			if(index == -1)
 			{
 				pic_name = "default.jpg";
@@ -119,6 +119,7 @@ public class VoucherInfoController {
 		}
 		Integer userid = voucherInfoService.insertVoucherInfo(voucherVO);
 		request.getSession().setAttribute("loginStatu", "login");
+		request.getSession().setAttribute("images", "/pic/"+pic_name);
 		request.getSession().setAttribute("username",voucherVO.getVoucher().getUsername());
 		request.getSession().setAttribute("userid", userid);
 		return "success";
@@ -186,9 +187,11 @@ public class VoucherInfoController {
 	 * 修改用户的基本信息
 	 */
 	@RequestMapping(value="/updateVoucherInfo.action",method={RequestMethod.POST,RequestMethod.GET})
-	public void updateVoucherInfo(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherInfoExtendClass voucherInfoExtendClass,BindingResult result,@RequestParam(value="picture",required=true) MultipartFile pic) throws Exception
+	public void updateVoucherInfo(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherInfoExtendClass voucherInfoExtendClass,BindingResult result,@RequestParam(value="pictures",required=true) MultipartFile pic) throws Exception
 	{
 		String message = "";
+		boolean flag = false;
+		String pic_name = "";
 		if(result.hasErrors())
 		{
 			message="illegal,请输入正确的邮箱";  //账户或密码的格式不对
@@ -201,10 +204,12 @@ public class VoucherInfoController {
 				String mimeType = request.getServletContext().getMimeType(pic_oriname);
 				if (!mimeType.startsWith("image/")) {
 					message = "illegal,您上传的不是图片的类型，请选择jpg、png、jpeg等格式的图片...";
+					request.setAttribute("messages", message);
+					request.getRequestDispatcher("/jsp/project/userproject.jsp").forward(request, response);
 				}
 				int index = pic_oriname.lastIndexOf(".");
 //				String suffix = "";
-				String pic_name = "";
+				
 				if(index == -1)
 				{
 					pic_name = "default.jpg";
@@ -216,6 +221,7 @@ public class VoucherInfoController {
 						file.createNewFile();
 					}
 					pic.transferTo(file);
+					flag = true;
 				}
 				voucherInfoExtendClass.setPicture("/pic/"+pic_name);
 			}
@@ -226,11 +232,15 @@ public class VoucherInfoController {
 			else 
 				message = "success";
 		}
-		response.setContentType("text/html");
+		request.setAttribute("messages", message);
+		if(flag == true && message.equals("success"))
+			request.getSession().setAttribute("images","/pic/"+pic_name );
+		request.getRequestDispatcher("/jsp/project/userproject.jsp").forward(request, response);
+		/*response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");
         PrintWriter out = null;
         out = response.getWriter();
-        out.println(message);
+        out.println(message);*/
 	}
 	
 	/**
@@ -325,7 +335,7 @@ public class VoucherInfoController {
 	 * 检验用户登录
 	 */
 	@RequestMapping(value="/checkVoucher.action",method={RequestMethod.GET,RequestMethod.POST})
-	public void checkVoucher(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherExtendClass voucherExtendClass, BindingResult result) throws Exception
+	public void checkVoucher(HttpServletRequest request,HttpServletResponse response,@Validated(value={ValidGroup1.class}) VoucherExtendClass voucherExtendClass, BindingResult result,@RequestParam(required=true) String vcode) throws Exception
 	{
 		String message = "";
 		if(result.hasErrors())
@@ -333,7 +343,8 @@ public class VoucherInfoController {
 			message="illegal";  //账户或密码的格式不对
 		} else {
 			 String code = (String)request.getSession().getAttribute("vcode");
-			  if(code == null || !code.equals(request.getParameter("code")))
+			 System.out.println(vcode);
+			  if(code == null || vcode == null || !code.equals(vcode))
 			  {
 			 	    message = "fail,验证码出错";
 			  } else {
@@ -345,6 +356,10 @@ public class VoucherInfoController {
 						session.setAttribute("loginStatu", "login");
 						session.setAttribute("username",voucherExtendClass.getUsername());
 						session.setAttribute("userid", checkResult);
+						String images = voucherInfoService.queryPictureById(checkResult);
+						if(images == null)
+							images = "/pic/default.jpg";
+						session.setAttribute("images", images);
 						message = "success,project/showProject.action";  //userproject.jsp
 					}
 			  }

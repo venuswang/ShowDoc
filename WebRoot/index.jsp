@@ -102,8 +102,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="password" name="password" placeholder="密码" id="login-password" class="item-content" /> 
 				</div>
 				<div class="login-item">
-					<input type="text" name="checkImg" placeholder="验证码" class="item-content" id="login-checkImg" />
+					<input type="text" name="vcode" placeholder="验证码" class="item-content" id="login-checkImg" />
+					<span class="checkImg-icon">&#xe901;</span>
+					<span class="checkImg-pass">&#xe900;</span>
 					<img src="" alt="验证码" name="checkImg" id="show-checkImg" />
+					<p class="checkImg-error-info">验证码错误</p>
 				</div>
 				<div class="login-item login-reset-password">
 					<a href="javascript:void(0);" class="btn btn-reset-password">忘记登录密码?</a>

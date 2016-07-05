@@ -50,4 +50,7 @@
   	 update voucher set password = #{newPassword} where id = #{id} and username = #{username} and password = #{password}
   </update>
   
+  <select id="queryPictureById" parameterType="int" resultType="java.lang.String">
+  	select picture from voucher_info where voucherid = #{id}
+  </select>
 </mapper>

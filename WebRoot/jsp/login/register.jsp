@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="register-logo-item">
 					<label for="register-picture" class="register-label">上传头像</label>
 					<div class="item-img-content">
-						<input type="file" name="picture" class="item-upimg" id="register-picture" />
+						<input type="file" name="pictures" class="item-upimg" id="register-picture" />
 						<s class="item-upimg-logo">&#xe010;</s>
 					</div>
 					<div class="item-img-show">

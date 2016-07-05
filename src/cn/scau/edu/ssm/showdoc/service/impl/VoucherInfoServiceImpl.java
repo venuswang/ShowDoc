@@ -153,4 +153,11 @@ public class VoucherInfoServiceImpl implements VoucherInfoService {
 		return flag;
 	}
 
+	//通过ID来查询picture
+	public String queryPictureById(Integer id) throws Exception{
+		if(id == null)
+			throw new MyException("错误编号10008:用户信息唯一标识出错...");
+		String picResult = voucherExtendMapper.queryPictureById(id);
+		return picResult;
+	}
 }
