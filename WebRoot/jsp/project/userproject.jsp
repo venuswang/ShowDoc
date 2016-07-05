@@ -3,6 +3,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String local = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
 %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </head>
 <body>
+	<h1>${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
 			<h1 class="left-title">ShowDoc</h1>
@@ -27,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<nav class="showdoc-nav">
 				<ul class="nav-list">
 					<li class="nav-item" id="user-center">
-						<img src="../../images/bg-1.jpg" alt="user logo" class="user-portraint" />
+						<img src="<%=local %>${sessionScope.images}" alt="user logo" class="user-portraint" />
 						<ul class="sub-nav">
 							<li class="sub-item">
 								<a href="javascript:void(0);" class="sub-btn" data-dist="person-info">个人信息</a>
@@ -84,11 +86,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<!-- 修改信息 -->
 		<div id="modify-person-info" data-user="${sessionScope.userid}">
-			<form action="#" method="get" accept-charset="utf-8" id="update-info-form">
+			<form action="${pageContext.request.contextPath }/voucher/updateVoucherInfo.action" method="post"
+					enctype="multipart/form-data" accept-charset="utf-8" id="update-info-form">
 				<!-- 用户名 -->
 				<div class="modify-info-items">
 					<input type="text" name="username" placeholder="用户名" 
-							id="modify-info-username" class="form-item" disabled="disabled" />	
+							id="modify-info-username" class="form-item" disabled="disabled" />
+					<input type="hidden" name="voucherid" value="${sessionScope.userid}" />	
 				</div>
 				<!-- 邮箱 -->
 				<div class="modify-info-items">
@@ -100,8 +104,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="modify-info-portraint">
 					<label for="modify-picture" class="modify-label">上传头像</label>
 					<div class="item-img-content">
-						<input type="file" name="picture" class="item-upimg" id="modify-picture" />
+						<input type="file" name="pictures" class="item-upimg" id="modify-picture" />
 						<s class="item-upimg-logo">&#xe010;</s>
+						<p class="item-upimg-name">选择图片</p>
 					</div>
 					<div class="item-img-show">
 						<span class="item-show-title">图片预览</span>
@@ -112,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<!-- 技能 -->
 				<div class="modify-info-skill">
 					<label for="modify-skill" class="modify-label">编程技能</label>
-					<select name="skill" multiple="multiple" id="modify-skill"  class="SlectBox">
+					<select name="skills" multiple="multiple" id="modify-skill"  class="SlectBox">
 						<option value="Java">Java</option>
 						<option value="C++">C++</option>
 						<option value="VB">VB</option>
@@ -130,14 +135,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<!-- 表单操作 -->
 				<div class="modify-form-operations">
 					<a href="javascript:void(0);" class="btn btn-submit">确定</a>
+					<!-- <input type="submit" name="submit" value="确定" class="btn btn-submit" /> -->
 					<a href="javascript:void(0);" class="btn btn-cancel">取消</a>
 				</div>
 			</form>
 		</div>
 
 		<!-- 修改密码 -->
-		<div id="modify-person-password">
-			<form action="#" method="get" accept-charset="utf-8" id="update-password-form">
+		<div id="modify-person-password"  data-user="${sessionScope.userid}">
+			<h3 class="modify-restul-info"></h3>
+			<form action="#" method="POST" accept-charset="utf-8" id="update-password-form">
 				<!-- 用户名 -->
 				<div class="update-form-items">
 					<input type="text" name="username" placeholder="用户名" 
@@ -145,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<!-- 用户名 -->
 				<div class="update-form-items">
-					<input type="password" name="oldPassword" placeholder="原密码" 
+					<input type="password" name="password" placeholder="原密码" 
 							id="update-old-password" class="form-item" />	
 				</div>
 				<!-- 新密码 -->

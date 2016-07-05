@@ -14,4 +14,6 @@ public interface VoucherExtendMapper {
 	public Integer selectVoucherExtend(VoucherExtendClass voucher) throws Exception;
 	
 	public void updateVoucherExtend(VoucherExtendClass voucher) throws Exception;
+	
+	public String queryPictureById(Integer id) throws Exception;
 }

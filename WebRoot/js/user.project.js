@@ -112,6 +112,7 @@ $(function(){
 					$mdName = $target.find('#modify-info-username'),
 					$mdEmail = $target.find('#modify-info-email' ),
 					$imageItem = $target.find('.modify-info-portraint'),
+					$imageName = $imageItem.find('.item-upimg-name'),
 					$mdImage = $imageItem.find('.item-img-result'),
 					$uploadImage = $imageItem.find('#modify-picture'),
 					$loadImgError = $imageItem.find('.valid-error'),
@@ -121,6 +122,7 @@ $(function(){
 							"\/ShowDoc\/" + "voucher\/queryVoucherById.action?id=" + modifyId;
 
 				$mdImage.hide().siblings().show();
+
 
 				// 异步获取需要修改信息的用户的基本信息
 				$.ajax({
@@ -216,8 +218,12 @@ $(function(){
 						$uploadImage.on('change', function() {
 							var file = this.files[0],
 								_self = this;
-							if ( file === undefined || !/image\/\w+/.test(file.type)) {
-								$loadImgError.text("只能上传图片").css("marginTop","15px").show();
+
+							$imageName.html( file.name );
+
+							$updateForm.validate().element(this);
+							if ( !$updateForm.validate().element(this) ) {
+								$uploadImage.blur();
 								return;
 							}
 							var reader = new FileReader();
@@ -231,14 +237,171 @@ $(function(){
 						// 点击确定按钮时先验证，如果验证通过则提交修改的信息 
 						$btnSubmit.on('click', function(){
 							if( $updateForm.valid() ) {
-								console.log("通过");
+								/*var reEmail = $mdEmail.val(),
+									rePicture = $uploadImage.val(),
+									$reSkills = $mdSkills.filter(':selected'),
+									dealUrl = window.location.protocol + "\/\/" + 
+											window.location.host + "\/ShowDoc\/" + 
+											"voucher\/updateVoucherInfo.action?email=" + 
+											reEmail + "&picture=" + rePicture;
+
+								$reSkills.each(function(){
+									dealUrl = dealUrl + "&skills=" + $(this).val();
+								});
+								
+								$.ajax({
+									url: dealUrl,
+									type: "POST",
+									dataType: "text",
+									success: function( data ) {
+										console.log( data );
+									}
+								});*/
+								console.log( 'submit' );
+								$target.find('#update-info-form').submit();
 							}
 							return false;
 						});
 					}
 				});
 			} else if ( data === 'modify-person-password' ) {
-				console.log( 'modify-person-password' );
+				var updateId =  $target.data('user'),
+					$updatePwdForm = $target.find('#update-password-form'),
+					$updateBtnPwd = $updatePwdForm.find('.update-form-operations').find('.btn-submit'),
+					$updatePwd = $target.find('#update-old-password'),
+					$updateNewPwd = $target.find('#update-new-password'),
+					$updateUsername = $updatePwdForm.find('#update-username'),
+					uinfourl = window.location.protocol + "\/\/" + window.location.host +
+							"\/ShowDoc\/" + "voucher\/queryVoucherById.action?id=" + updateId;
+
+				$target.find('.modify-restul-info').hide();	// 刚进来时隐藏显示反馈信息的h3b标签
+
+				// 以及清除上次在输入框中的数据
+				$updatePwd.val("");
+				$updateNewPwd.val("");
+				$updatePwdForm.find('#update-new-password-again').val("");
+
+				$.ajax({
+					url: uinfourl,
+					type: "POST",
+					dataType: "json",
+					success: function(data){
+						$updateUsername.val( data.voucher.username );
+					}
+				});
+
+				//表单验证 
+				$updatePwdForm.validate({
+					rules:{
+						"password": {
+							required: true,
+							rangelength: [6, 40]
+						},
+						"newPassword": {
+							required: true,
+							rangelength: [6, 40]
+						},
+						"newPasswordAgain": {
+							required: true,
+							rangelength: [6, 40],
+							equalTo: "#update-new-password"
+						}
+					},
+					messages: {
+						"password": {
+							required: "未输入原密码",
+							rangelength: "密码长度为6-40位"
+						},
+						newPassword: {
+							required: "未输入新密码",
+							rangelength: "密码长度为6-40位"
+						},
+						newPasswordAgain: {
+							required: "未输入确认密码",
+							rangelength: "密码长度为6-40位",
+							equalTo: "两次输入的密码不一致"
+						}
+					},
+					errorElement: 'p',
+					errorContainer: true,
+					errorClass: 'valid-error',
+					validClass: 'valid-pass',
+				});
+
+				var isupdating = false;	// 防止用户多次点击
+				$updateBtnPwd.on('click', function(){
+
+					/**
+					 * 如果是第一次点击修改按钮则受理用户的此操作，如果不是则不受理用户的此次点击操作
+					 * @param  {[type]} !isupdating [description]
+					 * @return {[type]}             [description]
+					 */
+					if ( !isupdating ) {
+						isupdating = true;
+						var updatepassword = $updatePwd.val(),
+							updateNewPassword = $updateNewPwd.val(),
+							upPwdUrl = window.location.protocol + "\/\/" + 
+									window.location.host + "\/ShowDoc\/" + 
+									"voucher\/updatePassword.action?id=" + updateId + "&username=" + 
+									$updateUsername.val() + "&password=" + updatepassword + 
+									"&newPassword=" + updateNewPassword;
+
+						if ( $updatePwdForm.valid()) {
+							
+							$.ajax({
+								url: upPwdUrl,
+								type: "POST",
+								dataType: "text",
+								success: function( data ) {
+									var result = data.trim();
+									isupdating = false;		// 反转 isupdating，使可以受理用户的下次点击
+
+									/*console.log( data );*/
+
+									if ( result === "success" ) {
+
+										/**
+										 * 如果修改成功，则隐藏遮罩层并隐藏修改密码UI后，显示一个小提示框
+										 */
+										$target.hide();
+										$mask.hide();
+
+										var $tmpdiv = $('<div>'),
+											tmpStrDom = '<span>已经保存成功</span>';
+
+										// 小提示层的提示文字以及样式
+										$tmpdiv.html(tmpStrDom).css({
+											    position: "absolute",
+											    left: "50%",
+											    "marginLeft": "-15px",
+											    top: "10%",
+											    "lineHeight": "35px",
+											    "backgroundColor": "#58f69e",
+											    color: "#fff",
+											    padding: "10px",
+											    "borderRadius": "5px",
+											    display: "none"
+										}).appendTo($('body')).show(function(){
+											setTimeout(function(){
+												$tmpdiv.fadeOut(300);
+												document.body.removeChild($tmpdiv[0]);
+											},700); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+										});
+									} else if ( result === "fail" ) {
+										var $resultInfo = $target.find('.modify-restul-info');
+
+										$resultInfo.html('账号和原始密码不匹配').show();
+									} else if ( result === "illegal") {
+										var $resultInfo = $target.find('.modify-restul-info');
+										$resultInfo.html('密码的格式不正确').show();
+									}
+									
+								}
+							});
+						}
+					}
+					return false;
+				});
 			}
 
 			// 将遮罩层显示出来以及显示相应的用户选择的视图

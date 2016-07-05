@@ -108,17 +108,58 @@ $(function(){
 			$form = $loginContent.find( '.login-form' ),
 			$username = $form.find('#login-username'),
 			$password = $form.find('#login-password'),
+			$vCode = $form.find('#login-checkImg'),
+			$checkImg = $form.find('#show-checkImg'),
 			$loginError = $loginContent.find('.login-error'),
+			$checkImgIcon = $form.find('.checkImg-icon'),
+			$checkImgInfo = $form.find('.checkImg-error-info'),
 			offset = 0,
 			width = 0,
 			height = 0,
 			left = 0,
-			top = 0;
+			top = 0,
+			srcUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+						(new Date().getTime().toString(36)),
+			codeUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getVcode.action",
+			$tmpImg = $('<img />'); 
 
+		// 禁止提交按钮
+		$loginSubmit.css("cursor","not-allowed");
+		$vCode.val("");
+		$checkImgIcon.html("");
+
+		// 如果点击的是遮罩层，则关闭登录UI
 		$loginContainer.css("display", "block").on("click", function(event) {
 			if ( this === event.target ) {
 				$( this ).hide();
 			}
+		});
+
+		// 去加载验证码
+		$tmpImg.on('load', function(){
+			$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+
+		});
+		$tmpImg.attr('src', srcUrl);
+
+		// 点击图片时刷新验证码
+		$checkImg.on('click', function(){
+
+			// 点击时更新时间获取不同的验证码
+			srcUrl = window.location.protocol + "\/\/" + window.location.host +
+						"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+						(new Date().getTime().toString(36));
+
+			$tmpImg.on('load', function(){
+				$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+				$checkImgIcon.html("");
+				$vCode.focus();
+				$checkImgInfo.hide();
+				$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+			});
+			$tmpImg.attr('src', srcUrl);
 		});
 
 		// 特别注意当父元素为  display: none 时，获取的子元素的宽度高度都为0
@@ -144,19 +185,45 @@ $(function(){
 			$loginContainer.trigger("click");
 		});
 
+		// 焦点离开验证码输入框时，检测验证输入是否正确
+		$vCode.on('blur', function(){
+			var inputCode = $vCode.val();
+
+			// 获取验证码字符串
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					if ( inputCode === result ) {
+						$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+						$checkImgInfo.hide();
+						$loginSubmit.removeAttr("disabled").css("cursor", "pointer");
+					} else {
+						$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+						$checkImgInfo.show();
+						$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+					}
+				}
+			});
+		});
+
 		// 绑定submit事件
 		$loginSubmit.on('click', function(){
 			$loginError.hide();
 			var action = $form.attr('action'),
 				username = $username.val(),
 				password = $password.val(),
-				url = action + "?username=" + username + "&password=" + password;
+				vcode = $vCode.val(),
+				url = action + "?username=" + username + "&password=" + password + "&vcode=" + vcode;
 			$.ajax({
 				url: url,
 				type: "post",
 				dataType: "text",
 				success: function( data ){
-					console.log( data );
+					/*console.log( data );*/
 					var result = data.trim(),
 						results = result.split(",");
 					if ( results[0] === "success" ) {
@@ -165,9 +232,11 @@ $(function(){
 									"\/ShowDoc\/" + results[1];
 						/*console.log( nextUrl );*/
 						window.location.href = nextUrl;
-					} else if ( results[0] === "fail" || results[0] === "illegal") {
-						$loginError.show();
-					} else {
+					} else if ( (results[0] === "fail" && results[1] === undefined ) || results[0] === "illegal") {
+						$loginError.html("账号或密码错误").show();
+					} else if ( results[0] === "fail" && results[1].length > 0 ) {
+						$loginError.html("验证码出错").show();
+					}else {
 						var nospace = data.replace(/\s/, ""),
 							leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
 							rightPos = nospace.lastIndexOf("<\/h3>"),

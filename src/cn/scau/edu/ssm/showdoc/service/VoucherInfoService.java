@@ -17,4 +17,6 @@ public interface VoucherInfoService {
 	public VoucherVO queryVoucherById(Integer id) throws Exception;
 	
 	public boolean updateVoucherInfoById(Integer id,VoucherInfoExtendClass voucherInfo) throws Exception;
+	
+	public String queryPictureById(Integer id) throws Exception;
 }

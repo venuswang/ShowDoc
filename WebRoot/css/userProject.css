@@ -332,6 +332,19 @@ body {
   color: #eee;
   line-height: 140px;
 }
+#modify-person-info .modify-info-portraint .item-img-content .item-upimg-name {
+  position: absolute;
+  text-align: center;
+  width: 160px;
+  left: 0;
+  top: 50%;
+  margin-top: -8px;
+  color: #666;
+  overflow: hidden;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 #modify-person-info .modify-info-portraint .item-img-show {
   width: 150px;
   height: 150px;
@@ -395,6 +408,11 @@ body {
 }
 
 /* 修改密码模块 */
+#modify-person-password .modify-restul-info {
+  margin: 20px 20px -10px 20px;
+  text-align: center;
+  color: #F6AC8C;
+}
 #modify-person-password .update-form-items {
   margin: 30px;
 }
