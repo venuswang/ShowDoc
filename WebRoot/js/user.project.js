@@ -13,7 +13,34 @@ $(function(){
 		$modifyInfo = $mask.find( '#modify-person-info' ),
 		$modifyInfoSubmit = $modifyInfo.find( '.btn-submit' ),
 		$modifyInfoCancel = $modifyInfo.find( '.btn-cancel' ),
-		isAnimating = false;
+		isAnimating = false,
+		modifyInfoResult = $('body').children('.modify-info-result').text().trim();
+
+	if ( modifyInfoResult === "success" ) {
+		var $tmpdiv = $('<div>'),
+			tmpStrDom = '<span>已经保存成功</span>';
+
+		// 小提示层的提示文字以及样式
+		$tmpdiv.html(tmpStrDom).css({
+			    position: "absolute",
+			    left: "50%",
+			    "marginLeft": "-15px",
+			    top: "10%",
+			    "lineHeight": "35px",
+			    "backgroundColor": "#58f69e",
+			    color: "#fff",
+			    padding: "10px",
+			    "borderRadius": "5px",
+			    display: "none"
+		}).appendTo($('body')).show(function(){
+			setTimeout(function(){
+				$tmpdiv.fadeOut(300);
+				document.body.removeChild($tmpdiv[0]);
+			},700); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+		});
+	} else if( modifyInfoResult != undefined ) {
+		// 修改不成功 待处理
+	}
 
 	// 鼠标移入移除用户头像时显示下拉菜单	
 	$userCenter.hover(function(event){

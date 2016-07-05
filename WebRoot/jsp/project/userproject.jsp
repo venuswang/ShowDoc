@@ -20,7 +20,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </head>
 <body>
-	<h1>${requestScope.messages}</h1>
+	<h1 class="modify-info-result">${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
 			<h1 class="left-title">ShowDoc</h1>

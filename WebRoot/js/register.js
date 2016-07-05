@@ -1,13 +1,23 @@
 $(function(){
 	var $username = $('#register-username'),
 		$form = $('#register-form'),
-		$items = $form.find('.register-item').add('.register-logo-item').add('.register-item-select'),
+		$items = $form.find('.border-item'),
 		$uploadImage = $('#register-picture'),
 		isUsername = false,
 		isFirstValidation = true,
 		$password = $('#register-password'),
 		$passwordAgain = $('#register-checkpwd'),
-		$email = $('#register-email');
+		$email = $('#register-email'),
+		$tmpImg = $('<img />'),
+		$vCode = $form.find('#register-checkImg'),
+		$checkImg = $form.find('#show-checkImg'),
+		$checkImgIcon = $form.find('.checkImg-icon'),
+		$checkImgInfo = $form.find('.checkImg-error-info'),
+		srcUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+					(new Date().getTime().toString(36)),
+		codeUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getVcode.action";
 
 	//下拉菜单插件配置参数	
 	$('.SlectBox').SumoSelect({
@@ -16,10 +26,34 @@ $(function(){
 		search: true
 	});
 
+	// 去加载验证码
+	$tmpImg.on('load', function(){
+		$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+
+	});
+	$tmpImg.attr('src', srcUrl);
+
+	// 点击图片时刷新验证码
+	$checkImg.on('click', function(){
+
+		// 点击时更新时间获取不同的验证码
+		srcUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+					(new Date().getTime().toString(36));
+
+		$tmpImg.on('load', function(){
+			$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+			$checkImgIcon.html("");
+			$vCode.focus();
+			$checkImgInfo.hide();
+			$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+		});
+		$tmpImg.attr('src', srcUrl);
+	});
 	// 点击每个注册项时改变边框阴影
 	$items.on('click', function(){
-		$items.css("boxShadow", "0 0 0 #888,0 0 1px #888,0 0 2px #888,0 0 3px #888,0 0 4px #888,0 0 5px #888");
-		$(this).css("boxShadow", "0 0 0 #23A7DE,0 0 1px #23A7DE,0 0 2px #23A7DE,0 0 3px #23A7DE,0 0 4px #23A7DE,0 0 5px #23A7DE");
+		$items.removeClass('border-active-item').addClass('border-item');
+		$(this).removeClass('border-item').addClass('border-active-item');
 	});
 
 	// 上传图片后预览
@@ -36,6 +70,31 @@ $(function(){
 			$('.item-img-result').attr("src", this.result ).show();
 			$('.item-show-title').hide();
 		};
+	});
+
+	// 焦点离开验证码输入框时，检测验证输入是否正确
+		$vCode.on('blur', function(){
+		var inputCode = $vCode.val();
+
+		// 获取验证码字符串
+		$.ajax({
+			url: codeUrl,
+			type: "GET",
+			dataType: "text",
+			async: false,	// 设为同步
+			success: function( data ) {
+				var result = data.trim();
+				if ( inputCode === result ) {
+					$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+					$checkImgInfo.hide();
+					/*$loginSubmit.removeAttr("disabled").css("cursor", "pointer");*/
+				} else {
+					$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+					$checkImgInfo.show();
+					/*$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");*/
+				}
+			}
+		});
 	});
 	//表单验证 
 	$('#register-form').validate({
