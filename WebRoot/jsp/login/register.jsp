@@ -57,6 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="item-img-content">
 						<input type="file" name="pictures" class="item-upimg" id="register-picture" />
 						<s class="item-upimg-logo">&#xe010;</s>
+						<span class="item-upimg-name"></span>
 					</div>
 					<div class="item-img-show">
 						<span class="item-show-title">图片预览</span>

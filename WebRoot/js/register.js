@@ -3,6 +3,8 @@ $(function(){
 		$form = $('#register-form'),
 		$items = $form.find('.border-item'),
 		$uploadImage = $('#register-picture'),
+		$imageName = $form.find('.item-upimg-name');
+		$registerSubmit = $form.find('#form-submit'),
 		isUsername = false,
 		isFirstValidation = true,
 		$password = $('#register-password'),
@@ -17,8 +19,10 @@ $(function(){
 					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
 					(new Date().getTime().toString(36)),
 		codeUrl = window.location.protocol + "\/\/" + window.location.host +
-					"\/ShowDoc\/" + "voucher/getVcode.action";
+					"\/ShowDoc\/" + "voucher/getVcode.action",
+		isCoded = false;
 
+	$registerSubmit.attr('disabled','disabled').css('cursor', 'not-allowed');
 	//下拉菜单插件配置参数	
 	$('.SlectBox').SumoSelect({
 		csvDispCount: 12,
@@ -44,9 +48,10 @@ $(function(){
 		$tmpImg.on('load', function(){
 			$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
 			$checkImgIcon.html("");
-			$vCode.focus();
+			$vCode.val("").focus();
 			$checkImgInfo.hide();
-			$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+			$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+			isCoded = false;
 		});
 		$tmpImg.attr('src', srcUrl);
 	});
@@ -60,8 +65,12 @@ $(function(){
 	$uploadImage.on('change', function() {
 		var file = this.files[0],
 			_self = this;
-		if ( file === undefined || !/image\/\w+/.test(file.type)) {
-			alert("文件必须为图片");
+
+		$imageName.html( file.name );
+
+		$form.validate().element(this);
+		if ( !$form.validate().element(this) ) {
+			$uploadImage.blur();
 			return;
 		}
 		var reader = new FileReader();
@@ -73,29 +82,71 @@ $(function(){
 	});
 
 	// 焦点离开验证码输入框时，检测验证输入是否正确
-		$vCode.on('blur', function(){
-		var inputCode = $vCode.val();
+	$vCode.on('blur', function(){
+		if ( !isCoded || !$vCode.val() || $vCode.val().length != 4) {
+			var inputCode = $vCode.val();
 
-		// 获取验证码字符串
-		$.ajax({
-			url: codeUrl,
-			type: "GET",
-			dataType: "text",
-			async: false,	// 设为同步
-			success: function( data ) {
-				var result = data.trim();
-				if ( inputCode === result ) {
-					$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
-					$checkImgInfo.hide();
-					/*$loginSubmit.removeAttr("disabled").css("cursor", "pointer");*/
-				} else {
-					$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
-					$checkImgInfo.show();
-					/*$loginSubmit.attr("disabled", "disabled").css("cursor","not-allowed");*/
+			// 获取验证码字符串
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					if ( inputCode === result ) {
+						$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+						$checkImgInfo.hide();
+						$registerSubmit.removeAttr("disabled").css("cursor", "pointer");
+						isCoded = true;
+					} else {
+						$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+						$checkImgInfo.show();
+						$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+						isCoded = false;
+					}
 				}
-			}
-		});
+			});
+		}
+	}).on('keyup', function(){
+		if ($(this).val() && $(this).val().length === 4 && !isCoded ) {
+			var inputCode = $vCode.val();
+
+			// 获取验证码字符串
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					if ( inputCode === result ) {
+						$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+						$checkImgInfo.hide();
+						$registerSubmit.removeAttr("disabled").css("cursor", "pointer");
+						isCoded = true;
+					} else {
+						$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+						$checkImgInfo.show();
+						$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+						isCoded = false;
+					}
+				}
+			});
+		}
 	});
+
+	// 自定义验证上传文件只能是图片的规则
+	$.validator.addMethod("isImage", function(value, element) {
+	    return this.optional(element) || (/\w*.jpg|\w*.png|\w*.gif/.test(value));
+	}, "只能上传图片");
+
+	// 自定义验证上传文件大小的规则
+	$.validator.addMethod("isToLarge", function(value, element) { 
+		var file = element.files[0];
+	    return this.optional(element) || ((file.size / 1024) < 3072 );
+	}, "文件大小不能超过3M");
+
 	//表单验证 
 	$('#register-form').validate({
 		rules:{
@@ -115,6 +166,10 @@ $(function(){
 			"voucherInfo.email": {
 				required: true,
 				email:true
+			},
+			"pictures": {
+				isImage: true,
+				isToLarge: true
 			}
 		},
 		messages: {
@@ -129,11 +184,15 @@ $(function(){
 			passwordAgain: {
 				required: "未输入确认密码",
 				rangelength: "密码长度为6-40位",
-				equalTo: "两次输入的密码不一致"
+				equalTo: "两次密码输入不一致"
 			},
 			"voucherInfo.email": {
 				required: "未输入邮箱",
 				email: "无效的电子邮件地址"
+			},
+			"pictures": {
+				isImage: "只能上传图片",
+				isToLarge: "文件大小不能超过3M"
 			}
 		},
 		onfocusout: false,
@@ -149,7 +208,7 @@ $(function(){
 		$('#register-username-error').css("opacity","0");
 	})();
 	// 提交表单
-	$('#form-submit').bind('click', function(event) {
+	$('#form-submit').on('click', function(event) {
 
 		isFirstValidation = false;	// 已经第一次验证，让第一次验证为false
 

@@ -137,6 +137,19 @@ input::-ms-clear, input::-ms-reveal {
   color: #eee;
   line-height: 140px;
 }
+#main .register-logo-item .item-img-content .item-upimg-name {
+  position: absolute;
+  text-align: center;
+  width: 160px;
+  left: 0;
+  top: 50%;
+  margin-top: -8px;
+  color: #666;
+  overflow: hidden;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 #main .register-logo-item .item-img-show {
   width: 150px;
   height: 150px;
@@ -251,9 +264,9 @@ input::-ms-clear, input::-ms-reveal {
   color: #41B15C;
 }
 #register-form .valid-error + i {
-  letter-spacing: .02em;
+  letter-spacing: .008em;
   position: absolute;
-  max-width: 250px;
+  width: 182px;
   background-color: #F4BD1B;
   color: #BF6F6F;
   padding: 10px;
@@ -262,6 +275,9 @@ input::-ms-clear, input::-ms-reveal {
   z-index: 1000;
   margin-left: 14px;
   margin-top: -5px;
+}
+#register-form .valid-error + i#register-picture-error {
+  margin-left: 403px;
 }
 #register-form .valid-error + i:before {
   content: '';
@@ -277,8 +293,13 @@ input::-ms-clear, input::-ms-reveal {
 }
 #register-form .valid-pass + i {
   color: #41B15C;
-  position: static;
+  position: absolute;
   display: inline-block !important;
+  right: 0;
+  top: 10px;
+}
+#register-form .valid-pass + #register-picture-error {
+  display: none !important;
 }
 #register-form .valid-pass + i:before {
   content: '\e900';
