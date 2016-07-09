@@ -1,14 +1,28 @@
 $(function(){
 	var $username = $('#register-username'),
 		$form = $('#register-form'),
-		$items = $form.find('.register-item').add('.register-logo-item').add('.register-item-select'),
+		$items = $form.find('.border-item'),
 		$uploadImage = $('#register-picture'),
+		$imageName = $form.find('.item-upimg-name');
+		$registerSubmit = $form.find('#form-submit'),
 		isUsername = false,
 		isFirstValidation = true,
 		$password = $('#register-password'),
 		$passwordAgain = $('#register-checkpwd'),
-		$email = $('#register-email');
+		$email = $('#register-email'),
+		$tmpImg = $('<img />'),
+		$vCode = $form.find('#register-checkImg'),
+		$checkImg = $form.find('#show-checkImg'),
+		$checkImgIcon = $form.find('.checkImg-icon'),
+		$checkImgInfo = $form.find('.checkImg-error-info'),
+		srcUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+					(new Date().getTime().toString(36)),
+		codeUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getVcode.action",
+		isCoded = false;
 
+	$registerSubmit.attr('disabled','disabled').css('cursor', 'not-allowed');
 	//下拉菜单插件配置参数	
 	$('.SlectBox').SumoSelect({
 		csvDispCount: 12,
@@ -16,18 +30,47 @@ $(function(){
 		search: true
 	});
 
+	// 去加载验证码
+	$tmpImg.on('load', function(){
+		$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+
+	});
+	$tmpImg.attr('src', srcUrl);
+
+	// 点击图片时刷新验证码
+	$checkImg.on('click', function(){
+
+		// 点击时更新时间获取不同的验证码
+		srcUrl = window.location.protocol + "\/\/" + window.location.host +
+					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+					(new Date().getTime().toString(36));
+
+		$tmpImg.on('load', function(){
+			$checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+			$checkImgIcon.html("");
+			$vCode.val("").focus();
+			$checkImgInfo.hide();
+			$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+			isCoded = false;
+		});
+		$tmpImg.attr('src', srcUrl);
+	});
 	// 点击每个注册项时改变边框阴影
 	$items.on('click', function(){
-		$items.css("boxShadow", "0 0 0 #888,0 0 1px #888,0 0 2px #888,0 0 3px #888,0 0 4px #888,0 0 5px #888");
-		$(this).css("boxShadow", "0 0 0 #23A7DE,0 0 1px #23A7DE,0 0 2px #23A7DE,0 0 3px #23A7DE,0 0 4px #23A7DE,0 0 5px #23A7DE");
+		$items.removeClass('border-active-item').addClass('border-item');
+		$(this).removeClass('border-item').addClass('border-active-item');
 	});
 
 	// 上传图片后预览
 	$uploadImage.on('change', function() {
 		var file = this.files[0],
 			_self = this;
-		if ( file === undefined || !/image\/\w+/.test(file.type)) {
-			alert("文件必须为图片");
+
+		$imageName.html( file.name );
+
+		$form.validate().element(this);
+		if ( !$form.validate().element(this) ) {
+			$uploadImage.blur();
 			return;
 		}
 		var reader = new FileReader();
@@ -37,6 +80,73 @@ $(function(){
 			$('.item-show-title').hide();
 		};
 	});
+
+	// 焦点离开验证码输入框时，检测验证输入是否正确
+	$vCode.on('blur', function(){
+		if ( !isCoded || !$vCode.val() || $vCode.val().length != 4) {
+			var inputCode = $vCode.val();
+
+			// 获取验证码字符串
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					if ( inputCode === result ) {
+						$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+						$checkImgInfo.hide();
+						$registerSubmit.removeAttr("disabled").css("cursor", "pointer");
+						isCoded = true;
+					} else {
+						$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+						$checkImgInfo.show();
+						$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+						isCoded = false;
+					}
+				}
+			});
+		}
+	}).on('keyup', function(){
+		if ($(this).val() && $(this).val().length === 4 && !isCoded ) {
+			var inputCode = $vCode.val();
+
+			// 获取验证码字符串
+			$.ajax({
+				url: codeUrl,
+				type: "GET",
+				dataType: "text",
+				async: false,	// 设为同步
+				success: function( data ) {
+					var result = data.trim();
+					if ( inputCode === result ) {
+						$checkImgIcon.css("color","#87F880").html("&#xe900;").show();
+						$checkImgInfo.hide();
+						$registerSubmit.removeAttr("disabled").css("cursor", "pointer");
+						isCoded = true;
+					} else {
+						$checkImgIcon.css("color","#F9998E").html("&#xe901;").show();
+						$checkImgInfo.show();
+						$registerSubmit.attr("disabled", "disabled").css("cursor","not-allowed");
+						isCoded = false;
+					}
+				}
+			});
+		}
+	});
+
+	// 自定义验证上传文件只能是图片的规则
+	$.validator.addMethod("isImage", function(value, element) {
+	    return this.optional(element) || (/\w*.jpg|\w*.png|\w*.gif/.test(value));
+	}, "只能上传图片");
+
+	// 自定义验证上传文件大小的规则
+	$.validator.addMethod("isToLarge", function(value, element) { 
+		var file = element.files[0];
+	    return this.optional(element) || ((file.size / 1024) < 3072 );
+	}, "文件大小不能超过3M");
+
 	//表单验证 
 	$('#register-form').validate({
 		rules:{
@@ -56,6 +166,10 @@ $(function(){
 			"voucherInfo.email": {
 				required: true,
 				email:true
+			},
+			"pictures": {
+				isImage: true,
+				isToLarge: true
 			}
 		},
 		messages: {
@@ -70,11 +184,15 @@ $(function(){
 			passwordAgain: {
 				required: "未输入确认密码",
 				rangelength: "密码长度为6-40位",
-				equalTo: "两次输入的密码不一致"
+				equalTo: "两次密码输入不一致"
 			},
 			"voucherInfo.email": {
 				required: "未输入邮箱",
 				email: "无效的电子邮件地址"
+			},
+			"pictures": {
+				isImage: "只能上传图片",
+				isToLarge: "文件大小不能超过3M"
 			}
 		},
 		onfocusout: false,
@@ -90,7 +208,7 @@ $(function(){
 		$('#register-username-error').css("opacity","0");
 	})();
 	// 提交表单
-	$('#form-submit').bind('click', function(event) {
+	$('#form-submit').on('click', function(event) {
 
 		isFirstValidation = false;	// 已经第一次验证，让第一次验证为false
 

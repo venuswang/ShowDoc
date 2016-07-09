@@ -67,54 +67,42 @@ input::-ms-clear, input::-ms-reveal {
 }
 #main .register-form {
   width: 500px;
-  margin: 20px auto;
-  padding: 1px 20px 20px 20px;
-  box-shadow: 0 0 0 #E6E5E5, 0 0 1px #E6E5E5, 0 0 2px #E6E5E5, 0 0 3px #E6E5E5, 0 0 4px #E6E5E5, 0 0 5px #E6E5E5, 0 0 6px #E6E5E5, 0 0 7px #E6E5E5, 0 0 8px #E6E5E5, 0 0 9px #E6E5E5, 0 0 10px #E6E5E5, 0 0 11px #E6E5E5, 0 0 12px #E6E5E5;
-  border-radius: 8px;
+  padding: 20px;
+  margin: 10px auto;
 }
 #main .register-item {
   margin: 25px auto;
-  font-size: 0;
-  letter-spacing: -3px;
-  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
-  padding: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
+  position: relative;
 }
 #main .register-item .register-label {
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
-  font-size: 24px;
+  position: absolute;
+  font-size: 18px;
   font-family: "icomoon" !important;
-  background-color: #888;
+  background-color: #8d7;
   color: #EFEAEA;
   width: 40px;
   line-height: 40px;
-  text-align: center;
   cursor: pointer;
-  vertical-align: middle;
-  position: relative;
-  z-index: 10;
-  left: 0;
-  border-radius: 3px;
+  border-radius: 3px 0 0 3px;
+  text-align: center;
 }
 #main .register-item .register-label:hover {
-  background-color: #333;
+  background-color: #67F68A;
   color: #FFF;
 }
 #main .register-item .register-content-text {
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
+  width: 100%;
   font-size: 18px;
-  padding: 0 5px;
+  padding: 0 5px 0 45px;
   background-color: rgba(255, 255, 255, 0);
   line-height: 40px;
-  width: 360px;
-  vertical-align: middle;
+  border-radius: 3px;
+}
+#main .register-item .register-content-text#register-checkImg {
+  padding: 0 5px;
 }
 #main .register-logo-item {
-  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
   padding: 10px;
   border-radius: 5px;
   position: relative;
@@ -149,6 +137,19 @@ input::-ms-clear, input::-ms-reveal {
   color: #eee;
   line-height: 140px;
 }
+#main .register-logo-item .item-img-content .item-upimg-name {
+  position: absolute;
+  text-align: center;
+  width: 160px;
+  left: 0;
+  top: 50%;
+  margin-top: -8px;
+  color: #666;
+  overflow: hidden;
+  padding: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 #main .register-logo-item .item-img-show {
   width: 150px;
   height: 150px;
@@ -177,13 +178,46 @@ input::-ms-clear, input::-ms-reveal {
 #main .register-item-select {
   margin-top: 25px;
   line-height: 26px;
-  box-shadow: 0 0 0 #888, 0 0 1px #888, 0 0 2px #888, 0 0 3px #888, 0 0 4px #888, 0 0 5px #888;
   padding: 10px;
   border-radius: 5px;
 }
 #main .register-item-select .register-label-select {
   vertical-align: .5em;
   margin-right: 25px;
+}
+#main .checkImg-icon {
+  font-family: 'icomoon' !important;
+  font-size: 18px;
+  position: absolute;
+  right: 90px;
+  top: 0;
+  line-height: 38px;
+  vertical-align: middle;
+  display: none;
+}
+#main .checkImg-error-info {
+  position: absolute;
+  font-size: 16px;
+  color: #F9998E;
+  margin: 5px 0 0 5px;
+  letter-spacing: .1em;
+  display: none;
+}
+#main #show-checkImg {
+  height: 40px;
+  width: 85px;
+  border-radius: 0 3px 3px 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  cursor: pointer;
+}
+#main .border-item {
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE;
+}
+#main .border-active-item {
+  box-shadow: 0 0 0 #0ae, 0 0 1px #0ae, 0 0 2px #0ae, 0 0 3px #0ae, 0 0 4px #0ae, 0 0 5px #0ae;
 }
 #main .register-content-index {
   margin-top: 20px;
@@ -230,17 +264,20 @@ input::-ms-clear, input::-ms-reveal {
   color: #41B15C;
 }
 #register-form .valid-error + i {
-  letter-spacing: .02em;
+  letter-spacing: .008em;
   position: absolute;
-  max-width: 250px;
+  width: 182px;
   background-color: #F4BD1B;
   color: #BF6F6F;
   padding: 10px;
   border: 1px solid #DEA11A;
   border-radius: 5px;
   z-index: 1000;
-  margin-left: 67px;
+  margin-left: 14px;
   margin-top: -5px;
+}
+#register-form .valid-error + i#register-picture-error {
+  margin-left: 403px;
 }
 #register-form .valid-error + i:before {
   content: '';
@@ -256,8 +293,13 @@ input::-ms-clear, input::-ms-reveal {
 }
 #register-form .valid-pass + i {
   color: #41B15C;
-  position: static;
+  position: absolute;
   display: inline-block !important;
+  right: 0;
+  top: 10px;
+}
+#register-form .valid-pass + #register-picture-error {
+  display: none !important;
 }
 #register-form .valid-pass + i:before {
   content: '\e900';

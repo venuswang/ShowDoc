@@ -13,6 +13,12 @@ body {
   background-color: #fff;
 }
 
+.modify-info-result {
+  position: absolute;
+  left: 110%;
+  top: 110%;
+}
+
 /* 头部导航栏 */
 #header {
   position: relative;

@@ -32,31 +32,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="main">
 			<form name="form" action="${pageContext.request.contextPath }/voucher/insertVoucherInfo.action" method="post" enctype="multipart/form-data" class="register-form" id="register-form">
 				<!-- username -->
-				<div class="register-item">
+				<div class="register-item border-item">
 					<label for="register-username" class="register-label label-three">&#xe074;</label>
 					<input type="text" name="voucher.username" value="${voucherVO.voucher.username}" placeholder="账号 6 ~ 15位" id="register-username" class="register-content-text" />
 				</div>
 				<!-- password -->
-				<div class="register-item">
+				<div class="register-item border-item">
 					<label for="register-password" class="register-label">&#xe007;</label>
 					<input type="password" name="voucher.password" value="${voucherVO.voucher.password}" placeholder="密码 6 ~ 40位" id="register-password" class="register-content-text" />
 				</div>
 				<!-- check password -->
-				<div class="register-item">
+				<div class="register-item border-item">
 					<label for="register-checkpwd" class="register-label">&#xe007;</label>
 					<input type="password" name="passwordAgain" value="${voucherVO.voucher.password}" placeholder="确认密码" id="register-checkpwd" class="register-content-text" />
 				</div>
 				<!-- email -->
-				<div class="register-item">
+				<div class="register-item border-item">
 					<label class="register-label label-three" for="register-email">&#xe002;</label>
 					<input type="email" name="voucherInfo.email" value="${voucherVO.voucherInfo.email}" id="register-email" placeholder="邮箱" class="register-content-text" />
 				</div>
 				<!-- logo -->
-				<div class="register-logo-item">
+				<div class="register-logo-item border-item">
 					<label for="register-picture" class="register-label">上传头像</label>
 					<div class="item-img-content">
 						<input type="file" name="pictures" class="item-upimg" id="register-picture" />
 						<s class="item-upimg-logo">&#xe010;</s>
+						<span class="item-upimg-name"></span>
 					</div>
 					<div class="item-img-show">
 						<span class="item-show-title">图片预览</span>
@@ -64,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</div>
 				<!-- skill -->
-				<div class="register-item-select">
+				<div class="register-item-select border-item">
 					<label for="register-skill" class="register-label register-label-select">编程技能</label>
 					<select name="voucherInfo.skills" multiple="multiple" id="register-skill"  class="SlectBox">
 						<option value="Java">Java</option>
@@ -80,6 +81,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<option value="ASP">ASP</option>
 						<option value="MySql">MySql</option>
 					</select>
+				</div>
+				<!-- 验证码操作 -->
+				<div class="register-item border-item">
+					<input type="text" name="vcode" placeholder="验证码" class="register-content-text" 
+							id="register-checkImg" />
+					<span class="checkImg-icon">&#xe901;</span>
+					<img src="" alt="验证码" name="checkImg" id="show-checkImg" />
+					<p class="checkImg-error-info">验证码错误</p>
 				</div>
 				<!-- 已有账号的情况 -->
 				<div class="register-content-index">

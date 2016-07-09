@@ -13,7 +13,37 @@ $(function(){
 		$modifyInfo = $mask.find( '#modify-person-info' ),
 		$modifyInfoSubmit = $modifyInfo.find( '.btn-submit' ),
 		$modifyInfoCancel = $modifyInfo.find( '.btn-cancel' ),
-		isAnimating = false;
+		isAnimating = false,
+		modifyInfoResult = $('body').children('.modify-info-result').text().trim(),
+		$main = $('#main'),
+		$projectList = $main.find('.project-list'),
+		$addProBtn = $projectList.find('.project-item').find('.project-btn');
+
+	if ( modifyInfoResult === "success" ) {
+		var $tmpdiv = $('<div>'),
+			tmpStrDom = '<span>已经保存成功</span>';
+
+		// 小提示层的提示文字以及样式
+		$tmpdiv.html(tmpStrDom).css({
+			    position: "absolute",
+			    left: "50%",
+			    "marginLeft": "-15px",
+			    top: "10%",
+			    "lineHeight": "35px",
+			    "backgroundColor": "#58f69e",
+			    color: "#fff",
+			    padding: "10px",
+			    "borderRadius": "5px",
+			    display: "none"
+		}).appendTo($('body')).show(function(){
+			setTimeout(function(){
+				$tmpdiv.fadeOut(300);
+				document.body.removeChild($tmpdiv[0]);
+			},700); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+		});
+	} else if( modifyInfoResult != undefined ) {
+		// 修改不成功 待处理
+	}
 
 	// 鼠标移入移除用户头像时显示下拉菜单	
 	$userCenter.hover(function(event){
@@ -446,4 +476,49 @@ $(function(){
 		}
 	});
 
+	
+	// 点击新建项目时触发的事件
+	$addProBtn.on('click', function(){
+		var $body = $('body'),
+			bdHeight = $body.height(),
+			wH = $(window).height(),
+			bottom = wH - bdHeight,
+			$creatProCon = $('#create-project-container'),
+			$creatProForm = $creatProCon.find('#create-project-form'),
+			fH = 0,
+			$creatProBtnSub = $creatProForm.find('.project-form-operations').find('.btn-submit'),
+			$creatProBtnCan = $creatProForm.find('.project-form-operations').find('.btn-cancel');
+
+		$creatProCon.css("bottom", bottom).show(100, function(){
+			$creatProForm.css({
+				opacity: "0",
+				top: "-100%"
+			}).show();
+			fH = $creatProForm.height();
+			$creatProForm.animate({
+				top: ( wH / 2 - fH / 2),
+				opacity: "1"
+			}, 100);
+		}).on('click', function(event){
+			
+			if (event.target === this ) {
+				$(this).hide(function(){
+					$creatProForm.hide();
+				});
+			}
+		});
+
+		// 点击取消按钮事件
+		$creatProBtnCan.on('click', function(){
+			$creatProCon.trigger('click');
+			return false;
+		});
+
+		// 点击确定按钮事件
+		$creatProBtnSub.on('click', function(){
+			// 是否提交表单
+			return false;
+		});
+		return false;
+	});
 });
