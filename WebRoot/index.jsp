@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -25,8 +26,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<h1 class="simple-title">ShowDoc</h1>
 					<p class="simple-summary">帮你解决前端后端开发文档的烦恼</p>
 					<div class="login-operations">
-						<a href="javascript:void(0);" class="btn btn-login">登录</a>
-						<a href=<%=basePath + "jsp/login/register.jsp" %> class="btn btn-register">注册</a>
+						<!-- 修改7-9 -->
+						<c:choose>
+							<c:when test="${sessoinScope.loginStatu == null || sessionScope.username == null || sessionScope.userid == null || sessionScope.images == null}">
+								<a href="javascript:void(0);" class="btn btn-login">登录</a>
+								<a href=<%=basePath + "jsp/login/register.jsp" %> class="btn btn-register">注册</a>
+							</c:when>
+							<c:otherwise>
+								<img alt="" src="">
+								<!-- exit -->
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 				</div>
 			</div>

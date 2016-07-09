@@ -7,6 +7,7 @@
 	<select id="queryProjectByUsername" parameterType="java.lang.String" resultType="projectExtendClass">
 		select
 			<include refid="query_project_col"/>
+		from project
 		where id in (select pid from username_project where vname = #{name}) and pstatu = 1 order by sortid
 	</select>
 	<insert id="insertProjectSelective" parameterType="projectExtendClass">

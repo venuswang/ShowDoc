@@ -517,6 +517,29 @@ $(function(){
 		// 点击确定按钮事件
 		$creatProBtnSub.on('click', function(){
 			// 是否提交表单
+			var $projectname = $creatProForm.find('.projectname'),
+				$projectdesc = $creatProForm.find('.projectdesc'),
+				$projectsort = $creatProForm.find('.sortid'),
+				$username = $creatProForm.find('.username'),
+				$password = $creatProForm.find('.password'),
+				projectname = $projectname.val(),
+				projectdesc = $projectdesc.val(),
+				projectsort = $projectsort.val(),
+				username = $username.val(),
+				password = $password.val(),
+				createUrl = window.location.protocol + "\/\/" + 
+									window.location.host + "\/ShowDoc\/" + "project\/addProject?projectname=" + 
+									projectname + "&projectdesc=" + projectdesc + "&sortid=" + projectsort + 
+									"&authorname=" + username + "&projectpassword=" + password ;
+			console.log( createUrl );
+			$.ajax({
+				url: createUrl,
+				type: "POST",
+				dataType: "text",
+				success: function(data) {
+					console.log( data );
+				}
+			});
 			return false;
 		});
 		return false;

@@ -21,6 +21,10 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </head>
 <body>
+	<%-- <h1>${requestScope.projects. }</h1> --%>
+	<c:forEach items="${requestScope.projects}" var="project">
+		<c:out value="${project.projectname}"></c:out>
+	</c:forEach>
 	<h1 class="modify-info-result">${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
@@ -179,23 +183,23 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			<h1 class="create-project-title">编辑项目信息</h1>
 			<!-- 项目名 -->
 			<div class="project-form-item">
-				<input type="text" class="form-item-content" placeholder="项目名" name="projectname" />
+				<input type="text" class="form-item-content projectname" placeholder="项目名" name="projectname" />
 			</div>
 			<!-- 项目描述 -->
 			<div class="project-form-item">
-				<input type="text" class="form-item-content" placeholder="项目描述" />
+				<input type="text" class="form-item-content projectdesc" placeholder="项目描述" name="projectdesc" />
 			</div>
 			<!-- 项目索引值 -->
 			<div class="project-form-item">
-				<input type="number" class="form-item-content" placeholder="项目索引值(数字)" />
+				<input type="number" class="form-item-content sortid" placeholder="项目索引值(数字)" name="sortid" />
 			</div>
 			<!-- 项目用户名 -->
 			<div class="project-form-item">
-				<input type="text" class="form-item-content" placeholder="用户名" />
+				<input type="text" class="form-item-content username" placeholder="用户名" name="authorname" value="${sessionScope.username }" disabled="disabled" />
 			</div>
 			<!-- 项目访问密码 -->
 			<div class="project-form-item">
-				<input type="password" class="form-item-content" placeholder="访问此项目的密码,不设密码默认所有人可访问" />
+				<input type="password" class="form-item-content password" placeholder="访问此项目的密码,不设密码默认所有人可访问" name="projectpassword" />
 			</div>
 			<!-- 项目操作 -->
 			<div class="project-form-operations">
