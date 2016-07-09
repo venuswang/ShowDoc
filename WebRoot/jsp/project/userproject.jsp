@@ -14,6 +14,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<link rel="stylesheet" href='<%=basePath + "css/basic.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/userProject.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/sumoselect.min.css" %>' />
+	<link rel="stylesheet" href='<%=basePath + "css/create.project.min.css" %>' />
 	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
 	<script src="<%=basePath + "js/jquery.sumoselect.min.js" %>"></script>
 	<script src="<%=basePath + "js/jquery.validate.min.js" %>"></script>
@@ -52,10 +53,10 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			</nav>		
 		</div>
 	</header><!-- /header -->
-	<div class="main">
+	<div class="main" id="main">
 		<ul class="project-list">
 			<li class="project-item">
-				<a href="" class="project-btn">新建项目<span class="add-project-icon">&#xe904;</span></a>
+				<a href="javascript:void(0);" class="project-btn">新建项目<span class="add-project-icon">&#xe904;</span></a>
 			</li>
 		</ul>
 	</div>
@@ -172,6 +173,36 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 				</div>
 			</form>
 		</div>
+	</div>
+	<div id="create-project-container">
+		<form action="#" id="create-project-form">
+			<h1 class="create-project-title">编辑项目信息</h1>
+			<!-- 项目名 -->
+			<div class="project-form-item">
+				<input type="text" class="form-item-content" placeholder="项目名" name="projectname" />
+			</div>
+			<!-- 项目描述 -->
+			<div class="project-form-item">
+				<input type="text" class="form-item-content" placeholder="项目描述" />
+			</div>
+			<!-- 项目索引值 -->
+			<div class="project-form-item">
+				<input type="number" class="form-item-content" placeholder="项目索引值(数字)" />
+			</div>
+			<!-- 项目用户名 -->
+			<div class="project-form-item">
+				<input type="text" class="form-item-content" placeholder="用户名" />
+			</div>
+			<!-- 项目访问密码 -->
+			<div class="project-form-item">
+				<input type="password" class="form-item-content" placeholder="访问此项目的密码,不设密码默认所有人可访问" />
+			</div>
+			<!-- 项目操作 -->
+			<div class="project-form-operations">
+				<a href="javascript:void(0);" class="btn btn-submit">确定</a>
+				<a href="javascript:void(0);" class="btn btn-cancel">取消</a>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

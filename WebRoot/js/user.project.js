@@ -14,7 +14,10 @@ $(function(){
 		$modifyInfoSubmit = $modifyInfo.find( '.btn-submit' ),
 		$modifyInfoCancel = $modifyInfo.find( '.btn-cancel' ),
 		isAnimating = false,
-		modifyInfoResult = $('body').children('.modify-info-result').text().trim();
+		modifyInfoResult = $('body').children('.modify-info-result').text().trim(),
+		$main = $('#main'),
+		$projectList = $main.find('.project-list'),
+		$addProBtn = $projectList.find('.project-item').find('.project-btn');
 
 	if ( modifyInfoResult === "success" ) {
 		var $tmpdiv = $('<div>'),
@@ -473,4 +476,49 @@ $(function(){
 		}
 	});
 
+	
+	// 点击新建项目时触发的事件
+	$addProBtn.on('click', function(){
+		var $body = $('body'),
+			bdHeight = $body.height(),
+			wH = $(window).height(),
+			bottom = wH - bdHeight,
+			$creatProCon = $('#create-project-container'),
+			$creatProForm = $creatProCon.find('#create-project-form'),
+			fH = 0,
+			$creatProBtnSub = $creatProForm.find('.project-form-operations').find('.btn-submit'),
+			$creatProBtnCan = $creatProForm.find('.project-form-operations').find('.btn-cancel');
+
+		$creatProCon.css("bottom", bottom).show(100, function(){
+			$creatProForm.css({
+				opacity: "0",
+				top: "-100%"
+			}).show();
+			fH = $creatProForm.height();
+			$creatProForm.animate({
+				top: ( wH / 2 - fH / 2),
+				opacity: "1"
+			}, 100);
+		}).on('click', function(event){
+			
+			if (event.target === this ) {
+				$(this).hide(function(){
+					$creatProForm.hide();
+				});
+			}
+		});
+
+		// 点击取消按钮事件
+		$creatProBtnCan.on('click', function(){
+			$creatProCon.trigger('click');
+			return false;
+		});
+
+		// 点击确定按钮事件
+		$creatProBtnSub.on('click', function(){
+			// 是否提交表单
+			return false;
+		});
+		return false;
+	});
 });
