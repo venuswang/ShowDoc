@@ -72,3 +72,12 @@ pageauthorname varchar(255),
 constraint page_project_key_pageprojectid foreign key(pageprojectid) references project(id),
 constraint page_subproject_key_pagesubprejectid foreign key(pagesubprejectid) references subproject(subprojectid)
 );
+
+#创建项目与用户的对应关系
+create table username_project(
+pid int(11),
+vname varchar(255),
+primary key(pid,vname),
+constraint K_V_ID foreign key(pid) references project(id),
+constraint K_V_NAME foreign key(vname) references voucher(username)
+);

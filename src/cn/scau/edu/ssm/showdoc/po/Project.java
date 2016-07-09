@@ -2,17 +2,33 @@ package cn.scau.edu.ssm.showdoc.po;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup4;
+
 public class Project {
     private Integer id;
-
+    
+    @NotBlank(message="{project.name.null.error}",groups={ValidGroup4.class})
+    @Size(max=200,message="{project.name.length.error}",groups={ValidGroup4.class})
     private String projectname;
 
+    @Size(max=200,message="{project.desc.length.error}",groups={ValidGroup4.class}) 
     private String projectdesc;
 
+    @NotBlank(message="{project.authorname.null.error}",groups={ValidGroup4.class})
+    @Size(min=6,max=15,message="{project.authorname.length.error}",groups={ValidGroup4.class})
     private String authorname;
-
+    
+    @Size(max=50,message="{project.password.length.error}",groups={ValidGroup4.class}) 
     private String projectpassword;
 
+    @Max(value=99,message="{project.sortid.length.error}",groups={ValidGroup4.class})
+    @Min(value=0,message="{project.sortid.length.error}",groups={ValidGroup4.class})
     private Integer sortid;
 
     private Integer pstatu;

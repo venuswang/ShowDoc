@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.scau.edu.ssm.showdoc.mapper.UserProjectMapper">
+	<insert id="insertProjectName" parameterType="userProject">
+		insert into username_project(pid,vname) values (#{pid},#{vname})
+	</insert>
+	
+	<delete id="deleteProjectName" parameterType="userProject">
+		delete from username_project where pid = #{pid} and vname = #{vname}
+	</delete>
+</mapper>
