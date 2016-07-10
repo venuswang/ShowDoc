@@ -17,7 +17,8 @@ $(function(){
 		modifyInfoResult = $('body').children('.modify-info-result').text().trim(),
 		$main = $('#main'),
 		$projectList = $main.find('.project-list'),
-		$addProBtn = $projectList.find('.project-item').find('.project-btn');
+		$projectBtn = $projectList.find('.project-item').find('.btn-detail'),
+		$addProBtn = $projectList.find('.project-item-add').find('.project-btn');
 
 	if ( modifyInfoResult === "success" ) {
 		var $tmpdiv = $('<div>'),
@@ -476,6 +477,13 @@ $(function(){
 		}
 	});
 
+
+
+	// 点击某个项目的click事件，待处理
+	$projectBtn.on('click', function(){
+		/*console.log( this );
+		return false;*/
+	});
 	
 	// 点击新建项目时触发的事件
 	$addProBtn.on('click', function(){

@@ -1,0 +1,85 @@
+@charset "UTF-8";
+#create-project-container {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: rgba(245, 245, 245, 0.7);
+  /* 标题 */
+  /* 项目项 */
+  /*操作*/
+}
+#create-project-container #create-project-form {
+  display: none;
+  width: 500px;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: -250px;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 #F8F7F7, 0 0 1px #F8F7F7, 0 0 2px #F8F7F7, 0 0 3px #F8F7F7, 0 0 4px #F8F7F7, 0 0 5px #F8F7F7;
+  /* 清除IE下的叉叉 */
+}
+#create-project-container #create-project-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+#create-project-container #create-project-form input::-ms-clear, #create-project-container #create-project-form input::-ms-reveal {
+  display: none;
+}
+#create-project-container .create-project-title {
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: .2em;
+  color: #666;
+  text-shadow: 0 0 1px #ccc, 0 0 2px #ccc, 0 0 3px #ccc, 0 0 4px #ccc, 0 0 5px #ccc;
+}
+#create-project-container .project-form-item {
+  margin: 20px 0;
+}
+#create-project-container .project-form-item .form-item-content {
+  width: 100%;
+  line-height: 35px;
+  padding: 0 5px;
+  font-size: 16px;
+  color: #666;
+  letter-spacing: 0.1em;
+  border-radius: 3px;
+  box-shadow: 0 0 0 #F0EEEE, 0 0 1px #F0EEEE, 0 0 2px #F0EEEE, 0 0 3px #F0EEEE, 0 0 4px #F0EEEE, 0 0 5px #F0EEEE, 0 0 6px #F0EEEE;
+}
+#create-project-container .project-form-item .form-item-content:focus {
+  box-shadow: 0 0 0 #0ae, 0 0 1px #0ae, 0 0 2px #0ae, 0 0 3px #0ae, 0 0 4px #0ae, 0 0 5px #0ae, 0 0 6px #0ae;
+}
+#create-project-container .project-form-operations {
+  position: relative;
+  padding-bottom: 30px;
+}
+#create-project-container .project-form-operations .btn {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  padding: 6px 15px;
+  border-radius: 3px;
+}
+#create-project-container .project-form-operations .btn.btn-submit {
+  left: 20%;
+  background-color: #006dcc;
+  box-shadow: 0 0 0 #006dcc, 0 0 1px #006dcc, 0 -1px 0px #006dcc, 0 -2px 1px #006dcc;
+  color: #EAE6E6;
+}
+#create-project-container .project-form-operations .btn.btn-submit:hover {
+  background-color: #2596F9;
+  box-shadow: 0 0 0 #2596F9, 0 0 1px #2596F9, 0 -1px 0px #2596F9, 0 -2px 1px #2596F9;
+  color: #fff;
+}
+#create-project-container .project-form-operations .btn.btn-cancel {
+  right: 20%;
+  box-shadow: 0 0 0 #C8C9C9, 0 0 1px #C8C9C9, 0 -1px 0px #C8C9C9, 0 -2px 1px #C8C9C9;
+  color: #666;
+}
+#create-project-container .project-form-operations .btn.btn-cancel:hover {
+  box-shadow: 0 0 0 #949595, 0 0 1px #949595, 0 -1px 0px #949595, 0 -2px 1px #949595;
+  color: #888;
+}

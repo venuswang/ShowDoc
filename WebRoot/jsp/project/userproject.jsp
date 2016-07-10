@@ -21,10 +21,6 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </head>
 <body>
-	<%-- <h1>${requestScope.projects. }</h1> --%>
-	<c:forEach items="${requestScope.projects}" var="project">
-		<c:out value="${project.projectname}"></c:out>
-	</c:forEach>
 	<h1 class="modify-info-result">${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
@@ -59,7 +55,14 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	</header><!-- /header -->
 	<div class="main" id="main">
 		<ul class="project-list">
-			<li class="project-item">
+			<c:forEach items="${requestScope.projects}" var="project">
+				<li class="project-item">
+					<a href="<%=basePath %>jsp/project/showproject.jsp" class="project-btn btn-detail">
+						<c:out value="${project.projectname}"></c:out>
+					</a>
+				</li>
+			</c:forEach>
+			<li class="project-item project-item-add">
 				<a href="javascript:void(0);" class="project-btn">新建项目<span class="add-project-icon">&#xe904;</span></a>
 			</li>
 		</ul>

@@ -138,6 +138,7 @@ body {
   display: inline-block;
   *display: inline;
   *zoom: 1;
+  margin: 15px 5px;
 }
 .main .project-item .project-btn {
   display: inline-block;
