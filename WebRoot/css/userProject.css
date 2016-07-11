@@ -133,6 +133,7 @@ body {
 .main {
   width: 83%;
   margin: 30px auto;
+  text-align: center;
 }
 .main .project-item {
   display: inline-block;
@@ -166,7 +167,7 @@ body {
 /* 遮罩 */
 #mask-container {
   display: none;
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
