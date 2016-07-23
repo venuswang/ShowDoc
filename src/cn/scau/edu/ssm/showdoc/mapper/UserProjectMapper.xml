@@ -8,4 +8,8 @@
 	<delete id="deleteProjectName" parameterType="userProject">
 		delete from username_project where pid = #{pid} and vname = #{vname}
 	</delete>
+	
+	<select id="countProjectName" parameterType="userProject" resultType="int">
+		select count(pid) from username_project where pid = #{pid} and vname = #{realname}
+	</select>
 </mapper>

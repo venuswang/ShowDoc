@@ -13,4 +13,6 @@ public interface UserProjectMapper {
 	
 	public int deleteProjectName(UserProject userProject) throws Exception;
 	
+	public int countProjectName(UserProject userProject) throws Exception;
+	
 }
