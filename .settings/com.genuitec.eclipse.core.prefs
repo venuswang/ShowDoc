@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-validator.Checked=WebRoot/js,WebRoot/jsp/js
+validator.Checked=WebRoot/jsp/lib/codemirror,WebRoot/js,WebRoot/jsp/lib/raphael.min.js,WebRoot/jsp/js,WebRoot/node_modules
 validator.Unchecked=
