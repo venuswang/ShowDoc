@@ -1,0 +1,99 @@
+@charset "UTF-8";
+body {
+  background-color: #fff;
+}
+
+/* 头部 */
+#header {
+  line-height: 70px;
+  text-align: center;
+}
+#header .middle-title {
+  font-size: 24px;
+  color: #666;
+}
+#header .common-right {
+  position: absolute;
+  right: 80px;
+  top: 0;
+}
+
+/* 主体布局 */
+#main {
+  padding: 10px;
+  position: relative;
+}
+#main .sideNav {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+}
+#main .show-content {
+  margin-left: 220px;
+  border: 1px solid blue;
+}
+
+/* 侧边栏修饰 */
+.sideNav .add-page-item {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.sideNav .page-item {
+  text-align: center;
+}
+.sideNav .page-item .btn {
+  border-bottom: 1px solid #9B9999;
+}
+.sideNav .page-item .btn.active {
+  border-left: 5px solid #9B9999;
+}
+.sideNav .page-item:last-child {
+  border-bottom: none;
+}
+.sideNav .btn {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 100%;
+  background-color: #62CEF9;
+  color: #666;
+  padding: 6px;
+}
+
+/* 展示markdown内容的主体块 */
+.show-content {
+  /* 操作区 */
+  display: none;
+  /* 标题区 */
+  /* editor.md 初始区*/
+  /* markdown内容展示区 */
+}
+.show-content .content-operation {
+  text-align: right;
+  margin: 10px 80px 10px 0;
+}
+.show-content .content-operation .btn {
+  padding: 6px 10px;
+  background-color: #9DF9D7;
+  color: #9C802E;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+.show-content .content-title {
+  text-align: center;
+  font-size: 20px;
+  color: #666;
+  letter-spacing: 0.1em;
+  margin-bottom: 15px;
+}
+.show-content .test-editormd {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.show-content .markdown-content {
+  padding: 10px;
+  color: #666;
+}

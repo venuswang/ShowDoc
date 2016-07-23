@@ -17,7 +17,8 @@ $(function(){
 		modifyInfoResult = $('body').children('.modify-info-result').text().trim(),
 		$main = $('#main'),
 		$projectList = $main.find('.project-list'),
-		$addProBtn = $projectList.find('.project-item').find('.project-btn');
+		$projectBtn = $projectList.find('.project-item').find('.btn-detail'),
+		$addProBtn = $projectList.find('.project-item-add').find('.project-btn');
 
 	if ( modifyInfoResult === "success" ) {
 		var $tmpdiv = $('<div>'),
@@ -65,7 +66,12 @@ $(function(){
 	});
 	//点击下拉菜单时相应切换不同的视图
 	$subNavItems.on('click', function(){
-		var data = $(this).data("dist");
+		var data = $(this).data("dist"),
+			wH = $(window).height(),		// 窗口高度
+			docH = $(document).height(),	// 文档高度
+			mBottom = wH - (docH + 30 );	// 文档高度与窗口高度的差值
+
+		mBottom = mBottom > 0 ? 0 : mBottom;	// 确定遮罩层的bottom位置
 
 		$subNav.hide();
 		if ( data !== undefined ) {
@@ -287,7 +293,7 @@ $(function(){
 										console.log( data );
 									}
 								});*/
-								console.log( 'submit' );
+								
 								$target.find('#update-info-form').submit();
 							}
 							return false;
@@ -435,12 +441,39 @@ $(function(){
 			}
 
 			// 将遮罩层显示出来以及显示相应的用户选择的视图
-			$mask.show(100, function(){
+			$mask.css("bottom", mBottom).show(100, function(){
 				$target.css("top","-100%").show();
-				var targetH = $target.height();
+				var targetH = $target.height(),
+					targetTop = (wH - targetH) / 2;
+
+				if ( data === 'modify-person-info' ) {
+
+					/**
+					 * 如果是修改信息的视图，因为修改信息中有select多选框，会导致弹出窗的高度变化
+					 * 故需要监听其点击事件，若高度变化则应该相应的重新定位遮罩层的bottom位置
+					 */
+					$target.find('.modify-info-skill').find('.CaptionCont').on('click', function(){
+
+						targetH += $target.find('.modify-info-skill').find('.optWrapper').height();
+
+						// 再次确定遮罩层的bottom位置, 防止多选框高度的变化, 导致遮罩层不能全部遮罩的情况
+						docH = docH > targetH ? docH : targetH;
+						mBottom = wH - ( docH + 30 );
+						mBottom  = mBottom > 0 ? 0 : mBottom;
+						$mask.css('bottom', mBottom);	// 重新定位bottom位置
+					});
+				}
+
+				targetTop = targetTop > 10 ? targetTop : 10;	// 确定弹出框与视口顶部的距离
+
+				// 再次确定遮罩层的bottom位置，防止弹出框的高度高过窗口高度，超过文档高度，导致遮罩层不能全部遮罩的情况
+				docH = docH > targetH ? docH : targetH;
+				mBottom = wH - ( docH + 30 );
+				mBottom  = mBottom > 0 ? 0 : mBottom;
+				$mask.css('bottom', mBottom);	// 重新定位bottom位置
 
 				$target.animate({
-					top: ( wH - targetH ) / 2
+					top: targetTop
 				},function(){
 					$target.siblings().hide();
 				});
@@ -476,37 +509,65 @@ $(function(){
 		}
 	});
 
+
+
+	// 点击某个项目的click事件，待处理
+	$projectBtn.on('click', function(){
+		/*console.log( this );
+		return false;*/
+	});
 	
 	// 点击新建项目时触发的事件
 	$addProBtn.on('click', function(){
 		var $body = $('body'),
 			bdHeight = $body.height(),
 			wH = $(window).height(),
-			bottom = wH - bdHeight,
+			docH = $(document).height(),
+			bottom = 0,
 			$creatProCon = $('#create-project-container'),
 			$creatProForm = $creatProCon.find('#create-project-form'),
 			fH = 0,
 			$creatProBtnSub = $creatProForm.find('.project-form-operations').find('.btn-submit'),
-			$creatProBtnCan = $creatProForm.find('.project-form-operations').find('.btn-cancel');
+			$creatProBtnCan = $creatProForm.find('.project-form-operations').find('.btn-cancel'),
+			formTop = 0;
+		
+		// 让滚动条回到顶端
+		$(document).scrollTop(10);
 
-		$creatProCon.css("bottom", bottom).show(100, function(){
-			$creatProForm.css({
-				opacity: "0",
-				top: "-100%"
-			}).show();
-			fH = $creatProForm.height();
-			$creatProForm.animate({
-				top: ( wH / 2 - fH / 2),
-				opacity: "1"
-			}, 100);
-		}).on('click', function(event){
-			
-			if (event.target === this ) {
-				$(this).hide(function(){
-					$creatProForm.hide();
-				});
-			}
-		});
+		setTimeout(function(){
+			$creatProCon.css("bottom", bottom).show(100, function(){
+
+				// 让表单弹框以透明度为0为的形式出现，用来获取高度
+				$creatProForm.css({
+					opacity: "0",
+					top: "-100%"
+				}).show();
+
+				// form 表单在遮罩层的位置
+				fH = $creatProForm.outerHeight();
+				formTop = wH / 2 - fH / 2;
+				formTop = formTop > 20 ? formTop : 10;
+
+				fH += 20;
+				docH = docH > fH ? docH : fH;
+				bottom = wH - docH;
+				bottom = bottom > 0 ? 0 : bottom;
+
+				$creatProCon.css("bottom", bottom);
+
+				$creatProForm.animate({
+					top: formTop,
+					opacity: "1"
+				}, 100);
+			}).on('click', function(event){
+				
+				if (event.target === this ) {
+					$(this).hide(function(){
+						$creatProForm.hide();
+					});
+				}
+			});
+		}, 100);
 
 		// 点击取消按钮事件
 		$creatProBtnCan.on('click', function(){
@@ -514,32 +575,115 @@ $(function(){
 			return false;
 		});
 
+		var iscreatingPro = false;	// 控制点击确定按钮，防止多次点击
 		// 点击确定按钮事件
 		$creatProBtnSub.on('click', function(){
-			// 是否提交表单
-			var $projectname = $creatProForm.find('.projectname'),
-				$projectdesc = $creatProForm.find('.projectdesc'),
-				$projectsort = $creatProForm.find('.sortid'),
-				$username = $creatProForm.find('.username'),
-				$password = $creatProForm.find('.password'),
-				projectname = $projectname.val(),
-				projectdesc = $projectdesc.val(),
-				projectsort = $projectsort.val(),
-				username = $username.val(),
-				password = $password.val(),
-				createUrl = window.location.protocol + "\/\/" + 
-									window.location.host + "\/ShowDoc\/" + "project\/addProject?projectname=" + 
-									projectname + "&projectdesc=" + projectdesc + "&sortid=" + projectsort + 
-									"&authorname=" + username + "&projectpassword=" + password ;
-			console.log( createUrl );
-			$.ajax({
-				url: createUrl,
-				type: "POST",
-				dataType: "text",
-				success: function(data) {
-					console.log( data );
-				}
-			});
+			if ( !iscreatingPro ) {
+
+				/**
+				 * 如果还没有点击确定按钮，则处理此次点击，否则直接不处理
+				 */
+				
+				iscreatingPro = true;	// 表示正在处理有效的点击事件
+				var $projectname = $creatProForm.find('.projectname'),
+					$projectdesc = $creatProForm.find('.projectdesc'),
+					$projectsort = $creatProForm.find('.sortid'),
+					$username = $creatProForm.find('.username'),
+					$password = $creatProForm.find('.password'),
+					projectname = $projectname.val(),
+					projectdesc = $projectdesc.val(),
+					projectsort = $projectsort.val(),
+					username = $username.val(),
+					password = $password.val(),
+					createUrl = window.location.protocol + "\/\/" + 
+										window.location.host + "\/ShowDoc\/" + "project\/addProject?projectname=" + 
+										projectname + "&projectdesc=" + projectdesc + "&sortid=" + projectsort + 
+										"&authorname=" + username + "&projectpassword=" + password ;
+				console.log( createUrl );
+				$.ajax({
+					url: createUrl,
+					type: "POST",
+					dataType: "text",
+					success: function(data) {
+						iscreatingPro = false;		// 表示可以接受下次点击事件了
+						var result = data.trim();
+							res = result.split(',');
+						if ( res[0] === "success" ) {
+							var $tmpdiv = $('<div>'),
+								tmpStrDom = '<span>项目创建成功</span>';
+
+							// 小提示层的提示文字以及样式
+							$tmpdiv.html(tmpStrDom).css({
+								    position: "absolute",
+								    left: "50%",
+								    "marginLeft": "-15px",
+								    top: "10%",
+								    "lineHeight": "35px",
+								    "backgroundColor": "#58f69e",
+								    color: "#fff",
+								    padding: "10px",
+								    "borderRadius": "5px",
+								    display: "none"
+							}).appendTo($('body')).show(function(){
+								setTimeout(function(){
+									$tmpdiv.fadeOut(300);
+									document.body.removeChild($tmpdiv[0]);
+
+									// 删除后要重新进行跳转
+									window.location.href = window.location.protocol + "\/\/" + 
+										window.location.host + "\/ShowDoc\/" + "project\/showProject.action";
+								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});
+						} else if ( res[0] === "fail" ) {
+							var $tmpdiv = $('<div>'),
+								tmpStrDom = '<span>项目创建时出错</span>';
+
+							// 小提示层的提示文字以及样式
+							$tmpdiv.html(tmpStrDom).css({
+								    position: "absolute",
+								    left: "50%",
+								    "marginLeft": "-15px",
+								    top: "10%",
+								    "lineHeight": "35px",
+								    "backgroundColor": "#E29685",
+								    color: "#fff",
+								    padding: "10px",
+								    "borderRadius": "5px",
+								    display: "none"
+							}).appendTo($('body')).show(function(){
+								setTimeout(function(){
+									$tmpdiv.fadeOut(300);
+									document.body.removeChild($tmpdiv[0]);
+								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});
+						} else if ( res[0] === "illegal") {
+							var $tmpdiv = $('<div>'),
+								tmpStrDom = '<span>' + res[1] + '</span>';
+
+							// 小提示层的提示文字以及样式
+							$tmpdiv.html(tmpStrDom).css({
+								    position: "absolute",
+								    left: "50%",
+								    "marginLeft": "-15px",
+								    top: "10%",
+								    "lineHeight": "35px",
+								    "backgroundColor": "#E29685",
+								    color: "#fff",
+								    padding: "10px",
+								    "borderRadius": "5px",
+								    display: "none"
+							}).appendTo($('body')).show(function(){
+								setTimeout(function(){
+									$tmpdiv.fadeOut(300);
+									document.body.removeChild($tmpdiv[0]);
+								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});
+						} else {
+
+						}
+					}
+				});
+			}
 			return false;
 		});
 		return false;

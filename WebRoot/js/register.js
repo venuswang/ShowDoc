@@ -272,11 +272,15 @@ $(function(){
 						$username.removeClass("valid-pass").addClass("valid-error").siblings("i").text("用户名应该为6~15位.").css("display","inline");
 					} else {
 						var nospace = data.replace(/\s/, ""),
-							leftPos = nospace.indexOf("body>") + "body>".length,
-							rightPos = nospace.lastIndexOf("<\/body>"),
+							leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
+							rightPos = nospace.lastIndexOf("<\/h3>"),
 							errorText = nospace.substring(leftPos, rightPos),
-							errorUrl = window.location.href + 
-										"exception/operateVoucherHandle.action?message=" + errorText;
+							currentUrl = window.location.protocol + "\/\/" + window.location.host +
+										"\/ShowDoc\/",
+							errorUrl = currentUrl +	"exception\/operateVoucherHandle.action?message=" +
+										errorText;
+			
+						// 改变当前 url
 						window.location.href = errorUrl;
 					}
 				}
