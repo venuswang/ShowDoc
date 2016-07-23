@@ -4,6 +4,7 @@ $(function(){
 		$userPortraint = $userCenter.find('.user-portraint').eq(0),
 		$subNav = $header.find( '.sub-nav' ).eq(0),
 		$subNavItems = $subNav.find( '.sub-btn' ),
+		$exitBtn = $header.find('#user-exit').find('.btn-exit'),
 		$mask = $( '#mask-container' ),
 		$personInfo = $mask.find( '#person-info' ),
 		$personInfoBtnBack = $personInfo.find( '.btn-back' ),
@@ -45,6 +46,15 @@ $(function(){
 	} else if( modifyInfoResult != undefined ) {
 		// 修改不成功 待处理
 	}
+
+	// 退出按钮点击事件, 跳转到相应的退出servlet处理
+	$exitBtn.on('click', function(event) {
+
+		var url = window.location.protocol + "//" + window.location.host +
+				"/ShowDoc/" + "voucher/exitVoucher.action";
+		window.location.href = url;
+		event.preventDefault();
+	});
 
 	// 鼠标移入移除用户头像时显示下拉菜单	
 	$userCenter.hover(function(event){
@@ -569,6 +579,27 @@ $(function(){
 			});
 		}, 100);
 
+		// 项目失去点击时需要异步验证该项目是否已经构建
+		$creatProForm.find('.projectname').on('blur', function(event){
+
+			var proname = $(this).val(),
+				prourl = window.location.protocol + "//" + window.location.host + "/ShowDoc/" +
+				"project/checkProject/" + proname;
+
+			console.log( prourl );
+			$.ajax({
+				url: prourl,
+				type: "POST",
+				dataType: 'text',
+				success: function(data) {
+					var result = data.trim();
+					console.log( data );
+				}
+			});
+
+			event.preventDefault();
+		});
+
 		// 点击取消按钮事件
 		$creatProBtnCan.on('click', function(){
 			$creatProCon.trigger('click');
@@ -599,16 +630,18 @@ $(function(){
 										window.location.host + "\/ShowDoc\/" + "project\/addProject?projectname=" + 
 										projectname + "&projectdesc=" + projectdesc + "&sortid=" + projectsort + 
 										"&authorname=" + username + "&projectpassword=" + password ;
-				console.log( createUrl );
 				$.ajax({
 					url: createUrl,
 					type: "POST",
 					dataType: "text",
 					success: function(data) {
-						iscreatingPro = false;		// 表示可以接受下次点击事件了
 						var result = data.trim();
 							res = result.split(',');
-						if ( res[0] === "success" ) {
+						if ( res[0] === "success" ) { 
+
+							/**
+							 * 如果创建成功，则显示相应的小提示框显示创建成功
+							 */
 							var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>项目创建成功</span>';
 
@@ -628,13 +661,17 @@ $(function(){
 								setTimeout(function(){
 									$tmpdiv.fadeOut(300);
 									document.body.removeChild($tmpdiv[0]);
-
+									iscreatingPro = false;		// 表示可以接受下次点击事件了
 									// 删除后要重新进行跳转
 									window.location.href = window.location.protocol + "\/\/" + 
 										window.location.host + "\/ShowDoc\/" + "project\/showProject.action";
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
 							});
 						} else if ( res[0] === "fail" ) {
+
+							/**
+							 * 如果创建失败，则显示相应的小提示框显示创建失败
+							 */
 							var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>项目创建时出错</span>';
 
@@ -654,9 +691,14 @@ $(function(){
 								setTimeout(function(){
 									$tmpdiv.fadeOut(300);
 									document.body.removeChild($tmpdiv[0]);
+									iscreatingPro = false;		// 表示可以接受下次点击事件了
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
 							});
 						} else if ( res[0] === "illegal") {
+
+							/**
+							 * 如果创建项目时，返回 illegal的结果，则说明创建项目的表单出现不合格的字段
+							 */
 							var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>' + res[1] + '</span>';
 
@@ -676,10 +718,25 @@ $(function(){
 								setTimeout(function(){
 									$tmpdiv.fadeOut(300);
 									document.body.removeChild($tmpdiv[0]);
+									iscreatingPro = false;		// 表示可以接受下次点击事件了
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
 							});
 						} else {
 
+							/**
+							 * 如果返回的结果除了上面相应的结果，则返回的是未知错误，相应的跳到错误的页面
+							 */
+							var nospace = data.replace(/\s/, ""),
+							leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
+							rightPos = nospace.lastIndexOf("<\/h3>"),
+							errorText = nospace.substring(leftPos, rightPos),
+							currentUrl = window.location.protocol + "\/\/" + window.location.host +
+										"\/ShowDoc\/",
+							errorUrl = currentUrl +	"exception\/operateVoucherHandle.action?message=" +
+										errorText;
+			
+							// 改变当前 url
+							window.location.href = errorUrl;
 						}
 					}
 				});

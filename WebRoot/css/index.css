@@ -105,6 +105,16 @@
 .login-content .login-operations .btn:hover {
   background-color: #1CE3DD;
 }
+.login-content .login-operations .uer-protraint {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+.login-content .login-operations .uer-protraint.transition {
+  transform: rotate(360deg);
+}
 
 /* 功能区 */
 .function-list {

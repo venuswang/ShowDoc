@@ -3,6 +3,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String local = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
 %>
 <!DOCTYPE html>
 <html>
@@ -28,12 +29,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="login-operations">
 						<!-- 修改7-9 -->
 						<c:choose>
-							<c:when test="${sessoinScope.loginStatu == null || sessionScope.username == null || sessionScope.userid == null || sessionScope.images == null}">
+							<c:when test="${sessionScope.loginStatu == null || sessionScope.username == null || sessionScope.userid == null || sessionScope.images == null}">
 								<a href="javascript:void(0);" class="btn btn-login">登录</a>
 								<a href=<%=basePath + "jsp/login/register.jsp" %> class="btn btn-register">注册</a>
 							</c:when>
 							<c:otherwise>
-								<img alt="" src="">
+								<img alt="user" src="<%=local %>${sessionScope.images}" class="uer-protraint"/>
 								<!-- exit -->
 							</c:otherwise>
 						</c:choose>
@@ -120,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p class="checkImg-error-info">验证码错误</p>
 				</div>
 				<div class="login-item login-reset-password">
-					<a href="javascript:void(0);" class="btn btn-reset-password">忘记登录密码?</a>
+					<a href=<%=basePath + "jsp/forgetpw.jsp" %> class="btn btn-reset-password">忘记登录密码?</a>
 				</div>
 				<div class="login-item login-form-opeation">
 					<input type="submit" name="login" value="登录" class="form-submit" disabled="disabled" />
