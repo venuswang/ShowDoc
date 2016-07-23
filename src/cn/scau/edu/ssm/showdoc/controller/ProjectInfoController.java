@@ -117,4 +117,23 @@ public class ProjectInfoController {
         out.println(message);		
 	}
 	
+	//Ajax异步请求项目名是否被该用户创建过
+	@RequestMapping(value="/checkProject/{projectname}")
+	public void checkProject(HttpServletRequest request,HttpServletResponse response,@PathVariable("projectname") String projectname) throws Exception 
+	{
+		String vname = request.getParameter("vname");
+		String message = "";
+		if(projectname == null || vname == null ||  "".equals(projectname.trim()) || "".equals(vname.trim()))
+			message = "illegal";
+		boolean result = projectInfoService.queryProjectByName(projectname, vname);
+		if(result == false)
+			message = "fail";  //表示该项目名已经被该用户创建过
+		else
+			message = "success"; //表示该项目可以被该用户创建
+		response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = null;
+        out = response.getWriter();
+        out.println(message);		
+	}
 }
