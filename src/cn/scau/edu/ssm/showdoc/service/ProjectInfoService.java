@@ -7,4 +7,5 @@ import cn.scau.edu.ssm.showdoc.po.ProjectExtendClass;
 public interface ProjectInfoService {
 	public List<ProjectExtendClass> getProjectByName(String name) throws Exception;
 	public boolean insertProject(ProjectExtendClass project) throws Exception;
+	public boolean queryProjectByName(String projectname,String authorname) throws Exception;
 }
