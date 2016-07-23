@@ -73,7 +73,6 @@
 	<mvc:resources location="/images/" mapping="/images/**"/>
 	<mvc:resources location="/css/" mapping="/css/**"/>
 	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
-	
 	<!-- 配置拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
