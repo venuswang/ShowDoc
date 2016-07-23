@@ -16,6 +16,11 @@ public class UserProjectServiceImpl implements UserProjectService {
 		boolean flag = false;
 		if(userProject == null || userProject.getPid() == null || userProject.getVname() == null || "".equals(userProject.getVname().trim()))
 			throw new MyException("错误编号10010:userProject的字段不能为空...");
+		if(userProject.isIsinner() == false) {
+			int count = userProjectMapper.countProjectName(userProject);
+			if(count != 1)
+				return false;
+		}
 		int result = userProjectMapper.insertProjectName(userProject);
 		System.out.println(result);
 		if(result > 0)
@@ -28,11 +33,17 @@ public class UserProjectServiceImpl implements UserProjectService {
 		boolean flag = false;
 		if(userProject == null || userProject.getPid() == null || userProject.getVname() == null || "".equals(userProject.getVname().trim()))
 			throw new MyException("错误编号10010:userProject的字段不能为空...");
+		if(userProject.isIsinner() == false) {
+			int count = userProjectMapper.countProjectName(userProject);
+			if(count != 1)
+				return false;
+		}
 		int result = userProjectMapper.deleteProjectName(userProject);
 		System.out.println(result);
 		if(result > 0)
 			flag = true;
 		return flag;
 	}
-
+	
+	
 }

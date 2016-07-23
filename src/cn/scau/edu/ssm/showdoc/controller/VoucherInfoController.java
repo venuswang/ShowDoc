@@ -378,7 +378,7 @@ public class VoucherInfoController {
 	public String exitVoucher(HttpServletRequest request) throws Exception 
 	{
 		request.getSession().invalidate();
-		return "forward:jsp/login/exit.jsp";
+		return "forward:/jsp/login/exit.jsp";
 	}
 	
 	/**
