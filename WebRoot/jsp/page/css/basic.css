@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-weight: normal;
+  font-style: normal;
+  font-family: SimSun, 'PingFangSC-Regular', 'PingFang SC', "Microsoft YaHei", arial, sans-serif;
+  font-size: 14px;
+  background-color: #f6f6f6;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  vertical-align: middle;
+  font-weight: normal;
+}
+
+ol, ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+input, button, textarea, select {
+  font-size: 100%;
+  *font-size: 100%;
+  border: none;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after, q::before, q::after {
+  content: '';
+  content: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:active {
+  background-color: transparent;
+}
+
+fieldset, img {
+  border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
