@@ -105,6 +105,16 @@ document.getElementById("cover_close").onclick = function () { //遮罩层提示
 };
 
 
+    var cover_close2=document.getElementById("cover");
+    cover_close2.addEventListener("click",function(e){
+        if(e.target==cover_close2){
+            document.getElementById("cover").style.display="none";
+        }
+    });
+
+
+
+
 
 
 

@@ -155,6 +155,7 @@
     font-size: 16px;
     display: block;
     /*font-family: "幼圆";*/
+    margin-top: 7px;
 }
 
 .register_input_box{
@@ -174,7 +175,8 @@
     font-size: 16px;
     height: auto;
     width:235px;
-    margin-top: 25px;
+    margin-top: 20px;
+    margin-bottom: 7px;
     padding: 7px 9px;
     border:1px solid #000000;
 }
@@ -192,6 +194,7 @@
     text-align:center;
     display:inline-block;
     text-decoration:none;
+    margin-top: 7px;
 }
 
 .btn:hover{
@@ -361,6 +364,13 @@
     font-family: "幼圆";
     text-align: center;
     line-height: 270px;
+}
+
+#cover_close:hover{
+    cursor: pointer;
+}
+#cover_close:active{
+    cursor: pointer;
 }
 
 
