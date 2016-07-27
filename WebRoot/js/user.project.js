@@ -586,14 +586,34 @@ $(function(){
 				prourl = window.location.protocol + "//" + window.location.host + "/ShowDoc/" +
 				"project/checkProject/" + proname;
 
-			console.log( prourl );
+			// 异步验证项目名是否已经创建
 			$.ajax({
 				url: prourl,
 				type: "POST",
 				dataType: 'text',
 				success: function(data) {
 					var result = data.trim();
-					console.log( data );
+					if ( result === 'success' ) {
+
+						/**
+						 * 如果异步验证返回的是success，则表明此项目该用户还没创建过，表示可以创建
+						 */
+						console.log( 'success' );
+
+					} else if ( result === 'fail' ) {
+
+						/**
+						 * 如果异步验证返回的是fail，则表明此项目该用户已经创建过，不可再创建
+						 */
+						console.log( 'fail' );
+
+					} else if ( result === 'illegal' ) {
+
+						/**
+						 * 如果异步验证返回的是illegal，则表明此项目名格式错误，应该提醒用户重新输入项目名
+						 */
+						 console.log( 'illegal' );
+					}
 				}
 			});
 
