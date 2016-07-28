@@ -108,7 +108,7 @@
     right: 91px;
 }
 
-.box_titile{
+.box_title{
     width: 417px;
     height: 40px;
 }
@@ -372,3 +372,40 @@
 #cover_close:active{
     cursor: pointer;
 }
+
+#id_logo1{
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+}
+
+#id_logo2{
+    width: auto;
+    height: 80px;
+}
+#navigation_index {
+    color: #3091F2;
+}
+#navigation_col_index{
+    background-color: #3B97F5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,9 +10,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>ShowDoc</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
         <!--title旁边的logo-->
-    <link rel="stylesheet" href="css/basic.min.css" type="text/css">
-    <link rel="stylesheet" href="css/index1.css" type="text/css">
+    <link rel="stylesheet" href="css/basic.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/index1.css" type="text/css" />
+
     <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
+
 </head>
 <body>
     <div id="container">
@@ -21,28 +23,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="top_content">
                 <div class="logo">
                     <div class="img_logo">
-                        <img src="images/icon.fw.png" style="width: 64px;height: 64px;margin: 8px;">
+                        <img src="images/icon.fw.png" id="id_logo1">
                     </div>
                     <div class="img_logo">
-                        <img src="images/logo_title.fw.png" style="width: auto;height: 80px;">
+                        <img src="images/logo_title.fw.png" id="id_logo2">
                     </div>
                 </div>
                 <div class="navigation">
                     <!--navigation顶部导航栏-->
                     <ul>
-                        <li onclick="move(4)">关于我们</li>
-                        <li onclick="move(3)">帮助</li>
-                        <li onclick="move(2)">功能介绍</li>
-                        <li onclick="move(1)" style="color: #3091F2">首页</li>
+                        <li class="navigation_li">关于我们</li>
+                        <li class="navigation_li">帮助</li>
+                        <li class="navigation_li">功能介绍</li>
+                        <li class="navigation_li" id="navigation_index">首页</li>
                     </ul>
                 </div>
-                <div class="navigation_col" >
+                <div class="navigation_col">
                     <!--navigation_col侧导航栏-->
                     <ul>
-                        <li onclick="move(1)" style="background-color: #3B97F5">首页</li>
-                        <li onclick="move(2)">功能</li>
-                        <li onclick="move(3)">帮助</li>
-                        <li onclick="move(4)">关于</li>
+                        <li class="navigation_col_li" id="navigation_col_index">首页</li>
+                        <li class="navigation_col_li">功能</li>
+                        <li class="navigation_col_li">帮助</li>
+                        <li class="navigation_col_li">关于</li>
                     </ul>
                 </div>
 
@@ -51,11 +53,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="login">
             <div class="login_content">
                 <div class="login_box">
-                    <div class="box_titile">
-                        <div id="id_login_title" class="login_title c_title" onclick="change_login_input(1)" onmouseover="change_login_title(1)" onmouseout="change_login_title(0)">
-                            帐号登陆
+                    <div class="box_title">
+                        <div id="id_login_title" class="login_title c_title">
+                            帐号登录
                         </div>
-                        <div id="id_register_title" class="register_title" onclick="change_login_input(0)" onmouseover="change_register_title(1)" onmouseout="change_register_title(0)">
+                        <div id="id_register_title" class="register_title">
                             帐号注册
                         </div>
                     </div>
@@ -133,5 +135,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <script src="js/index1.js" type="text/javascript"></script>
+
 </body>
 </html>

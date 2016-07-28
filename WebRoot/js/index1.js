@@ -27,7 +27,7 @@ window.onscroll=function(){ //遮罩层和侧导航栏滚动监听
         timer=setTimeout(function(){
             navigation_col[0].style.bottom = -t + 20 + "px";
             cover.style.top=t+"px";
-        },30)
+        },350)
     }
 };
 
@@ -113,15 +113,36 @@ document.getElementById("cover_close").onclick = function () { //遮罩层提示
     });
 
 
+var navigation_li=document.getElementsByClassName("navigation_li");
+    for(var i = 0, len = navigation_li.length; i < len; i ++ ) {
+        (function (index) {
+            navigation_li[index].onclick = function () {
+                move(4-index);
+            };
+        })(i);
+    }
+
+var navigation_col_li=document.getElementsByClassName("navigation_col_li");
+    for(var i = 0, len = navigation_col_li.length; i < len; i ++ ) {
+        (function (index) {
+            navigation_col_li[index].onclick = function () {
+                move(index+1);
+            };
+        })(i);
+    }
+
+var id_login_title=document.getElementById("id_login_title");
+
+    id_login_title.onclick=function(){change_login_input(1);};
+    id_login_title.onmouseover=function(){change_login_title(1);};
+    id_login_title.onmouseout=function(){change_login_title(0);};
 
 
+var id_register_title=document.getElementById("id_register_title");
 
-
-
-
-
-
-
+    id_register_title.onclick=function(){change_login_input(0);};
+    id_register_title.onmouseover=function(){change_register_title(1);};
+    id_register_title.onmouseout=function(){change_register_title(0);};
 
 
 
