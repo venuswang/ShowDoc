@@ -1,0 +1,257 @@
+/*分享遮罩层*/
+#cover_share{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.7);
+    z-index: 6;
+
+    display:none;
+}
+#share_content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -150px;
+    margin-left: -275px;
+    width: 550px;
+    height:300px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+.share_title{
+    width: 550px;
+    height: 25px;
+    background-color: #dddddd;
+    text-align: right;
+    line-height: 25px;
+}
+#cover_share_close{
+    background-color: #989A9B;
+    display: inline-block;
+}
+#cover_share_close:hover{
+    cursor: pointer;
+}
+#cover_share_close:active{
+    cursor: pointer;
+}
+.share{
+    padding: 20px;
+}
+.share span{
+    background-color: #c8c8c8;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+}
+.share h3{
+    font-family: "幼圆";
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+
+/*导出遮罩层*/
+#cover_export{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.7);
+    z-index: 6;
+
+    display:none;
+}
+#export_content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -150px;
+    margin-left: -275px;
+    width: 550px;
+    height:300px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+.export_title{
+    width: 550px;
+    height: 25px;
+    background-color: #dddddd;
+    text-align: right;
+    line-height: 25px;
+}
+#cover_export_close{
+    background-color: #989A9B;
+    display: inline-block;
+}
+#cover_export_close:hover{
+    cursor: pointer;
+}
+#cover_export_close:active{
+    cursor: pointer;
+}
+.export{
+    padding:20px;
+}
+
+
+/*成员管理遮罩层*/
+#cover_member{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.7);
+    z-index: 6;
+
+    display:none;
+}
+#member_content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -300px;
+    margin-left: -275px;
+    width: 550px;
+    height:auto;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+.member_title{
+    width: 550px;
+    height: 25px;
+    background-color: #dddddd;
+    text-align: right;
+    line-height: 25px;
+}
+#cover_member_close{
+    background-color: #989A9B;
+    display: inline-block;
+}
+#cover_member_close:hover{
+    cursor: pointer;
+}
+#cover_member_close:active{
+    cursor: pointer;
+}
+.member{
+    padding:20px;
+}
+.member h3{
+    font-family: "幼圆";
+    font-weight: bold;
+    font-size: 24px;
+}
+.member h3 span{
+    font-size: 14px;
+    color: #989A9B;
+}
+
+/*转让遮罩层*/
+#cover_transfer{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.7);
+    z-index: 6;
+
+    display:none;
+}
+#transfer_content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -150px;
+    margin-left: -275px;
+    width: 550px;
+    height:300px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+.transfer_title{
+    width: 550px;
+    height: 25px;
+    background-color: #dddddd;
+    text-align: right;
+    line-height: 25px;
+}
+#cover_transfer_close{
+    background-color: #989A9B;
+    display: inline-block;
+}
+#cover_transfer_close:hover{
+    cursor: pointer;
+}
+#cover_transfer_close:active{
+    cursor: pointer;
+}
+.transfer{
+    padding:20px;
+}
+.transfer h3{
+    font-family: "幼圆";
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+/*删除遮罩层*/
+#cover_delete{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.7);
+    z-index: 6;
+
+    display:none;
+}
+#delete_content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -150px;
+    margin-left: -275px;
+    width: 550px;
+    height:300px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+.delete_title{
+    width: 550px;
+    height: 25px;
+    background-color: #dddddd;
+    text-align: right;
+    line-height: 25px;
+}
+#cover_delete_close{
+    background-color: #989A9B;
+    display: inline-block;
+}
+#cover_delete_close:hover{
+    cursor: pointer;
+}
+#cover_delete_close:active{
+    cursor: pointer;
+}
+.delete{
+    padding:20px;
+}
+.delete h3{
+    font-family: "幼圆";
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+
+
+
+
+
+
+
