@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉菜单</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/project_m.css">
+    <link type="text/css" rel="stylesheet" href="css/basic.css">
+</head>
+<body>
+
+    <!--下拉按钮-->
+    <div class="dropdown">
+        <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            项目
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li id="project_share"><a href="javascript:void(0);">分享</a></li>
+            <li id="project_export"><a href="javascript:void(0);">导出</a></li>
+            <li id="project_member"><a href="javascript:void(0);">成员管理</a></li>
+            <li id="project_transfer"><a href="javascript:void(0);">转让</a></li>
+            <li id="project_delete"><a href="javascript:void(0);">删除</a></li>
+            <li id="project_more"><a href="#">更多项目</a></li>
+        </ul>
+    </div>
+
+    <!--测试遮罩层滚动div-->
+    <div style="height: 2000px">
+
+    </div>
+
+    <!--分享遮罩层-->
+    <div id="cover_share">
+        <!--遮罩层提示框-->
+        <div id="share_content">
+            <div class="share_title"><span id="cover_share_close">&nbsp关闭&nbsp</span></div>
+            <div class="share">
+                <h3>分享</h3>
+                <hr/>
+                <p>项目地址：<span id="project_url">http://www.showdoc.cc/xxxxxx</span></p>
+                <p>你可以复制地址给你的好友</p>
+            </div>
+        </div>
+    </div>
+
+    <!--导出遮罩层-->
+    <div id="cover_export">
+        <!--遮罩层提示框-->
+        <div id="export_content">
+            <div class="export_title"><span id="cover_export_close">&nbsp关闭&nbsp</span></div>
+            <div class="export"></div>
+        </div>
+    </div>
+
+    <!--成员管理遮罩层-->
+    <div id="cover_member">
+        <!--遮罩层提示框-->
+        <div id="member_content">
+            <div class="member_title"><span id="cover_member_close">&nbsp关闭&nbsp</span></div>
+            <div class="member">
+                <h3>新增成员</h3>
+                <hr/>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">保存</button>
+                        </div>
+                    </div>
+                </form>
+
+                <h3>成员列表<span>（点击可删除）</span></h3>
+                <hr/>
+                <div id="member_list">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--转让遮罩层-->
+    <div id="cover_transfer">
+        <!--遮罩层提示框-->
+        <div id="transfer_content">
+            <div class="transfer_title"><span id="cover_transfer_close">&nbsp关闭&nbsp</span></div>
+            <div class="transfer">
+                <h3>转让</h3>
+                <hr/>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">验证身份</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">转让</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!--删除遮罩层-->
+    <div id="cover_delete">
+        <!--遮罩层提示框-->
+        <div id="delete_content">
+            <div class="delete_title"><span id="cover_delete_close">&nbsp关闭&nbsp</span></div>
+            <div class="delete">
+                <h3>删除项目</h3>
+                <hr/>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">验证你的身份</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="" placeholder="创建人登录密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">删除</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/project_m.js"></script>
+</body>
+</html>

@@ -46,8 +46,8 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 							</li>
 						</ul>			
 					</li>
-					<li class="nav-item">
-						<a href="javascript:void(0);" class="nav-btn">退出</a>
+					<li class="nav-item" id="user-exit">
+						<a href="javascript:void(0);" class="nav-btn btn-exit">退出</a>
 					</li>
 				</ul>
 			</nav>		
@@ -58,11 +58,12 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			<c:forEach items="${requestScope.projects}" var="project">
 				<li class="project-item">
 					<a href="<%=basePath %>jsp/project/showproject.jsp" class="project-btn btn-detail">
-						<c:out value="${project.projectname}"></c:out>
+						<p class="item-content-project">${project.projectname }</p>
+						<p class="item-content-author">项目所有者&nbsp;${project.authorname }</p>
 					</a>
 				</li>
 			</c:forEach>
-			<li class="project-item project-item-add">
+			<li class="project-item project-item-add" style="vertical-align: top;">
 				<a href="javascript:void(0);" class="project-btn">新建项目<span class="add-project-icon">&#xe904;</span></a>
 			</li>
 		</ul>

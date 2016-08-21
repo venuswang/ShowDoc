@@ -160,6 +160,12 @@ body {
   font-weight: 500;
   font-size: 14px;
 }
+.main .project-item .project-btn .item-content-project, .main .project-item .project-btn .item-content-author {
+  line-height: 50px;
+}
+.main .project-item .project-btn .item-content-author {
+  color: #C6BBBB;
+}
 .main .project-item .project-btn:hover {
   background-color: #F4F4F4;
 }

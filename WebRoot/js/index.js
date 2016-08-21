@@ -9,6 +9,7 @@ $(function(){
 		$tooltipText = $tooltip.find( '.tooltip-content' ),
 		$tooltipIcon = $tooltip.find( '.icon' ),
 		$btnLogin = $container.find( '.login-container' ).find( '.login-operations' ).find( '.btn-login' ),
+		$userPro = $container.find( '.login-container' ).find( '.login-operations' ).find( '.uer-protraint' ),
 		tooltipInfo = {
 			API: "服务端提供API,APP端或者网页前端便可方便调用数据,用ShowDoc可以非常方便快速地编写出美观的API文档.",
 			dictionary: "一份好的数据字典可以很方便地向别人说明你的数据库结构，如各个字段的释义等.",
@@ -258,4 +259,16 @@ $(function(){
 			return false;
 		});
 	});
+	
+	// 移入移除用户头像的动画
+	$userPro.hover(function(){
+		$(this).addClass('transition');
+	}, function(){
+		$(this).removeClass('transition');
+	}).on('click', function(event){
+		window.location.href = window.location.protocol + "//" + window.location.host +
+										"/ShowDoc/" + "project/showProject.action";
+		event.preventDefault();
+	});
+
 });
