@@ -1,5 +1,8 @@
 package cn.scau.edu.ssm.showdoc.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.scau.edu.ssm.showdoc.exception.MyException;
@@ -22,7 +25,7 @@ public class UserProjectServiceImpl implements UserProjectService {
 				return false;
 		}
 		int result = userProjectMapper.insertProjectName(userProject);
-		System.out.println(result);
+		//System.out.println(result);
 		if(result > 0)
 			flag = true;
 		return flag;
@@ -43,6 +46,19 @@ public class UserProjectServiceImpl implements UserProjectService {
 		if(result > 0)
 			flag = true;
 		return flag;
+	}
+
+	@Override
+	public List<UserProject> queryProjectName(UserProject userProject)
+			throws Exception {
+		List<UserProject> lists = null;
+		if(userProject == null || userProject.getPid() == null || userProject.getVname() == null || userProject.getVname().equals(""))
+			return new ArrayList<UserProject>();
+		int count = userProjectMapper.countProjectName(userProject);
+		if(count != 1)
+			return new ArrayList<UserProject>();
+		lists = userProjectMapper.queryProjectAuthorName(userProject);
+		return lists;
 	}
 	
 	

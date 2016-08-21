@@ -5,5 +5,18 @@ package cn.scau.edu.ssm.showdoc.po;
  *
  */
 public class PageExtendClass extends Page {
+
+	@Override
+	public String toString() {
+		return "PageExtendClass [getPageid()=" + getPageid()
+				+ ", getPageprojectid()=" + getPageprojectid()
+				+ ", getPagesubprejectid()=" + getPagesubprejectid()
+				+ ", getPageprojectpassword()=" + getPageprojectpassword()
+				+ ", getPagestatu()=" + getPagestatu() + ", getPagedate()="
+				+ getPagedate() + ", getPagetitle()=" + getPagetitle()
+				+ ", getPagesortid()=" + getPagesortid()
+				+ ", getPageauthorname()=" + getPageauthorname()
+				+ ", getPagecontext()=" + getPagecontext() + "]";
+	}
 	
 }

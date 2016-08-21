@@ -6,13 +6,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.scau.edu.ssm.showdoc.exception.MyException;
+import cn.scau.edu.ssm.showdoc.mapper.PageMapper;
 import cn.scau.edu.ssm.showdoc.mapper.ProjectExtendMapper;
 import cn.scau.edu.ssm.showdoc.mapper.ProjectMapper;
+import cn.scau.edu.ssm.showdoc.mapper.SubprojectMapper;
 import cn.scau.edu.ssm.showdoc.mapper.UserProjectMapper;
+import cn.scau.edu.ssm.showdoc.po.Page;
+import cn.scau.edu.ssm.showdoc.po.PageExample;
 import cn.scau.edu.ssm.showdoc.po.Project;
 import cn.scau.edu.ssm.showdoc.po.ProjectExample;
 import cn.scau.edu.ssm.showdoc.po.ProjectExample.Criteria;
 import cn.scau.edu.ssm.showdoc.po.ProjectExtendClass;
+import cn.scau.edu.ssm.showdoc.po.Subproject;
+import cn.scau.edu.ssm.showdoc.po.SubprojectExample;
 import cn.scau.edu.ssm.showdoc.po.UserProject;
 import cn.scau.edu.ssm.showdoc.service.ProjectInfoService;
 import cn.scau.edu.ssm.showdoc.service.UserProjectService;
@@ -26,6 +32,10 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 	private ProjectMapper projectMapper;
 	@Autowired
 	private UserProjectMapper userProjectMapper;
+	@Autowired
+	private PageMapper pageMapper;
+	@Autowired
+	private SubprojectMapper subprojectMapper;
 	
 	@Override
 	public List<ProjectExtendClass> getProjectByName(String name) throws Exception {
@@ -78,6 +88,18 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
 			int updateResult = projectMapper.updateByPrimaryKeySelective(record);
 			if(updateResult == 1) {
 				userProjectMapper.deleteProjectName(userproject);
+				PageExample example = new PageExample();
+				cn.scau.edu.ssm.showdoc.po.PageExample.Criteria pageCriteria = example.createCriteria();
+				pageCriteria.andPageprojectidEqualTo(pid).andPagestatuEqualTo(1);
+				Page pageRecord = new Page();
+				pageRecord.setPagestatu(0);
+				pageMapper.updateByExampleSelective(pageRecord, example);
+				SubprojectExample subExample = new SubprojectExample();
+				cn.scau.edu.ssm.showdoc.po.SubprojectExample.Criteria subCriteria = subExample.createCriteria();
+				subCriteria.andProjectidEqualTo(pid).andSubpstatuEqualTo(1);
+				Subproject subRecord = new Subproject();
+				subRecord.setSubpstatu(0);
+				subprojectMapper.updateByExampleSelective(subRecord, subExample);
 				result = true;
 			}
 		}	

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.scau.edu.ssm.showdoc.mapper.SubProjectExtendMapper" >
+ <insert id="insertSubProjectSelective" parameterType="subprojectExtendClass" >
+ 	<selectKey keyProperty="subprojectid" order="AFTER" resultType="java.lang.Integer">
+				SELECT LAST_INSERT_ID()
+	</selectKey>
+    insert into subproject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subprojectid != null" >
+        subprojectid,
+      </if>
+      <if test="subprojectname != null" >
+        subprojectname,
+      </if>
+      <if test="projectid != null" >
+        projectid,
+      </if>
+      <if test="sublevel != null" >
+        sublevel,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="subsortid != null" >
+        subsortid,
+      </if>
+      <if test="subpstatu != null" >
+        subpstatu,
+      </if>
+      <if test="subauthorname != null" >
+        subauthorname,
+      </if>
+      <if test="subprojectpassword != null" >
+        subprojectpassword,
+      </if>
+      <if test="subdate != null" >
+        subdate,
+      </if>
+      <if test="hassubproject != null" >
+        hassubproject,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subprojectid != null" >
+        #{subprojectid,jdbcType=INTEGER},
+      </if>
+      <if test="subprojectname != null" >
+        #{subprojectname,jdbcType=VARCHAR},
+      </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="sublevel != null" >
+        #{sublevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="subsortid != null" >
+        #{subsortid,jdbcType=INTEGER},
+      </if>
+      <if test="subpstatu != null" >
+        #{subpstatu,jdbcType=INTEGER},
+      </if>
+      <if test="subauthorname != null" >
+        #{subauthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="subprojectpassword != null" >
+        #{subprojectpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="subdate != null" >
+        #{subdate,jdbcType=DATE},
+      </if>
+      <if test="hassubproject != null" >
+        #{hassubproject,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

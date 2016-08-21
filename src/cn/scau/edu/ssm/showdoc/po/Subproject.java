@@ -2,15 +2,29 @@ package cn.scau.edu.ssm.showdoc.po;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup5;
+import cn.scau.edu.ssm.showdoc.validator.ValidGroup6;
+
 public class Subproject {
+	@Min(value=-1,groups={ValidGroup6.class},message="{subproject.subprojectid.min.error}")
     private Integer subprojectid;
 
+    @NotBlank(groups={ValidGroup5.class},message="{subproject.subprojectname.length.error}")
+    @Size(max=200,groups={ValidGroup5.class},message="{subproject.subprojectname.lenth.max}")
     private String subprojectname;
-
+    
+    @Min(value=-1,groups={ValidGroup5.class},message="{subproject.projectid.null.error}")
     private Integer projectid;
-
+    
+    @Min(value=-1,groups={ValidGroup5.class},message="{subproject.sublevel.null.error}")
     private Integer sublevel;
-
+    
+    @Min(value=-1,groups={ValidGroup5.class},message="{subproject.parentid.null.error}")
     private Integer parentid;
 
     private Integer subsortid;

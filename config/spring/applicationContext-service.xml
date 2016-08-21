@@ -17,4 +17,6 @@
 	<bean id="voucherInfoService" class="cn.scau.edu.ssm.showdoc.service.impl.VoucherInfoServiceImpl"></bean>
 	<bean id="projectInfoService" class="cn.scau.edu.ssm.showdoc.service.impl.ProjectInfoServiceImpl"></bean>
 	<bean id="userProjectService" class="cn.scau.edu.ssm.showdoc.service.impl.UserProjectServiceImpl"></bean>
+	<bean id="subProjectInfoService" class="cn.scau.edu.ssm.showdoc.service.impl.SubProjectInfoServiceImpl"></bean>
+	<bean id="pageInfoService" class="cn.scau.edu.ssm.showdoc.service.impl.PageInfoServiceImpl"></bean>
 </beans>

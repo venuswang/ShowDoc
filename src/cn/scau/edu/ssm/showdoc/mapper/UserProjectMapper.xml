@@ -12,4 +12,8 @@
 	<select id="countProjectName" parameterType="userProject" resultType="int">
 		select count(pid) from username_project where pid = #{pid} and vname = #{realname}
 	</select>
+	
+	<select id="queryProjectAuthorName" parameterType="userProject" resultType="userProject">
+		select * from username_project where pid = #{pid} and vname != #{vname}
+	</select>
 </mapper>

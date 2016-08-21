@@ -167,7 +167,8 @@ public class ProjectInfoController {
 		if(projectid == null || username == null || username.trim().equals("")) {
 			namelists = new ArrayList<UserProject>();
 		} else {
-			
+			UserProject userProject = new UserProject(projectid,username,username,false);
+			namelists = userProjectService.queryProjectName(userProject);
 		}
 		return namelists;
 	}

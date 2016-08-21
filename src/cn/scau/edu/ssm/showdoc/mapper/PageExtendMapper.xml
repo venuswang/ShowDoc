@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.scau.edu.ssm.showdoc.mapper.PageExtendMapper" >
+	<insert id="insertPage" parameterType="cn.scau.edu.ssm.showdoc.po.PageExtendClass" >
+	<selectKey keyProperty="pageid" order="AFTER" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+    insert into page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pageid != null" >
+        pageid,
+      </if>
+      <if test="pageprojectid != null" >
+        pageprojectid,
+      </if>
+      <if test="pagesubprejectid != null" >
+        pagesubprejectid,
+      </if>
+      <if test="pageprojectpassword != null" >
+        pageprojectpassword,
+      </if>
+      <if test="pagestatu != null" >
+        pagestatu,
+      </if>
+      <if test="pagedate != null" >
+        pagedate,
+      </if>
+      <if test="pagetitle != null" >
+        pagetitle,
+      </if>
+      <if test="pagesortid != null" >
+        pagesortid,
+      </if>
+      <if test="pageauthorname != null" >
+        pageauthorname,
+      </if>
+      <if test="pagecontext != null" >
+        pagecontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pageid != null" >
+        #{pageid,jdbcType=INTEGER},
+      </if>
+      <if test="pageprojectid != null" >
+        #{pageprojectid,jdbcType=INTEGER},
+      </if>
+      <if test="pagesubprejectid != null" >
+        #{pagesubprejectid,jdbcType=INTEGER},
+      </if>
+      <if test="pageprojectpassword != null" >
+        #{pageprojectpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="pagestatu != null" >
+        #{pagestatu,jdbcType=INTEGER},
+      </if>
+      <if test="pagedate != null" >
+        #{pagedate,jdbcType=DATE},
+      </if>
+      <if test="pagetitle != null" >
+        #{pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pagesortid != null" >
+        #{pagesortid,jdbcType=INTEGER},
+      </if>
+      <if test="pageauthorname != null" >
+        #{pageauthorname,jdbcType=VARCHAR},
+      </if>
+      <if test="pagecontext != null" >
+        #{pagecontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="selectPageByPid" parameterType="cn.scau.edu.ssm.showdoc.po.PageExtendClass" resultType="cn.scau.edu.ssm.showdoc.po.PageExtendClass">
+  	select pageid, pagetitle from page where pagesubprejectid = #{pagesubprejectid} and pagestatu = #{pagestatu} <!-- and pageauthorname = #{pageauthorname} -->
+  </select>
+</mapper>
