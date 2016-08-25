@@ -14,26 +14,77 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<link rel="stylesheet" href='<%=basePath + "css/basic.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/editormd.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/showproject.min.css" %>' />
-	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
-	<script src="<%=basePath + "js/editormd.min.js" %>"></script>
-	<script src="<%=basePath + "js/showproject.min.js" %>"></script>
+	<link href="http://cdn.bootcss.com/layer/2.4/skin/layer.min.css" rel="stylesheet">
+	
 </head>
 <body>
 	<header id="header">
 		<div class="common-middle">
-			<h1 class="middle-title">项目名称</h1>
+			<h1 class="middle-title"></h1>
 		</div>
 		<div class="common-right">
-			<a href="javascript:void(0);" class="btn">项目管理</a>
+			<a href="javascript:void(0);" class="btn btn-manage">项目管理</a>
+			<ul class="feature-list">
+				<span class="top-triangle"></span>
+				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-share" data-item="share">分享</a></li>
+				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-modify" data-item="modify">修改信息</a></li>
+				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-member" data-item="member">成员管理</a></li>
+				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-transfer" data-item="transfer">转让</a></li>
+				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-delete" data-item="delete">删除</a></li>
+			</ul>
 		</div>
 	</header><!-- /header -->
 	<div id="main">
 		<div class="sideNav">
 			<div class="add-page-item">
-				<a href="<%=basePath %>jsp/project/editproject.jsp" class="btn btn-add-page">新建页面</a>
+				<a href="<%=basePath %>jsp/project/editproject.jsp" class="btn btn-add-page" title="新建页面">新建页面<span class="add-project-icon">&#xe904;</span></a>
 			</div>
-			<nav id="page-nav">
-				<ul class="page-list">
+			<div class="add-dir-item">
+				<a href="javascript:void(0);" title="新建目录" class="btn btn-add-dir">新建目录<span class="add-project-icon">&#xe907;</span></a>
+			</div>
+			<nav id="project-nav">
+				<ul class="project-list" id="project-list">
+					<li class="dir-item">
+						<a href="javascript:void(0);" class="btn btn-dir"><span class="triangle"></span>目录1</a>
+						<ul class="project-list">
+							<li class="dir-item">
+								<a href="javascript:void(0);" class="btn btn-dir">子目录2</a>
+							</li>
+							<li class="dir-item">
+								<a href="javascript:void(0);" class="btn btn-dir">子目录3</a>
+							</li>
+							<li class="page-item">
+								<a href="javascript:void(0);" class="btn btn-page active">子页面标题1</a>
+							</li>
+							<li class="page-item">
+								<a href="javascript:void(0);" class="btn btn-page">子页面标题2</a>
+							</li>
+						</ul>
+					</li>
+					<li class="dir-item">
+						<a href="javascript:void(0);" class="btn btn-dir">目录2</a>
+					</li>
+					<li class="dir-item">
+						<a href="javascript:void(0);" class="btn btn-dir">目录3</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page active">页面标题1</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page">页面标题2</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page">页面标题3</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page active">页面标题1</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page">页面标题2</a>
+					</li>
+					<li class="page-item">
+						<a href="javascript:void(0);" class="btn btn-page">页面标题3</a>
+					</li>
 					<li class="page-item">
 						<a href="javascript:void(0);" class="btn btn-page active">页面标题1</a>
 					</li>
@@ -48,7 +99,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 		</div>
 		<div class="show-content">
 			<!-- 操作 -->
-			<div class="content-operation">
+			<div class="content-operations">
 				<a href="javascript:void(0);" class="btn btn-share">分享</a>
 				<a href="javascript:void(0);" class="btn btn-copy">复制</a>
 				<a href="javascript:void(0);" class="btn btn-edit">编辑</a>
@@ -64,8 +115,20 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			<div id="markdown-content">
 					
 			</div>
-			</div>
 		</div>
 	</div>
+	<div id="mask" data-event="close"></div>
+
+	<!-- bulid in project -->
+	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
+	<script src="<%=basePath + "js/editormd.min.js" %>"></script>
+
+	<!-- CDN resources -->
+	<script src="http://cdn.bootcss.com/layer/2.4/layer.min.js"></script>
+	<!-- end CDN resources -->
+
+	<script src="<%=basePath + "js/showproject.min.js" %>"></script>
+	<!-- end bulid in project -->
+
 </body>
 </html>

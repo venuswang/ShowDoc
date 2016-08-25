@@ -72,3 +72,43 @@ body {
   background-color: #D5D2D2;
   color: #666;
 }
+
+.markdown-body table tr {
+  border-top: 0;
+}
+.markdown-body table th {
+  border: none;
+}
+.markdown-body table td {
+  border: none;
+}
+.markdown-body thead th {
+  background-color: #7BDFF7;
+}
+.markdown-body thead th:first-child {
+  border-radius: 5px 0 0 0;
+}
+.markdown-body thead th:last-child {
+  border-radius: 0 5px 0 0;
+}
+.markdown-body tbody tr:nth-child(odd) {
+  background-color: #EAF899;
+}
+.markdown-body tbody tr:nth-child(even) {
+  background-color: #A5FBD6;
+}
+.markdown-body tbody tr:hover {
+  background-color: #A1E1CC;
+}
+.markdown-body tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+.markdown-body tbody tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+.markdown-body code {
+  color: #FA8C4E;
+}
+.markdown-body pre.prettyprinted {
+  box-shadow: 0 0 0 #ddd, 0 0 1px #ddd, 0 0 2px #ddd, 0 0 3px #ddd, 0 0 4px #ddd, 0 0 5px #ddd;
+}

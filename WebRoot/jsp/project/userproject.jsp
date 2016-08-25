@@ -57,7 +57,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 		<ul class="project-list">
 			<c:forEach items="${requestScope.projects}" var="project">
 				<li class="project-item">
-					<a href="<%=basePath %>jsp/project/showproject.jsp" class="project-btn btn-detail">
+					<a href="<%=basePath %>jsp/project/showproject.jsp?id=${project.id}&projectname=${project.projectname}&check=${project.projectpassword}" class="project-btn btn-detail">
 						<p class="item-content-project">${project.projectname }</p>
 						<p class="item-content-author">项目所有者&nbsp;${project.authorname }</p>
 					</a>
