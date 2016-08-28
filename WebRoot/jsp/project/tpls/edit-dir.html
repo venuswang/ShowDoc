@@ -1,8 +1,8 @@
-<div class="create-dir-container">
+<div class="edit-dir-container">
 	<!-- title -->
-	<h2 class="title">新建目录</h2>
+	<h2 class="title">编辑目录</h2>
 	<!-- create dir form -->
-	<form class="create-dir-form">
+	<form class="edit-dir-form">
 		<!-- 目录名 -->
 		<div class="form-item">
 			<label for="_dirname" class="item-label">目<span class="space">录</span>名</label>
@@ -22,7 +22,8 @@
 		</div>
 		<!-- 表单操作 -->
 		<div class="form-operation">
-			<input type="submit" value="创建" class="form-submit" data-event="createdir" />
+			<a href="javascript:void(0);" class="btn btn-update" data-event="updatedir">保存</a>
+			<a href="javascript:void(0);" class="btn btn-delete" data-event="deletedir">删除此目录</a>
 		</div>
 	</form><!-- end create dir form -->
 	<!-- 该项目下已经存在的目录 -->
