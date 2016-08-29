@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -62,36 +63,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
                     </div>
                     <div id="id_login_input" class="login_input">
-                        <div class="login_input_box">
-                            <form class="form-signin">
-                                <div class="login-item">
-                                    <input type="text" name="username" placeholder="账号" id="login-username" class="item-content" />
+                        
+                         <c:choose>
+                            <c:when test="${sessionScope.loginStatu == null || sessionScope.username == null || sessionScope.userid == null || sessionScope.images == null}">
+                                <div class="login_input_box">
+                                    <form class="form-signin">
+                                        <div class="login-item">
+                                            <input type="text" name="username" placeholder="账号" id="login-username" class="item-content" />
+                                        </div>
+                                        <div class="login-item">
+                                            <input type="password" name="password" placeholder="密码" id="login-password" class="item-content" /> 
+                                        </div>
+                                        <div class="login-item">
+                                            <input type="text" name="vcode" placeholder="验证码" class="item-content" id="login-checkImg" />
+                                            <img src="" alt="验证码" name="checkImg" id="show-checkImg" />
+                                        </div>
+                                        <button class="btn form-submit" type="submit" name="login">登录</button>
+                                        <a href="javascript:void(0);" id="forget_pw">忘记密码?</a>
+                                    </form>
                                 </div>
-                                <div class="login-item">
-                                    <input type="password" name="password" placeholder="密码" id="login-password" class="item-content" /> 
-                                </div>
-                                <div class="login-item">
-                                    <input type="text" name="vcode" placeholder="验证码" class="item-content" id="login-checkImg" />
-                                    <img src="" alt="验证码" name="checkImg" id="show-checkImg" />
-                                </div>
-                                <button class="btn form-submit" type="submit" name="login">登录</button>
-                                <a href="javascript:void(0);" id="forget_pw">忘记密码?</a>
-                            </form>
-                        </div>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<%=basePath + "project/showProject.action" %>" class="btn btn-project" style="border-radius: 10px;margin: 100px;">我的项目</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div id="id_register_input" class="register_input c_input">
                         <div class="register_input_box">
-                            <!--<form class="form-signin" method="post">-->
-                                <!--&lt;!&ndash;<input type="text" class="input-block-level" name="username" placeholder="用户名（可填英文昵称或邮箱）">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="password" class="input-block-level" name="password"  placeholder="密码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="password" class="input-block-level" name="confirm_password"  placeholder="再次输入密码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="text" class="input-block-level" name="v_code"  placeholder="验证码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<div class="control-group">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="controls">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<img src="#" id="v_code_img">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</form>-->
                             <a href="<%=basePath + "jsp/login/register.jsp" %>"><button class="btn" type="submit">马上注册</button></a>
                             <!--跳转到注册页面-->
                         </div>
@@ -99,8 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 </div>
             </div>
+            
         </div>
-
+        
         <div class="introduction1">
             <div class="introduction1_content">
 
