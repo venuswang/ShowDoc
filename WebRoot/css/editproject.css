@@ -62,7 +62,8 @@ body {
   padding: 8px 15px;
   border-radius: 5px;
   color: #888;
-  background-color: #CFCDCD;
+  background-color: #FFF;
+  border: 1px solid #DDD;
   display: inline-block;
   *display: inline;
   *zoom: 1;
@@ -70,7 +71,7 @@ body {
 }
 #project-form .form-markdown-operations .btn:hover {
   color: #666;
-  background-color: #B3B2B2;
+  background-color: #F2F1F1;
 }
 #project-form .items-label {
   font-size: 16px;
@@ -90,7 +91,7 @@ body {
   box-shadow: 0 0 0 #0AE, 0 0 1px #0AE, 0 0 2px #0AE, 0 0 3px #0AE, 0 0 4px #0AE, 0 0 5px #0AE, 0 0 6px #0AE;
 }
 #project-form .item-content#_pageparent {
-  min-width: 494px;
+  min-width: 464px;
 }
 
 .markdown-body table tr {
@@ -112,13 +113,13 @@ body {
   border-radius: 0 5px 0 0;
 }
 .markdown-body tbody tr:nth-child(odd) {
-  background-color: #EAF899;
+  background-color: #FFF;
 }
 .markdown-body tbody tr:nth-child(even) {
-  background-color: #A5FBD6;
+  background-color: #F6F3F3;
 }
 .markdown-body tbody tr:hover {
-  background-color: #A1E1CC;
+  background-color: #F0EDED;
 }
 .markdown-body tbody tr:last-child td:first-child {
   border-radius: 0 0 0 5px;

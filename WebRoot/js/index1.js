@@ -144,7 +144,182 @@ var id_register_title=document.getElementById("id_register_title");
     id_register_title.onmouseover=function(){change_register_title(1);};
     id_register_title.onmouseout=function(){change_register_title(0);};
 
+// 登录逻辑
+var $doc = $(document), // 保存document引用，优化
+    $body = $doc.find('body'),   // 保存 body
+    $login = $body.find('#id_login_input'),  // 登录容器
+    $form = $login.find('.form-signin'),     // 登录表单
+    $username = $form.find('#login-username'),  // 用户名
+    $password = $form.find('#login-password'),  // 密码
+    $vCode = $form.find('#login-checkImg'),     // 验证码
+    $checkImg = $form.find('#show-checkImg'),   // 验证码图片
+    $loginSubmit = $form.find( '.form-submit'),     // 登录按钮
+    srcUrl = window.location.protocol + "\/\/" + window.location.host + "/ShowDoc/" + 
+            "voucher/getCaptchar.action?temp=" +  (new Date().getTime().toString(36)), // 拿取验证图片的url
+    codeUrl = window.location.protocol + "\/\/" + window.location.host +    
+                        "/ShowDoc/voucher/getVcode.action",             // 拿取验证码的url
+    $tmpImg = $('<img />'),                                             // 临时预加载图片的元素
+    isdealinglogin = false;                                             // 控制处理登录，防止多次点击有效
 
+    $vCode.val("");
+
+    // 去加载验证码
+    $tmpImg.on('load', function(){
+        $checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+
+    });
+    $tmpImg.attr('src', srcUrl);
+
+    // 点击图片时刷新验证码
+    $checkImg.on('click', function(){
+
+        // 点击时更新时间获取不同的验证码
+        srcUrl = window.location.protocol + "\/\/" + window.location.host +
+                    "\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+                    (new Date().getTime().toString(36));
+
+        $tmpImg.on('load', function(){
+            $checkImg.attr("src", srcUrl); // 将获取的验证码图片显示出来
+        });
+
+        // 开始加载验证码
+        $tmpImg.attr('src', srcUrl);
+    });
+
+    // 绑定submit事件
+    $loginSubmit.on('click', function( event ){
+        
+        // 如果没有在处理一个登录事件，则接受并处理
+        if ( !isdealinglogin ) {
+
+            isdealinglogin = true;      // 控制反转，正在处理登录事件，则不应多次处理
+
+            var url = window.location.protocol + "//" + window.location.host + "/ShowDoc/voucher/checkVoucher.action",  // 处理登录的url
+                username = $username.val() || '',     // 用户名
+                password = $password.val() || '',     // 密码
+                vcode = $vCode.val() || '',           // 验证码
+                params = {
+                    username: username,
+                    password: password,
+                    vcode: vcode
+                };                          // 需要post的参数
+             
+             // 如果检测到用户没有输入用户名，则不再进行后续处理，并小提示框告诉用户输入用户名
+             if ( username === undefined || username === '' ) {
+                layer.msg( '用户名不能为空', {
+                    time: 1500
+                });
+                isdealinglogin = false;     // 控制反转，说明可以接受点击事件，并处理
+
+                return false;
+             } 
+
+            // 如果检测到用户没有输入密码，则不再进行后续处理，并小提示框告诉用户输入密码
+             if ( password === undefined || password === '' ) {
+                layer.msg( '密码不能为空', {
+                    time: 1500
+                });
+                isdealinglogin = false;     // 控制反转，说明可以接受点击事件，并处理
+
+                return false;
+             } 
+
+             // 如果检测到用户没有输入验证码，则不再进行后续处理，并小提示框告诉用户输入验证码
+             if ( vcode === undefined || vcode === '' ) {
+                layer.msg( '请输入验证码', {
+                    time: 1500
+                });
+                isdealinglogin = false;     // 控制反转，说明可以接受点击事件，并处理
+
+                return false;
+             }
+
+            // 先检测验证码，异步链编程模式
+            $.ajax({
+                url: codeUrl,
+                type: "GET",
+                dataType: "text"
+            })
+            .then(function( data ){
+                var result = data.trim();
+
+                // 如果验证码正确，则继续维持异步链中的状态
+                if ( vcode === result ) {
+                    $.Deferred().resolve();
+                } else {
+
+                    // 如果验证码不对，则小提示框显示
+                    layer.msg( '验证码错误', {
+                        time: 1500
+                    });
+
+                    // 修改异步链的对象直接为fail，不再进行后面异步链中相关操作的执行
+                    $.Deferred().reject();  
+                }
+            })
+            .then(function(){
+
+                // 当前面的异步链都成功执行，并且状态没有变为reject，才执行到这来
+                // 发送登录的请求
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    dataType: "text",
+                    data: params,
+                    success: function( data ){
+
+                        var result = data.trim(),
+                            results = result.split(",");
+
+                        isdealinglogin = false;     // 控制反转，说明可以接受点击事件，并处理
+
+                        // 如果成功，需要进行跳转
+                        if ( results[0] === "success" ) {
+
+                            var nextUrl = window.location.protocol + "//" + window.location.host +
+                                        "/ShowDoc/" + results[1];
+
+                            window.location.href = nextUrl;
+                        } else if ( (results[0] === "fail" && results[1] === undefined ) || results[0] === "illegal") {
+
+                            // 如果登录不成，则给出小提示框显示原因
+                            layer.msg( '账号或密码错误', {
+                                time: 1500
+                            });
+
+                        } else if ( results[0] === "fail" && results[1].length > 0 ) {
+
+                            // 如果验证码错误，则也给出原因
+                            layer.msg( '验证码错误', {
+                                time: 1500
+                            });
+
+                        }else {
+                            var nospace = data.replace(/\s/, ""),
+                                leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
+                                rightPos = nospace.lastIndexOf("<\/h3>"),
+                                errorText = nospace.substring(leftPos, rightPos),
+                                currentUrl = window.location.protocol + "//" + window.location.host +
+                                            "/ShowDoc/",
+                                errorUrl = currentUrl + "exception/operateVoucherHandle.action?message=" +
+                                            errorText;
+                
+                            // 改变当前 url
+                            window.location.href = errorUrl;
+                        }
+                    },
+                    error: function( xhr ) {
+                    }
+                });
+            });
+        }
+        
+        // 取消事件的默认行为，以及阻止冒泡
+        event.preventDefault();
+        event.stopPropagation();
+
+        return false;
+    });
 
 
 

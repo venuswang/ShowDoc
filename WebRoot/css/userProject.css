@@ -178,7 +178,7 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(203, 203, 203, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 #mask-container #person-info, #mask-container #modify-person-info, #mask-container #modify-person-password {
   background-color: #fff;
@@ -211,6 +211,12 @@ body {
   line-height: 1.5;
   letter-spacing: .05em;
   font-size: 16px;
+}
+#person-info .info-item.deal-overflow {
+  width: 69%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #person-info .info-item .item-name-title {
   letter-spacing: 0.5em;

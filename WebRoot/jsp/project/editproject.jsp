@@ -24,12 +24,12 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			<div class="form-layout">
 				<!-- 标题 -->
 				<div class="form-items form-items-title">
-					<label for="_pagetitle" class="items-label">页面标题</label>
+					<label for="_pagetitle" class="items-label">标题</label>
 					<input type="text" name="pagetitle" placeholder="请输入页面标题"  class="item-content" id="_pagetitle" />
 				</div>
 				<!-- 排序数字 -->
 				<div class="form-items form-items-sort">
-					<label for="_pagesortid" class="items-label">页面序号</label>
+					<label for="_pagesortid" class="items-label">序号</label>
 					<input type="number" name="pagesortid" placeholder="序号（可选）用于排序" class="item-content" id="_pagesortid" />
 				</div>
 				<!-- 表单操作 -->

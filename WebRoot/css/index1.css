@@ -1,3 +1,4 @@
+
 *{
     margin: 0px;
     padding: 0px;
@@ -195,6 +196,7 @@
     display:inline-block;
     text-decoration:none;
     margin-top: 7px;
+    cursor: pointer;
 }
 
 .btn:hover{
@@ -388,6 +390,19 @@
 }
 #navigation_col_index{
     background-color: #3B97F5;
+}
+.login-item {
+	position: relative;
+}
+.login-item #show-checkImg {
+  height: 34px;
+  width: 85px;
+  border-radius: 0 3px 3px 0;
+  position: absolute;
+  right: 23px;
+  top: 20px;
+  border: none;
+  cursor: pointer;
 }
 
 

@@ -15,10 +15,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<link rel="stylesheet" href='<%=basePath + "css/userProject.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/sumoselect.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/create.project.min.css" %>' />
-	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
-	<script src="<%=basePath + "js/jquery.sumoselect.min.js" %>"></script>
-	<script src="<%=basePath + "js/jquery.validate.min.js" %>"></script>
-	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
+	<link href="http://cdn.bootcss.com/layer/2.4/skin/layer.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1 class="modify-info-result">${requestScope.messages}</h1>
@@ -72,11 +69,11 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 		<!-- 个人信息 -->
 		<div id="person-info" data-user="${sessionScope.userid}">
 			<ul class="info-list">
-				<li class="info-item">
+				<li class="info-item deal-overflow">
 					<span class="item-name-title">用户名</span>
 					<span class="item-name-content">张作豪</span>
 				</li>
-				<li class="info-item">
+				<li class="info-item deal-overflow">
 					<span class="item-email-title">邮箱</span>
 					<span class="item-email-content">2456898390@qq.com</span>
 				</li>
@@ -212,5 +209,12 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			</div>
 		</form>
 	</div>
+	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
+	<script src="<%=basePath + "js/jquery.sumoselect.min.js" %>"></script>
+	<script src="<%=basePath + "js/jquery.validate.min.js" %>"></script>
+	<!-- CDN resources -->
+	<script src="http://cdn.bootcss.com/layer/2.4/layer.min.js"></script>
+	<!-- end CDN resources -->
+	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </body>
 </html>

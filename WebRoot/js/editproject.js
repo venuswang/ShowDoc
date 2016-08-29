@@ -19,7 +19,8 @@ $(function(){
                                 "/ShowDoc" + "/subProject/getAllProject/",  // 获取所有目录的url
         iscreatingpage = false,                                      // 控制是否正在创建页面，防止多次点击
         pageinfourl = window.location.protocol + "//" + window.location.host +
-                                "/ShowDoc/page/selectPageById/"; // 获取页面相应信息的url
+                                "/ShowDoc/page/selectPageById/", // 获取页面相应信息的url
+        markdownInitialized = false;                            // markdown编辑区是否完成初始化
 
 
     var temps = urlParams.replace(/\?\s*/g, '').split('&');     // 把参数分割成数组
@@ -106,13 +107,16 @@ $(function(){
                                 height          : 720,        
                                 path            : "../lib/",
                                 htmlDecode      : "style,script,iframe",
-                                placeholder     : "用mardown语法编辑你的项目,右边可以实时预览" 
+                                placeholder     : "用mardown语法编辑你的项目,右边可以实时预览",
+                                onload: function(){
+                                     markdownInitialized = true;     // markdown编辑区已经完成初始化
+                                } 
                             });
                         },
                         error: function( error ) {
                             // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
                             layer.msg('登录信息失效，请返回首页重新登录',{
-                                timeout: 3000
+                                time: 2000
                             }, function(){
                                 window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
                             });
@@ -135,7 +139,10 @@ $(function(){
             height          : 720,        
             path            : "../lib/",
             htmlDecode      : "style,script,iframe",
-            placeholder     : "用mardown语法编辑你的项目,右边可以实时预览" 
+            placeholder     : "用mardown语法编辑你的项目,右边可以实时预览",
+            onload: function(){
+                markdownInitialized = true;     // markdown编辑区已经完成初始化
+            } 
         });
         // 从后台拿到某个项目下已经存在的目录，添加到下拉框中，以及显示到已有目录列表中
         $.ajax({
@@ -156,7 +163,7 @@ $(function(){
             error: function( error ) {
                 // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
                 layer.msg('登录信息失效，请返回首页重新登录',{
-                    timeout: 3000
+                    time: 2000
                 }, function(){
                     window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
                 });
@@ -170,22 +177,38 @@ $(function(){
 
         switch( data ) {
             case 'API': 
-                $.get('./tpls/api.md', function( md ){
-                    editor.appendMarkdown( md );    // 把API模板导入markdown编辑器中
-                });
+                if ( markdownInitialized ) {
+
+                    /**
+                     * 如果mardown编辑已经完成初始化，则受理此次点击事件，否则不受理
+                     */
+                    $.get('./tpls/api.md', function( md ){
+                        editor.clear();
+                        editor.appendMarkdown( md );
+                    });
+                } else {
+                    // 当markdown还没有完成初始化时，给用户一个小提示告知还没完成初始化
+                    layer.msg( 'markdown编辑区还未能完成初始化，请您在给它一点时间啦!',{
+                        time: 1500
+                    });
+                }
                 break;
             case 'data':
-                $.get('./tpls/data.md', function( md ){
-                    editor.appendMarkdown( md );    // 把数据字典模板导入markdown编辑器中
-                });
-                break;
-            case 'json': 
-                // JSON转参数表格
-                console.log( 'json' );
+                if ( markdownInitialized ) {
+                    $.get('./tpls/data.md', function( md ){
+                        editor.clear();
+                        editor.appendMarkdown( md );    // 把数据字典模板导入markdown编辑器中
+                    });
+                } else {
+                    // 当markdown还没有完成初始化时，给用户一个小提示告知还没完成初始化
+                    layer.msg( 'markdown编辑区还未能完成初始化，请您在给它一点时间啦!',{
+                        time: 1500
+                    });
+                }
                 break;
             case 'http': 
                 // 在线测试 http 请求
-                console.log( 'http' );
+                /*console.log( 'http' );*/
                 break;
         }
     });
@@ -248,7 +271,7 @@ $(function(){
                              * 如果创建页面成功，则弹出一个小弹窗显示成功创建，提示框3秒后自动关闭
                              */
                             layer.msg('已成功更新页面并保存',{
-                                time: 3000
+                                time: 1000
                             }, function(){
                                 // 创建页面成功后返回用户该项目的主页面
                                 var pUrl = window.location.protocol + "//" + window.location.host +
@@ -263,7 +286,7 @@ $(function(){
                              * 如果创建目录失败，则弹出一个小弹窗显示失败的原因
                              */
                             layer.msg(data.message,{
-                                time: 3000
+                                time: 1500
                             }); 
                         }
                     },
@@ -290,7 +313,7 @@ $(function(){
                              * 如果创建页面成功，则弹出一个小弹窗显示成功创建，提示框3秒后自动关闭
                              */
                             layer.msg('已成功创建页面并保存',{
-                                time: 3000
+                                time: 1000
                             }, function(){
                                 // 创建页面成功后返回用户该项目的主页面
                                 var pUrl = window.location.protocol + "//" + window.location.host +
@@ -305,7 +328,7 @@ $(function(){
                              * 如果创建目录失败，则弹出一个小弹窗显示失败的原因
                              */
                             layer.msg(data.message,{
-                                time: 3000
+                                time: 1500
                             }); 
                         }
                     },

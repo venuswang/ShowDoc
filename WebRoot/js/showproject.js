@@ -43,6 +43,7 @@ $(function() {
         isdeletinguser = false,     // 控制变量，防止多次点击删除项目协作者的点击事件有效
         pageId = '',                // 记录当前的pageid
         isupdatingdir = false;      // 控制阻止多次点击更新目录信息的保存按钮事件有效
+        isdeletingdir = false;      // 控制阻止多次点击删除目录的按钮事件有效
 
     var temps = urlParams.replace(/\?\s*/g, '').split('&');     // 把参数分割成数组
 
@@ -302,7 +303,7 @@ $(function() {
                                         $dirList.html( dirlisthtmlDom );    // 填充内容到目录列表
 
                                         // 添加后要重新设置遮罩层的高度，防止被表单高度超过
-                                        height = $contrainer.height() + (wh - height > 0 ? wh - height : 20 );
+                                        height = $contrainer.height() + (wh - height > 0 ? (wh - height)/2 : 20 );
                                         mh = mh > height ? mh : height;
                                         $mask.css( 'height', mh );
                                     },
@@ -312,7 +313,7 @@ $(function() {
                                 });
 
                                 layer.msg('已成功创建目录',{
-                                    time: 1500
+                                    time: 1000
                                 }, function(){
 
                                     // 新增了一个目录，要把新增的相应的父目录的id添加到dirchanges数组中
@@ -328,7 +329,7 @@ $(function() {
                                  * 如果创建目录失败，则弹出一个小弹窗显示失败的原因
                                  */
                                 layer.msg(data.message,{
-                                    time: 2000
+                                    time: 1500
                                 }); 
                             }
 
@@ -344,7 +345,7 @@ $(function() {
                     project = $showContent.data('project'),     // page 所在的项目id
                     removeparentid = $showContent.data('parent'), // 将要删除的页面所属的目录id
                     removeUrl = window.location.protocol + "//" + window.location.host +
-                                "/ShowDoc/page/deletePageById/" + removepageid + '/' + project; // 处理这个请求的服务地址
+                                "/ShowDoc/page/deletePageById/" + pageId + '/' + projectid; // 处理这个请求的服务地址
 
                 // 往服务器发送请求，处理删除这个pgae
                 $.ajax({
@@ -379,7 +380,7 @@ $(function() {
 
                         // 成功后小提示框提示用户操作后返回的信息
                         layer.msg( data.message, {
-                            timeout: 2000
+                            time: 1000
                         });
                     },
                     error: function( error ){
@@ -450,7 +451,7 @@ $(function() {
 
                                 // 提示框
                                 layer.msg( '已成功添加项目协作者并保存', {
-                                    timeout: 3000
+                                    time: 1000
                                 }, function(){
                                     isaddinguser = false;   // 控制isaddinguser反转，表示可以接受新的点击事件
                                 });
@@ -460,19 +461,19 @@ $(function() {
                                  * 如果添加失败，则给出相应的失败的原因
                                  */
                                 layer.msg( '对不起！添加失败啦<br/>可能的原因：项目不存在或您没有添加协作者的权限', {
-                                    timeout: 3000
+                                    time: 1500
                                 }, function(){
                                     isaddinguser = false;   // 控制isaddinguser反转，表示可以接受新的点击事件
                                 });
                             } else if( result === 'illegal' ) {
                                 layer.msg( '请输入协作者的用户名', {
-                                    timeout: 3000
+                                    time: 1500
                                 }, function(){
                                     isaddinguser = false;   // 控制isaddinguser反转，表示可以接受新的点击事件
                                 });
                             } else {
                                 layer.msg( '该用户名不存在或者已经添加过该用户啦', {
-                                    tiemout: 3000
+                                    tiemout: 1500
                                 }, function(){
                                     isaddinguser = false;   // 控制isaddinguser反转，表示可以接受新的点击事件
                                 });
@@ -538,7 +539,7 @@ $(function() {
 
                                 // 提示框
                                 layer.msg( '已成功删除项目协作者', {
-                                    timeout: 3000
+                                    time: 1000
                                 }, function(){
                                     isdeletinguser = false;   // 控制isdeletinguser反转，表示可以接受新的点击事件
                                 });
@@ -548,13 +549,13 @@ $(function() {
                                  * 如果添加失败，则给出相应的失败的原因
                                  */
                                 layer.msg( '对不起！删除失败啦<br/>可能的原因：项目不存在或您没有删除协作者的权限', {
-                                    timeout: 3000
+                                    time: 2000
                                 }, function(){
                                     isdeletinguser = false;   // 控制isdeletinguser反转，表示可以接受新的点击事件
                                 });
                             } else {
                                 layer.msg( '该用户名不存在或者已经删除过该用户啦', {
-                                    tiemout: 3000
+                                    tiemout: 1500
                                 }, function(){
                                     isdeletinguser = false;   // 控制isdeletinguser反转，表示可以接受新的点击事件
                                 });
@@ -568,7 +569,8 @@ $(function() {
                 break;
             case 'editdir':             // 编辑目录事件
                 var $createDir = $mask.find('.create-dir-container'),   // 创建目录的容器
-                    dirId = $target.data('parent');     // 目录id
+                    dirId = $target.data('parent'),     // 目录id
+                    top = 0;                            // 记录偏移位置
 
                 if ( $createDir.length < 1) {   
 
@@ -576,6 +578,9 @@ $(function() {
                     // 则此时出发的编辑事件，仍然是在编辑目录容器里出发的
                     $createDir = $mask.find('.edit-dir-container');
                 }
+
+                top = $createDir.position().top;    // 记录原来新建/编辑目录的容器的top的偏移位置的值
+
                 $createDir.fadeOut(function(){
                     $mask.load('./tpls/edit-dir.html', function( response, status, xhr ){
                         var $editContainer = $mask.find('.edit-dir-container'),     // 编辑目录的容器
@@ -591,6 +596,11 @@ $(function() {
                         // 把要操作的目录的id保存到$editContainer容器上
                         $editContainer.attr('data-dirid', dirId);
 
+                        // 先隐藏容器并且偏移到指定位置
+                        $editContainer.css({
+                            opacity: '0',
+                            top: top
+                        });
                         // 从后台获取目录信息的请求
                         $.ajax({
                             url: dirInfoUrl,
@@ -604,6 +614,9 @@ $(function() {
                                 // 把要操作的目录的父级目录的id也要保存到$editContainer容器中，当目录发生改变时需要重新调整目录树
                                 $editContainer.attr('data-dirparent', result.parentid );
 
+                                // 定位编辑目录的top位置
+                                
+                                $editContainer.css('top', top);
                                 // 从后台拿到某个项目下已经存在的目录，添加到下拉框中，以及显示到已有目录列表中
                                 $.ajax({
                                     url: dirsInfoUrl,
@@ -637,10 +650,15 @@ $(function() {
                                         $select.html( selecthtmlDom );  // 填充内容到下拉框
                                         $dirList.html( dirlisthtmlDom );    // 填充内容到目录列表
 
-                                        // 添加后要重新设置遮罩层的高度，防止被表单高度超过
-                                        height = $editContainer.height() + (wh - height > 0 ? wh - height : 20 );
-                                        mh = mh > height ? mh : height;
-                                        $mask.css( 'height', mh );
+                                        // 显示容器
+                                        $editContainer.animate({
+                                            opacity: '1'
+                                        }, 300, function(){
+                                            // 添加后要重新设置遮罩层的高度，防止被表单高度超过
+                                            height = $editContainer.height() + (wh - height > 0 ? (wh - height)/2 : 20 );
+                                            mh = mh > height ? mh : height;
+                                            $mask.css( 'height', mh );
+                                        });
                                     },
                                     error: function( error ) {
                                         console.log( error );
@@ -762,7 +780,7 @@ $(function() {
 
                                 // 没有更新成功，则提示失败的信息
                                 layer.msg( data.message, {
-                                    timeout: 2000
+                                    time: 1500
                                 }, function(){
 
                                     isupdatingdir = false;      // 此次事件已经处理完毕，控制反转，接受新的有效的事件
@@ -777,9 +795,80 @@ $(function() {
                 }
                 break;
             case 'deletedir':           // 删除目录事件
-                console.log( '删除目录' );
-                var ddirurl = window.location.protocol + "//" + window.location.host +
-                                "/ShowDoc/deleteSubProject/{projectid}/{subprojectid}/{parentid}";
+
+                // 如果没有正在处理删除目录的事件，则接受此次事件有效
+                if ( !isdeletingdir ) {
+
+                    isdeletingdir = true;       // 控制反转，不在接受删除目录的点击事件
+
+                    var $editContainer = $mask.find('.edit-dir-container'),     // 编辑目录容器
+                        dirId = $editContainer.data('dirid'),                   // 目录id
+                        dirparent = $editContainer.data('dirparent'),           // 目录的父级目录的id
+                        $editForm = $editContainer.find('.edit-dir-form'),      // 编辑目录的表单
+                        $dirname = $editForm.find('.form-item').find('#_dirname'), // 编辑目录的目录名输入框
+                        $dirnum = $editForm.find('.form-item').find('#_dirnum'),   // 编辑目录的目录索引输入框
+                        $select = $editForm.find('.form-item').find('#_dirparname'),    // 编辑目录的下拉框
+                        ddirurl = window.location.protocol + "//" + window.location.host +
+                                    "/ShowDoc/subProject/deleteSubProject/" + projectid + "/" + dirId + "/" + dirparent;   // 处理删除目录的url
+
+                    // 发送删除目录的请求
+                    $.ajax({
+                        url: ddirurl,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function( data ) {
+
+                            // 如果删除成功，则要清空编辑目录中的输入框中的值，以及要更新下拉列表中的目录，以及更新目录列表
+                            // 以及还要更新侧边栏中的目录树
+                            if ( data.result ) {
+
+                                // 清空编辑目录中的输入框
+                                $dirname.val('');
+                                $dirnum.val('');
+
+                                // 更新下拉列表框以及更新目录列表
+                                var dirsUrl = window.location.protocol + "//" + window.location.host +
+                                        "/ShowDoc" + "/subProject/getAllProject/" + projectid;  // 获取所有目录信息的url地址
+
+                                // 更新
+                                loadDirInfo( dirsUrl );
+
+
+                                // 小提示框显示
+                                layer.msg( '删除成功', {
+                                    time: 1500
+                                }, function(){
+
+                                    isdeletingdir = false;      // 控制反转，能够继续接受删除目录的点击事件
+
+                                    // 更新侧边栏的目录树
+                                    if ( dirparent === -1 ) {
+
+                                        // 如果删除的是项目下的一级目录，则需要重新加载侧边栏中的目录树
+                                        Initial();
+                                    } else if( dirparent !== -1 ){
+
+                                        // 通知parent这个目录，下面有目录更新，下次要重新加载目录下的目录
+                                        dirchanges.push( dirparent ); 
+                                    }
+                                    
+                                });
+                            } else {
+
+                                // 提示框显示删除失败的信息
+                                layer.msg( data.message, {
+                                    time: 1500
+                                }, function(){
+                                    isdeletingdir = false;      // 控制反转，能够继续接受删除目录的点击事件
+                                });
+                            }
+                        },
+                        error: function( error ) {
+                            console.log( error );
+                        }
+                    });
+
+                }
                 break;
         }
 
@@ -1116,13 +1205,16 @@ $(function() {
                     success: function( data ) {
                         if ( data.result ) {
                             layer.msg('已成功删除项目', {
-                                timeout: 3000
+                                time: 1000
                             }, function(){
-
+                                // 删除项目成功后返回项目的主页
+                                // 跳转到项目首页
+                                window.location.href = window.location.protocol + "//" + window.location.host +
+                                                        "/ShowDoc/" + "project/showProject.action";
                             });
                         } else {
                             layer.msg( data.message, {
-                                timeout: 3000
+                                time: 1500
                             }, function(){
 
                             });
@@ -1219,6 +1311,7 @@ $(function() {
                 $showContent.fadeIn(function(){
                     // 使markdown展示容器可见，并且把这个页面的相关的信息以属性的形式保存起来
                     setTimeout(100, function(){
+                        console.log('page');
                         $showContent
                                 .attr({
                                     'data-page': data.page.pageid,

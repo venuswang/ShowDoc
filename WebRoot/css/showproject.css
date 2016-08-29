@@ -448,10 +448,6 @@ body {
   color: #fff;
 }
 
-.edit-dir-container {
-  opacity: 1;
-  z-index: 10000;
-}
 .edit-dir-container .form-operation .btn-update {
   background-color: #68BCDF;
   color: #ffd;
