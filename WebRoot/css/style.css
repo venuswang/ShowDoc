@@ -8,7 +8,7 @@ body {
   src: url("../fonts/icomoon.eot?xvh4s");
   src: url("../fonts/icomoon.eot?xvh4s#iefix") format("embedded-opentype"), url("../fonts/icomoon.ttf?xvh4s") format("truetype"), url("../fonts/icomoon.woff?xvh4s") format("woff"), url("../fonts/icomoon.svg?xvh4s#icomoon") format("svg");
   font-weight: normal;
-  font-style: normal;   
+  font-style: normal;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -520,16 +520,16 @@ body {
   *display: inline;
   *zoom: 1;
   line-height: 35px;
-  background-color: #F4E163;
-  color: #FFFEFE;
+  background-color: #F6F4F4;
+  color: #787575;
   width: 70px;
   text-align: center;
   border-radius: 5px;
   margin-right: 20px;
 }
 #header .nav-list .nav-item .nav-btn:hover {
-  color: #fff;
-  background-color: #FCDD13;
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* 用户项目 */

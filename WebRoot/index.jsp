@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <a href="<%=basePath + "project/showProject.action" %>" class="btn btn-project" style="border-radius: 10px;margin: 100px;">我的项目</a>
+                                <a href="<%=basePath + "project/showProject.action" %>" class="btn btn-project" style="border-radius: 10px;margin: 100px;">${sessionScope.username }</a>
                             </c:otherwise>
                         </c:choose>
                     </div>

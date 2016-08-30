@@ -127,16 +127,16 @@ body {
   *display: inline;
   *zoom: 1;
   line-height: 35px;
-  background-color: #F4E163;
-  color: #FFFEFE;
+  background-color: #F6F4F4;
+  color: #787575;
   width: 70px;
   text-align: center;
   border-radius: 5px;
   margin-right: 20px;
 }
 #header .nav-list .nav-item .nav-btn:hover {
-  color: #fff;
-  background-color: #FCDD13;
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* 用户项目 */
