@@ -65,24 +65,22 @@
     z-index: 5;
 }
 
-.navigation_col li{
+.navigation_col_li{
     display: block;
     width: 60px;
     height: 66px;
-    background-color: #4FB2FC;
     line-height: 66px;
     text-align: center;
     font-family: "幼圆";
-
 }
 
-.navigation_col li:hover{
-    background-color: #3B97F5;
-    cursor: pointer;
+.navigation_col_li_normal{
+    background: #4FB2FC;
 }
-.navigation_col li:active{
-    background-color: #3B97F5;
-    cursor: pointer;
+
+.navigation_col_li_active{
+    background: #3B97F5;
+    cursor:pointer;
 }
 
 .login{
@@ -387,9 +385,6 @@
 }
 #navigation_index {
     color: #3091F2;
-}
-#navigation_col_index{
-    background-color: #3B97F5;
 }
 .login-item {
 	position: relative;

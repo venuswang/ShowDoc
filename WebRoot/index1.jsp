@@ -41,10 +41,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="navigation_col">
                     <!--navigation_col侧导航栏-->
                     <ul>
-                        <li class="navigation_col_li" id="navigation_col_index">首页</li>
-                        <li class="navigation_col_li">功能</li>
-                        <li class="navigation_col_li">帮助</li>
-                        <li class="navigation_col_li">关于</li>
+                        <li class="navigation_col_li navigation_col_li_normal" id="navigation_col_index">首页</li>
+                        <li class="navigation_col_li navigation_col_li_normal">功能</li>
+                        <li class="navigation_col_li navigation_col_li_normal">帮助</li>
+                        <li class="navigation_col_li navigation_col_li_normal">关于</li>
                     </ul>
                 </div>
 
@@ -114,6 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="help_content">
                 <br/><br/>
                 <a href='#' class='help_btn'>帮助教程</a>
+
             </div>
         </div>
 

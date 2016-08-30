@@ -15,18 +15,55 @@ function move(i){ //点击导航栏使页面滚动，list数组存储对应位�
         },500);
 }
 
+$("#navigation_col_index").removeClass("navigation_col_li_normal").addClass("navigation_col_li_active");
+
 window.onscroll=function(){ //遮罩层和侧导航栏滚动监听
     var timer;
     var navigation_col=document.getElementsByClassName("navigation_col");
     var cover = document.getElementById("cover");
 
     var t=document.documentElement.scrollTop||document.body.scrollTop;
+
+    // console.log(t);
+
+    var nav_col=$(".navigation_col li");
+
+    // if(t>0&&t<=$(".introduction1").offset().top-200){
+    //     nav_col.eq(0).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+    //         .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+    // }else if(t>$(".introduction1").offset().top-200&&t<=$(".help").offset().top-200){
+    //     nav_col.eq(1).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+    //         .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+    // }else if(t>$(".help").offset().top-200&&t<=$(".about").offset().top-200){
+    //     nav_col.eq(2).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+    //         .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+    // }else if(t>$(".about").offset().top-200){
+    //     nav_col.eq(3).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+    //         .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+    // }
+
+
     if(timer){
         clearTimeout(timer);
     }else{
         timer=setTimeout(function(){
             navigation_col[0].style.bottom = -t + 20 + "px";
             cover.style.top=t+"px";
+
+            if(t>0&&t<=$(".introduction1").offset().top-200){
+                nav_col.eq(0).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+            }else if(t>$(".introduction1").offset().top-200&&t<=$(".help").offset().top-200){
+                nav_col.eq(1).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+            }else if(t>$(".help").offset().top-200&&t<=$(".about").offset().top-200){
+                nav_col.eq(2).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+            }else if(t>$(".about").offset().top-200){
+                nav_col.eq(3).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+            }
+
         },350)
     }
 };
@@ -126,10 +163,21 @@ var navigation_col_li=document.getElementsByClassName("navigation_col_li");
     for(var i = 0, len = navigation_col_li.length; i < len; i ++ ) {
         (function (index) {
             navigation_col_li[index].onclick = function () {
+                $(event.target).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
                 move(index+1);
+            };
+            navigation_col_li[index].onmouseover = function () {
+                $(event.target).removeClass("navigation_col_li_normal").addClass("navigation_col_li_active")
+                    .siblings().removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
+            };
+            navigation_col_li[index].onmouseout = function () {
+                $(event.target).removeClass("navigation_col_li_active").addClass("navigation_col_li_normal");
             };
         })(i);
     }
+
+
 
 var id_login_title=document.getElementById("id_login_title");
 
