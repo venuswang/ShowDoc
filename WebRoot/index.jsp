@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -12,9 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!--title旁边的logo-->
     <link rel="stylesheet" href="css/basic.min.css" type="text/css" />
     <link rel="stylesheet" href="css/index1.css" type="text/css" />
-
-    <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
-
+    <link href="http://cdn.bootcss.com/layer/2.4/skin/layer.min.css" rel="stylesheet">
+    
+    
 </head>
 <body>
     <div id="container">
@@ -62,43 +63,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
                     </div>
                     <div id="id_login_input" class="login_input">
-                        <div class="login_input_box">
-                            <form class="form-signin" method="post">
-                                <input type="text" class="input-block-level"  name="username" placeholder="用户名" id="login-username">
-                                <input type="password" class="input-block-level" name="password" placeholder="密码" id="login-password">
-                                <input type="text" class="input-block-level"  name="v_code" placeholder="验证码" id="login-checkImg">
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <img src="" alt="验证码" name="checkImg" id="show-checkImg">
-                                    </div>
+                        
+                         <c:choose>
+                            <c:when test="${sessionScope.loginStatu == null || sessionScope.username == null || sessionScope.userid == null || sessionScope.images == null}">
+                                <div class="login_input_box">
+                                    <form class="form-signin">
+                                        <div class="login-item">
+                                            <input type="text" name="username" placeholder="账号" id="login-username" class="item-content" />
+                                        </div>
+                                        <div class="login-item">
+                                            <input type="password" name="password" placeholder="密码" id="login-password" class="item-content" /> 
+                                        </div>
+                                        <div class="login-item">
+                                            <input type="text" name="vcode" placeholder="验证码" class="item-content" id="login-checkImg" />
+                                            <img src="" alt="验证码" name="checkImg" id="show-checkImg" />
+                                        </div>
+                                        <button class="btn form-submit" type="submit" name="login">登录</button>
+                                        <a href="javascript:void(0);" id="forget_pw">忘记密码?</a>
+                                    </form>
                                 </div>
-                                <button class="btn" type="submit" name="login">登录</button>
-                                <a href="javascript:void(0);" id="forget_pw">忘记密码</a>
-                            </form>
-                        </div>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<%=basePath + "project/showProject.action" %>" class="btn btn-project" style="border-radius: 10px;margin: 100px;">我的项目</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div id="id_register_input" class="register_input c_input">
                         <div class="register_input_box">
-                            <!--<form class="form-signin" method="post">-->
-                                <!--&lt;!&ndash;<input type="text" class="input-block-level" name="username" placeholder="用户名（可填英文昵称或邮箱）">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="password" class="input-block-level" name="password"  placeholder="密码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="password" class="input-block-level" name="confirm_password"  placeholder="再次输入密码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<input type="text" class="input-block-level" name="v_code"  placeholder="验证码">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<div class="control-group">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="controls">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<img src="#" id="v_code_img">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</form>-->
-                            <a href="#"><button class="btn" type="submit">马上注册</button></a>
+                            <a href="<%=basePath + "jsp/login/register.jsp" %>"><button class="btn" type="submit">马上注册</button></a>
                             <!--跳转到注册页面-->
                         </div>
                     </div>
 
                 </div>
             </div>
+            
         </div>
-
+        
         <div class="introduction1">
             <div class="introduction1_content">
 
@@ -114,7 +115,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="help_content">
                 <br/><br/>
                 <a href='#' class='help_btn'>帮助教程</a>
-
             </div>
         </div>
 
@@ -135,6 +135,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 
+    <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
+    <!-- CDN resources -->
+    <script src="http://cdn.bootcss.com/layer/2.4/layer.min.js"></script>
+    <!-- end CDN resources -->
     <script src="js/index1.js" type="text/javascript"></script>
 
 </body>
