@@ -8,7 +8,7 @@ body {
   src: url("../fonts/icomoon.eot?xvh4s");
   src: url("../fonts/icomoon.eot?xvh4s#iefix") format("embedded-opentype"), url("../fonts/icomoon.ttf?xvh4s") format("truetype"), url("../fonts/icomoon.woff?xvh4s") format("woff"), url("../fonts/icomoon.svg?xvh4s#icomoon") format("svg");
   font-weight: normal;
-  font-style: normal;
+  font-style: normal;   
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
