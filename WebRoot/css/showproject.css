@@ -24,14 +24,45 @@ body {
 
 /* 头部 */
 #header {
-  line-height: 70px;
-  text-align: left;
+  height: 70px;
+  background: #0767c8;
+  background: linear-gradient(#086ed5, #055db5);
+  margin-bottom: 3px;
+}
+#header .btn-index {
+  position: absolute;
+  line-height: normal;
+  padding: 6px 5px;
+  top: 20px;
+  left: 25px;
+  border: 1px solid #045bb2;
+  border-radius: 2px 4px 4px 2px;
+  background: #0e78e7;
+  background: linear-gradient(#0e7bef, #0d73da);
+  color: #FFF;
+  /* &:hover {
+  	background-color: rgba(255, 255, 255, 0.6);
+  	color: #666;
+  } */
+}
+#header .btn-index::before {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-style: solid solid solid none;
+  border-color: transparent #0e78e7 transparent transparent;
+  border-width: 14px 11px 14px 0;
+  left: 0;
+  top: 0;
+  margin-left: -11px;
 }
 #header .middle-title {
   font-size: 32px;
-  color: #000;
+  color: #FFF;
   font-weight: 800;
-  padding-left: 76px;
+  padding: 10px 0 0 76px;
+  text-align: center;
 }
 #header .common-right {
   position: absolute;
@@ -483,13 +514,14 @@ body {
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0 0 0 #EFEEEE, 0 0 1px #EFEEEE, 0 0 2px #EFEEEE, 0 0 3px #EFEEEE, 0 0 4px #EFEEEE, 0 0 5px #EFEEEE, 0 0 6px #EFEEEE, 0 0 7px #EFEEEE;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #FFF;
   opacity: 0;
 }
 .remove-page-container .info {
-  color: #fff;
+  color: #777;
   font-size: 20px;
   margin: 0 0 30px 0;
+  font-weight: 600;
 }
 .remove-page-container .btn {
   padding: 10px 35px;
@@ -513,31 +545,33 @@ body {
   text-align: left;
   border-radius: 5px;
   box-shadow: 0 0 0 #EFEEEE, 0 0 1px #EFEEEE, 0 0 2px #EFEEEE, 0 0 3px #EFEEEE, 0 0 4px #EFEEEE, 0 0 5px #EFEEEE, 0 0 6px #EFEEEE, 0 0 7px #EFEEEE;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #FFF;
+  color: #666;
   opacity: 0;
 }
 .page-share-container .title {
-  color: #fff;
+  color: #333;
   font-size: 20px;
   border-bottom: 1px solid #CBC7C7;
   padding: 20px 20px 5px 20px;
   margin: 10px 0;
+  font-weight: 600;
 }
 .page-share-container .link-address {
-  color: #FED;
+  color: #999;
   font-size: 16px;
   margin: 20px 10px;
 }
 .page-share-container .link-address .link {
   border-radius: 3px;
   padding: 5px;
-  color: #FFF;
+  color: #666;
   white-space: normal;
   word-wrap: break-word;
   word-break: break-all;
 }
 .page-share-container .info {
-  color: #FFF;
+  color: #999;
   margin: 10px;
 }
 .page-share-container .btn {
@@ -567,13 +601,12 @@ body {
   text-align: left;
   border-radius: 5px;
   box-shadow: 0 0 0 #EFEEEE, 0 0 1px #EFEEEE, 0 0 2px #EFEEEE, 0 0 3px #EFEEEE, 0 0 4px #EFEEEE, 0 0 5px #EFEEEE, 0 0 6px #EFEEEE, 0 0 7px #EFEEEE;
-  background-color: rgba(255, 255, 255, 0.2);
-  z-index: 10000;
+  background-color: #FFF;
   font-size: 16px;
   text-align: center;
 }
 .member-manage-container .title {
-  color: #fff;
+  color: #666;
   font-size: 20px;
   border-bottom: 1px solid #CBC7C7;
   padding: 20px 20px 10px 20px;

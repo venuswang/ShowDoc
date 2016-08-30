@@ -20,30 +20,30 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 <body>
 	<header id="header">
 		<div class="common-middle">
+			<a href="<%=basePath + "project/showProject.action" %>" class="btn-index">首页</a>
 			<h1 class="middle-title"></h1>
 		</div>
 		<div class="common-right">
 			<a href="javascript:void(0);" class="btn btn-manage">项目管理</a>
 			<ul class="feature-list">
 				<span class="top-triangle"></span>
-				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-share" data-item="share">分享项目</a></li>
 				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-member" data-item="member">成员管理</a></li>
 				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-delete" data-item="delete">删除项目</a></li>
-				<li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-project" data-item="project">返回项目首页</a></li>
+				<!-- <li class="feature-item"><a href="javascript:void(0)" class="btn-feature btn-feature-project" data-item="project">返回项目首页</a></li> -->
 			</ul>
 		</div>
 	</header><!-- /header -->
 	<div id="main">
 		<div class="sideNav">
+			<div class="add-item-operations">
+				<a href="javascript:void(0);" class="btn btn-add-page" title="新建页面">新建页面<span class="add-project-icon">&#xe904;</span></a>
+				<a href="javascript:void(0);" title="新建目录" class="btn btn-add-dir">新建目录<span class="add-project-icon">&#xe907;</span></a>
+			</div>
 			<nav id="project-nav">
 				<ul class="project-list" id="project-list">
 					
 				</ul>
 			</nav>
-			<div class="add-item-operations">
-				<a href="javascript:void(0);" class="btn btn-add-page" title="新建页面">新建页面<span class="add-project-icon">&#xe904;</span></a>
-				<a href="javascript:void(0);" title="新建目录" class="btn btn-add-dir">新建目录<span class="add-project-icon">&#xe907;</span></a>
-			</div>
 		</div>
 		<div class="show-content">
 			<!-- 操作 -->

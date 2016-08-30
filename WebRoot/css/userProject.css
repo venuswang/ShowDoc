@@ -22,18 +22,25 @@ body {
 /* 头部导航栏 */
 #header {
   position: relative;
+  height: 70px;
+  background: #0767c8;
+  background: linear-gradient(#086ed5, #055db5);
+  margin-bottom: 3px;
   line-height: 70px;
-  background-color: #666;
 }
 #header .common-left {
   position: absolute;
   left: 10%;
 }
 #header .common-left .left-title {
-  color: #76EAE4;
-  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.025em;
   font-size: 36px;
-  text-shadow: 0 0 0 #76EAE4, 0 0 1px #76EAE4, 0 0 2px #76EAE4, 0 0 3px #76EAE4, 0 0 4px #76EAE4;
+  font-weight: 600;
+  text-shadow: 0 0 0 rgba(255, 255, 255, 0.5), 0 0 1px rgba(255, 255, 255, 0.5);
+}
+#header .common-left .left-title .sub-btn {
+  color: inherit;
 }
 #header .nav-list {
   text-align: right;
@@ -43,6 +50,9 @@ body {
   display: inline-block;
   *display: inline;
   *zoom: 1;
+}
+#header .nav-list .nav-item#user-center {
+  margin-right: 30px;
 }
 #header .nav-list .nav-item .user-portraint {
   width: 50px;

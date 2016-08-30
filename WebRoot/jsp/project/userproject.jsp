@@ -21,7 +21,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<h1 class="modify-info-result">${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
-			<h1 class="left-title">ShowDoc</h1>
+			<h1 class="left-title"><a href=<%=basePath + "index.jsp" %> class="sub-btn">ShowDoc</a></h1>
 		</div>
 		<div class="common-middle">
 			<nav class="showdoc-nav">
@@ -38,9 +38,9 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 							<li class="sub-item">
 								<a href="javascript:void(0);" class="sub-btn" data-dist="modify-person-password">修改密码</a>
 							</li>
-							<li class="sub-item">
+							<%-- <li class="sub-item">
 								<a href=<%=basePath + "index.jsp" %> class="sub-btn">网站首页</a>
-							</li>
+							</li> --%>
 						</ul>			
 					</li>
 					<li class="nav-item" id="user-exit">
