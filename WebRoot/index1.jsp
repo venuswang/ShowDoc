@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="navigation_col">
                     <!--navigation_col侧导航栏-->
                     <ul>
-                        <li class="navigation_col_li navigation_col_li_normal" id="navigation_col_index">首页</li>
+                        <li class="navigation_col_li navigation_col_li_active" id="navigation_col_index">首页</li>
                         <li class="navigation_col_li navigation_col_li_normal">功能</li>
                         <li class="navigation_col_li navigation_col_li_normal">帮助</li>
                         <li class="navigation_col_li navigation_col_li_normal">关于</li>

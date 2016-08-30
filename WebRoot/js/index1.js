@@ -15,7 +15,7 @@ function move(i){ //点击导航栏使页面滚动，list数组存储对应位�
         },500);
 }
 
-$("#navigation_col_index").removeClass("navigation_col_li_normal").addClass("navigation_col_li_active");
+// $("#navigation_col_index").removeClass("navigation_col_li_normal").addClass("navigation_col_li_active");
 
 window.onscroll=function(){ //遮罩层和侧导航栏滚动监听
     var timer;
