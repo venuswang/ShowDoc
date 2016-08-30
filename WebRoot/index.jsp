@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="help">
             <div class="help_content">
                 <br/><br/>
-                <a href='#' class='help_btn'>帮助教程</a>
+                <a href='jsp/faq.html' class='help_btn'>帮助教程</a>
             </div>
         </div>
 
