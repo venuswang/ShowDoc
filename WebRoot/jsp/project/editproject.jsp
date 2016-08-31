@@ -52,7 +52,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 					<a href="javascript:void(0);" class="btn" data-role="API">插入API接口模板</a>
 					<a href="javascript:void(0);" class="btn" data-role="data">插入数字字典模板</a>
 					<a href="http://tool.oschina.net/codeformat/json/" class="btn">JSON转参数表格</a>
-					<a href="javascript:void(0);" class="btn" data-role="http">在线HTTP请求测试</a>
+					<!-- <a href="javascript:void(0);" class="btn" data-role="http">在线HTTP请求测试</a> -->
 				</div>
 				<div class="form-markdown-editormd">
 					<div id="markdown-editormd">

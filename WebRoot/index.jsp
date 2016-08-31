@@ -3,16 +3,18 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String imgSrc1 = basePath + "images/icon.fw.png";
+String imgSrc2 = basePath + "images/logo_title.fw.png";
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>ShowDoc</title>
-    <link rel="icon" href="images/icon.ico" type="image/x-icon" />
+    <link rel="icon" href="<%=basePath + "images/icon.ico" %>" type="image/x-icon" />
         <!--title旁边的logo-->
-    <link rel="stylesheet" href="css/basic.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/index1.css" type="text/css" />
+    <link rel="stylesheet" href="<%=basePath + "css/basic.min.css" %>" />
+    <link rel="stylesheet" href="<%=basePath + "css/index1.css" %>" />
     <link href="http://cdn.bootcss.com/layer/2.4/skin/layer.min.css" rel="stylesheet">
     
     
@@ -24,10 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="top_content">
                 <div class="logo">
                     <div class="img_logo">
-                        <img src="images/icon.fw.png" id="id_logo1">
+                        <img src="<%=imgSrc1 %>" id="id_logo1">
                     </div>
                     <div class="img_logo">
-                        <img src="images/logo_title.fw.png" id="id_logo2">
+                        <img src="<%=imgSrc2 %>" id="id_logo2">
                     </div>
                 </div>
                 <div class="navigation">
@@ -42,10 +44,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="navigation_col">
                     <!--navigation_col侧导航栏-->
                     <ul>
-                        <li class="navigation_col_li navigation_col_li_active" id="navigation_col_index">首页</li>
-                        <li class="navigation_col_li navigation_col_li_normal">功能</li>
-                        <li class="navigation_col_li navigation_col_li_normal">帮助</li>
-                        <li class="navigation_col_li navigation_col_li_normal">关于</li>
+                        <li id="navigation_col_index"><a href="javascript:void(0);" class="navigation_col_li navigation_col_li_active">首页</a></li>
+                        <li><a  href="javascript:void(0);" class="navigation_col_li navigation_col_li_normal">功能</a></li>
+                        <li><a  href="javascript:void(0);" class="navigation_col_li navigation_col_li_normal">帮助</a></li>
+                        <li><a  href="javascript:void(0);" class="navigation_col_li navigation_col_li_normal">关于</a></li>
                     </ul>
                 </div>
 
@@ -135,11 +137,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 
-    <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
+    <script src="<%=basePath + "js/jquery-1.12.3.min.js" %>" type="text/javascript"></script>
     <!-- CDN resources -->
     <script src="http://cdn.bootcss.com/layer/2.4/layer.min.js"></script>
     <!-- end CDN resources -->
-    <script src="js/index1.js" type="text/javascript"></script>
+    <script src="<%=basePath + "js/index1.js" %>" type="text/javascript"></script>
 
 </body>
 </html>

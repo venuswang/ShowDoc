@@ -127,7 +127,12 @@ $(function(){
                 }
             },
             error: function( error ) {
-                console.log( error );
+                // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                layer.msg('登录信息失效，请返回首页重新登录',{
+                    time: 2000
+                }, function(){
+                    window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                });
             }
         });
 
@@ -291,7 +296,12 @@ $(function(){
                         }
                     },
                     error: function( error ) {
-                        console.log( error );
+                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                        layer.msg('登录信息失效，请返回首页重新登录',{
+                            time: 2000
+                        }, function(){
+                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                        });
                     }
                 });
 
@@ -333,7 +343,12 @@ $(function(){
                         }
                     },
                     error: function( error ) {
-                        console.log( error );
+                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                        layer.msg('登录信息失效，请返回首页重新登录',{
+                            time: 2000
+                        }, function(){
+                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                        });
                     }
                 });
             }

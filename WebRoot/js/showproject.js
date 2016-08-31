@@ -67,11 +67,7 @@ $(function() {
     $headerTitle.text( projectName );   // 标题显示项目名称
 
     
-   /* // 把页面的内容通过markdown展示
-        window.editormd.markdownToHTML('markdown-content',{
-            markdown: ''
-        });
-*/    // 从后台拿某个项目下的一级目录以及一级页面先填充到侧边栏
+    // 从后台拿某个项目下的一级目录以及一级页面先填充到侧边栏
     function Initial() {
         $.ajax({
             url: levelUrl + projectid + '/-1',      // 获取一级目录
@@ -114,12 +110,22 @@ $(function() {
 
                     },
                     error: function( error ) {
-                        console.log( error );
+                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                        layer.msg('登录信息失效，请返回首页重新登录',{
+                            time: 2000
+                        }, function(){
+                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                        });
                     }
                 });
             },
             error: function( error ) {
-                console.log( error );
+                // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                layer.msg('登录信息失效，请返回首页重新登录',{
+                    time: 2000
+                }, function(){
+                    window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                });
             }
         });
     }
@@ -199,7 +205,12 @@ $(function() {
                                     $mask.css( 'height', mh );
                                 },
                                 error: function( error ) {
-                                    console.log( error );
+                                    // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                    layer.msg('登录信息失效，请返回首页重新登录',{
+                                        time: 2000
+                                    }, function(){
+                                        window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                    });
                                 }
                             });
                         });
@@ -308,7 +319,12 @@ $(function() {
                                         $mask.css( 'height', mh );
                                     },
                                     error: function( error ) {
-                                        console.log( error );
+                                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                        layer.msg('登录信息失效，请返回首页重新登录',{
+                                            time: 2000
+                                        }, function(){
+                                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                        });
                                     }
                                 });
 
@@ -335,7 +351,12 @@ $(function() {
 
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 }
@@ -384,14 +405,60 @@ $(function() {
                         });
                     },
                     error: function( error ){
-                        console.log( error );
+                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                        layer.msg('登录信息失效，请返回首页重新登录',{
+                            time: 2000
+                        }, function(){
+                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                        });
                     }
                 });
 
 
                 break;
+            case 'removeproject':       // 确定删除项目的事件
+                var deleteProUrl = window.location.protocol + "//" + window.location.host +
+                        "/ShowDoc/project/deleteProject/" + projectid;
+
+                // 发送删除项目的请求
+                $.ajax({
+                    url: deleteProUrl,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function( data ) {
+                        if ( data.result ) {
+                            layer.msg('已成功删除项目', {
+                                time: 1000
+                            }, function(){
+                                // 删除项目成功后返回项目的主页
+                                // 跳转到项目首页
+                                window.location.href = window.location.protocol + "//" + window.location.host +
+                                                        "/ShowDoc/" + "project/showProject.action";
+                            });
+                        } else {
+                            layer.msg( data.message, {
+                                time: 1500
+                            }, function(){
+
+                            });
+                        }
+                    },
+                    error: function( error ) {
+                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                        layer.msg('登录信息失效，请返回首页重新登录',{
+                            time: 2000
+                        }, function(){
+                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                        });
+                    }
+                });
+                break;
             case 'removecancel':
                 $mask.trigger('click'); // 取消删除page，则直接把遮罩层关闭即可
+                break;
+
+            case 'removeprojectcancel': // 取消删除项目，则直接把遮罩层关闭即可
+                $mask.trigger('click');
                 break;
             case 'sharecancel':         // 分享框中返回按钮事件，直接关闭遮罩层即可
                 $mask.trigger('click');
@@ -445,7 +512,12 @@ $(function() {
                                                 .find('.member-list').eq(0).html( itemDOM );
                                     },
                                     error: function( error ) {
-                                        console.log( error );
+                                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                        layer.msg('登录信息失效，请返回首页重新登录',{
+                                            time: 2000
+                                        }, function(){
+                                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                        });
                                     }
                                 });
 
@@ -480,7 +552,12 @@ $(function() {
                             }
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 }
@@ -533,7 +610,12 @@ $(function() {
                                                 .find('.member-list').eq(0).html( itemDOM );
                                     },
                                     error: function( error ) {
-                                        console.log( error );
+                                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                        layer.msg('登录信息失效，请返回首页重新登录',{
+                                            time: 2000
+                                        }, function(){
+                                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                        });
                                     }
                                 });
 
@@ -562,7 +644,12 @@ $(function() {
                             }
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 }
@@ -661,12 +748,22 @@ $(function() {
                                         });
                                     },
                                     error: function( error ) {
-                                        console.log( error );
+                                        // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                        layer.msg('登录信息失效，请返回首页重新登录',{
+                                            time: 2000
+                                        }, function(){
+                                            window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                        });
                                     }
                                 });
                             },
                             error: function( error ) {
-                                console.log( error );
+                                // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                layer.msg('登录信息失效，请返回首页重新登录',{
+                                    time: 2000
+                                }, function(){
+                                    window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                });
                             }
                         });
                     });
@@ -789,7 +886,12 @@ $(function() {
                             }
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 }
@@ -864,7 +966,12 @@ $(function() {
                             }
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
 
@@ -980,13 +1087,23 @@ $(function() {
 
                                 },
                                 error: function( error ) {
-                                    console.log( error );
+                                    // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                                    layer.msg('登录信息失效，请返回首页重新登录',{
+                                        time: 2000
+                                    }, function(){
+                                        window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                                    });
                                 }
                             });
 
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 }
@@ -1190,45 +1307,45 @@ $(function() {
                                             });
                         },
                         error: function( error ) {
-                            console.log( error );
+                            // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                            layer.msg('登录信息失效，请返回首页重新登录',{
+                                time: 2000
+                            }, function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                            });
                         }
                     });
                 });
                 break;
             case 'delete':         // 删除项目
-                var deleteProUrl = window.location.protocol + "//" + window.location.host +
-                        "/ShowDoc/project/deleteProject/" + projectid;
-                $.ajax({
-                    url: deleteProUrl,
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function( data ) {
-                        if ( data.result ) {
-                            layer.msg('已成功删除项目', {
-                                time: 1000
-                            }, function(){
-                                // 删除项目成功后返回项目的主页
-                                // 跳转到项目首页
-                                window.location.href = window.location.protocol + "//" + window.location.host +
-                                                        "/ShowDoc/" + "project/showProject.action";
-                            });
-                        } else {
-                            layer.msg( data.message, {
-                                time: 1500
-                            }, function(){
+                // 重新计算文档的高度
+                 dh = $(document).height();
+                // 重新计算遮罩层的高度
+                mh = wh > dh ? wh : dh; 
+                $mask.css('height', mh).fadeIn(200);
 
-                            });
-                        }
-                    },
-                    error: function( error ) {
-                        console.log( error );
-                    }
+                $mask.load('./tpls/remove-project.html', function( response, status, xhr){
+                    var $removeContainer = $mask.find('.remove-project-container'),    // 移除页面时的提示框容器
+                        height = $removeContainer.height(),                         // 提示框容器高度
+                        top = (wh - height ) / 2;                                   // 将要偏移的值
+
+                    top  = top > 0 ? top : 20;   // 如果wh(窗口高度) 比这个容器高度小，则取 top值为20
+
+                    // 动画显示提示框
+                    $removeContainer.css('top', -height)
+                                    .animate({
+                                        opacity: '1',
+                                        top: top
+                                    }, 200, function(){
+                                        $removeContainer.animate({
+                                            top: (top - 30 )
+                                        }, 200, function(){
+                                            $removeContainer.animate({
+                                                top: top
+                                            }, 200);
+                                        });
+                                    });
                 });
-                break;
-            case 'project':     // 返回项目首页
-                // 跳转到项目首页
-                window.location.href = window.location.protocol + "//" + window.location.host +
-                                        "/ShowDoc/" + "project/showProject.action";
                 break;
         }
 
@@ -1240,7 +1357,7 @@ $(function() {
     // 分享页面的UI展示
     function shareUILoader() {
         // 重新计算文档的高度
-         dh = $(document).height();
+        dh = $(document).height();
         // 重新计算遮罩层的高度
         mh = wh > dh ? wh : dh; 
         $mask.css('height', mh).fadeIn(200);
@@ -1334,7 +1451,12 @@ $(function() {
                 });
             },
             error: function( error ) {
-                console.log( error );
+                // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                layer.msg('登录信息失效，请返回首页重新登录',{
+                    time: 2000
+                }, function(){
+                    window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                });
             }
         }); 
     }
@@ -1374,7 +1496,12 @@ $(function() {
                 $mask.css( 'height', mh );
             },
             error: function( error ) {
-                console.log( error );
+                // 若返回的是error，则是登录信息已经过了有效期，需要重新登录
+                layer.msg('登录信息失效，请返回首页重新登录',{
+                    time: 2000
+                }, function(){
+                    window.location.href = window.location.protocol + "//" + window.location.host + "/ShowDoc";
+                });
             }
         });
     }

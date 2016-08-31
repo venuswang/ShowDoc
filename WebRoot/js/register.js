@@ -15,11 +15,11 @@ $(function(){
 		$checkImg = $form.find('#show-checkImg'),
 		$checkImgIcon = $form.find('.checkImg-icon'),
 		$checkImgInfo = $form.find('.checkImg-error-info'),
-		srcUrl = window.location.protocol + "\/\/" + window.location.host +
-					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+		srcUrl = window.location.protocol + "//" + window.location.host +
+					"/ShowDoc/" + "voucher/getCaptchar.action?temp=" + 
 					(new Date().getTime().toString(36)),
-		codeUrl = window.location.protocol + "\/\/" + window.location.host +
-					"\/ShowDoc\/" + "voucher/getVcode.action",
+		codeUrl = window.location.protocol + "//" + window.location.host +
+					"/ShowDoc/" + "voucher/getVcode.action",
 		isCoded = false;
 
 	$registerSubmit.attr('disabled','disabled').css('cursor', 'not-allowed');
@@ -41,8 +41,8 @@ $(function(){
 	$checkImg.on('click', function(){
 
 		// 点击时更新时间获取不同的验证码
-		srcUrl = window.location.protocol + "\/\/" + window.location.host +
-					"\/ShowDoc\/" + "voucher/getCaptchar.action?temp=" + 
+		srcUrl = window.location.protocol + "//" + window.location.host +
+					"/ShowDoc/" + "voucher/getCaptchar.action?temp=" + 
 					(new Date().getTime().toString(36));
 
 		$tmpImg.on('load', function(){
@@ -109,7 +109,9 @@ $(function(){
 			});
 		}
 	}).on('keyup', function(){
-		if ($(this).val() && $(this).val().length === 4 && !isCoded ) {
+		isCoded = false;
+
+		if ($(this).val() && $(this).val().length >= 4 && !isCoded ) {
 			var inputCode = $vCode.val();
 
 			// 获取验证码字符串
@@ -275,9 +277,9 @@ $(function(){
 							leftPos = nospace.indexOf('<h3 class=\"error-info\">') + "<h3 class=\"error-info\">".length,
 							rightPos = nospace.lastIndexOf("<\/h3>"),
 							errorText = nospace.substring(leftPos, rightPos),
-							currentUrl = window.location.protocol + "\/\/" + window.location.host +
-										"\/ShowDoc\/",
-							errorUrl = currentUrl +	"exception\/operateVoucherHandle.action?message=" +
+							currentUrl = window.location.protocol + "//" + window.location.host +
+										"/ShowDoc/",
+							errorUrl = currentUrl +	"exception/operateVoucherHandle.action?message=" +
 										errorText;
 			
 						// 改变当前 url
