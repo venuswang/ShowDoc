@@ -81,3 +81,8 @@ primary key(pid,vname),
 constraint K_V_ID foreign key(pid) references project(id),
 constraint K_V_NAME foreign key(vname) references voucher(username)
 );
+
+#init the database
+insert into project(projectname) values ("test");
+insert into subproject(subprojectname,projectid) values ("test",1);
+update subproject set subprojectid = -1 where subprojectid=1;
