@@ -22,29 +22,25 @@ $(function(){
 		$addProBtn = $projectList.find('.project-item-add').find('.project-btn');
 
 	if ( modifyInfoResult === "success" ) {
-		var $tmpdiv = $('<div>'),
-			tmpStrDom = '<span>已经保存成功</span>';
 
-		// 小提示层的提示文字以及样式
-		$tmpdiv.html(tmpStrDom).css({
-			    position: "absolute",
-			    left: "50%",
-			    "marginLeft": "-15px",
-			    top: "10%",
-			    "lineHeight": "35px",
-			    "backgroundColor": "#58f69e",
-			    color: "#fff",
-			    padding: "10px",
-			    "borderRadius": "5px",
-			    display: "none"
-		}).appendTo($('body')).show(function(){
-			setTimeout(function(){
-				$tmpdiv.fadeOut(300);
-				document.body.removeChild($tmpdiv[0]);
-			},700); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+		// 跳转到项目首页
+   		window.location.href = window.location.protocol + "//" + window.location.host +
+                "/ShowDoc/" + "project/showProject.action";
+
+		// 如果修改个人信息成功
+		layer.msg( '个人信息修改成功并保存', {
+			time: 1000
+		}, function(){
 		});
+
 	} else if( modifyInfoResult != undefined ) {
-		// 修改不成功 待处理
+		/*// 修改不成功,给个小提示，并且跳转
+		layer.msg( '修改信息失败', {
+			time: 1500
+		}, function(){
+			window.location.href = window.location.protocol + "//" + window.location.host +
+                                "/ShowDoc/" + "project/showProject.action";
+		});*/
 	}
 
 	// 退出按钮点击事件, 跳转到相应的退出servlet处理
@@ -53,6 +49,9 @@ $(function(){
 		var url = window.location.protocol + "//" + window.location.host +
 				"/ShowDoc/" + "voucher/exitVoucher.action";
 		window.location.href = url;
+
+		// 阻止事件冒泡并取消默认行为
+		event.stopPropagation();
 		event.preventDefault();
 	});
 
@@ -74,6 +73,7 @@ $(function(){
 	},function(){
 		$(this).removeClass('rotate');
 	});
+
 	//点击下拉菜单时相应切换不同的视图
 	$subNavItems.on('click', function(){
 		var data = $(this).data("dist"),
@@ -169,6 +169,47 @@ $(function(){
 
 				$mdImage.hide().siblings().show();
 
+				// 自定义验证上传文件只能是图片的规则
+				$.validator.addMethod("isImage", function(value, element) {
+				    return this.optional(element) || (/\w*.jpg|\w*.png|\w*.gif/.test(value));
+				}, "只能上传图片");
+
+				// 自定义验证上传文件大小的规则
+				$.validator.addMethod("isToLarge", function(value, element) { 
+					var file = element.files[0];
+				    return this.optional(element) || ((file.size / 1024) < 3072 );
+				}, "文件大小不能超过3M");
+
+				// 对修改表单进行验证操作
+				var updateValidator = $updateForm.validate({
+					rules: {
+						email: {
+							required: true,
+							email: true
+						},
+						picture: {
+							isImage: true,
+							isToLarge: true
+						}
+					},
+					messages: {
+						email: {
+							required: "邮箱不能为空",
+							email: "邮箱格式不合格"
+						},
+						picture: {
+							isImage: "只能上传图片",
+							isToLarge: "文件大小不能超过3M"
+						}
+					},
+					errorElement: 'p',
+					errorContainer: true,
+					errorClass: 'valid-error',
+					validClass: 'valid-pass',
+				});
+
+				// 清空上次的验证信息
+				updateValidator.resetForm();
 
 				// 异步获取需要修改信息的用户的基本信息
 				$.ajax({
@@ -221,45 +262,6 @@ $(function(){
 							search: true
 						});
 
-						// 自定义验证上传文件只能是图片的规则
-						$.validator.addMethod("isImage", function(value, element) {
-						    return this.optional(element) || (/\w*.jpg|\w*.png|\w*.gif/.test(value));
-						}, "只能上传图片");
-
-						// 自定义验证上传文件大小的规则
-						$.validator.addMethod("isToLarge", function(value, element) { 
-							var file = element.files[0];
-						    return this.optional(element) || ((file.size / 1024) < 3072 );
-						}, "文件大小不能超过3M");
-
-						// 对修改表单进行验证操作
-						$updateForm.validate({
-							rules: {
-								email: {
-									required: true,
-									email: true
-								},
-								picture: {
-									isImage: true,
-									isToLarge: true
-								}
-							},
-							messages: {
-								email: {
-									required: "邮箱不能为空",
-									email: "邮箱格式不合格"
-								},
-								picture: {
-									isImage: "只能上传图片",
-									isToLarge: "文件大小不能超过3M"
-								}
-							},
-							errorElement: 'p',
-							errorContainer: true,
-							errorClass: 'valid-error',
-							validClass: 'valid-pass',
-						});
-
 						// 上传图片后预览
 						$uploadImage.on('change', function() {
 							var file = this.files[0],
@@ -280,30 +282,10 @@ $(function(){
 								$loadImgError.text("").hide();
 							};
 						});
+
 						// 点击确定按钮时先验证，如果验证通过则提交修改的信息 
 						$btnSubmit.on('click', function(){
 							if( $updateForm.valid() ) {
-								/*var reEmail = $mdEmail.val(),
-									rePicture = $uploadImage.val(),
-									$reSkills = $mdSkills.filter(':selected'),
-									dealUrl = window.location.protocol + "\/\/" + 
-											window.location.host + "\/ShowDoc\/" + 
-											"voucher\/updateVoucherInfo.action?email=" + 
-											reEmail + "&picture=" + rePicture;
-
-								$reSkills.each(function(){
-									dealUrl = dealUrl + "&skills=" + $(this).val();
-								});
-								
-								$.ajax({
-									url: dealUrl,
-									type: "POST",
-									dataType: "text",
-									success: function( data ) {
-										console.log( data );
-									}
-								});*/
-								
 								$target.find('#update-info-form').submit();
 							}
 							return false;
@@ -320,6 +302,7 @@ $(function(){
 					uinfourl = window.location.protocol + "\/\/" + window.location.host +
 							"\/ShowDoc\/" + "voucher\/queryVoucherById.action?id=" + updateId;
 
+
 				$target.find('.modify-restul-info').hide();	// 刚进来时隐藏显示反馈信息的h3b标签
 
 				// 以及清除上次在输入框中的数据
@@ -327,17 +310,8 @@ $(function(){
 				$updateNewPwd.val("");
 				$updatePwdForm.find('#update-new-password-again').val("");
 
-				$.ajax({
-					url: uinfourl,
-					type: "POST",
-					dataType: "json",
-					success: function(data){
-						$updateUsername.val( data.voucher.username );
-					}
-				});
-
-				//表单验证 
-				$updatePwdForm.validate({
+				 //表单验证 
+				var validator = $updatePwdForm.validate({
 					rules:{
 						"password": {
 							required: true,
@@ -374,6 +348,19 @@ $(function(){
 					validClass: 'valid-pass',
 				});
 
+				// 清空表单验证的信息
+				validator.resetForm();
+
+				// 从后台获取用户的信息
+				$.ajax({
+					url: uinfourl,
+					type: "POST",
+					dataType: "json",
+					success: function(data){
+						$updateUsername.val( data.voucher.username );
+					}
+				});
+
 				var isupdating = false;	// 防止用户多次点击
 				$updateBtnPwd.on('click', function(){
 
@@ -402,44 +389,31 @@ $(function(){
 									var result = data.trim();
 									isupdating = false;		// 反转 isupdating，使可以受理用户的下次点击
 
-									/*console.log( data );*/
-
 									if ( result === "success" ) {
 
 										/**
 										 * 如果修改成功，则隐藏遮罩层并隐藏修改密码UI后，显示一个小提示框
 										 */
-										$target.hide();
-										$mask.hide();
+										layer.msg( '修改成功并保存', {
+											time: 1000
+										}, function(){
 
-										var $tmpdiv = $('<div>'),
-											tmpStrDom = '<span>已经保存成功</span>';
-
-										// 小提示层的提示文字以及样式
-										$tmpdiv.html(tmpStrDom).css({
-											    position: "absolute",
-											    left: "50%",
-											    "marginLeft": "-15px",
-											    top: "10%",
-											    "lineHeight": "35px",
-											    "backgroundColor": "#58f69e",
-											    color: "#fff",
-											    padding: "10px",
-											    "borderRadius": "5px",
-											    display: "none"
-										}).appendTo($('body')).show(function(){
-											setTimeout(function(){
-												$tmpdiv.fadeOut(300);
-												document.body.removeChild($tmpdiv[0]);
-											},700); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+											// 关闭遮罩层以及密码修改区
+											$target.fadeOut();
+											$mask.fadeOut();
 										});
-									} else if ( result === "fail" ) {
-										var $resultInfo = $target.find('.modify-restul-info');
 
-										$resultInfo.html('账号和原始密码不匹配').show();
+
+									} else if ( result === "fail" ) {
+
+										layer.msg( '账号和原始密码不匹配', {
+											time: 1500
+										});
+
 									} else if ( result === "illegal") {
-										var $resultInfo = $target.find('.modify-restul-info');
-										$resultInfo.html('密码的格式不正确').show();
+										layer.msg('密码的格式不正确', {
+											time: 1500
+										});
 									}
 									
 								}
@@ -494,37 +468,29 @@ $(function(){
 	// 点击个人信息下的展示后返回
 	$personInfoBtnBack.on('click', function(){
 		$mask.hide(function(){
-			$mask.children().hide();
+			$mask.children().fadeOut(200);
 		});
 	});
 
 	// 点击修改信息下的取消按钮返回
 	$modifyInfoCancel.on('click', function() {
 		$mask.hide(function(){
-			$mask.children().hide();
+			$mask.children().fadeOut(200);
 		});
 	});
 
 	// 点击修改密码下的取消按钮返回
 	$updatePwdCancel.on('click', function() {
 		$mask.hide(function(){
-			$mask.children().hide();
+			$mask.children().fadeOut(200);
 		});
 	});
 
 	// 点击遮罩层时,遮罩层消失
 	$mask.on('click',function( event ){
 		if ( event.target === this ) {
-			$mask.hide().children().hide();
+			$mask.fadeOut(200).children().hide();
 		}
-	});
-
-
-
-	// 点击某个项目的click事件，待处理
-	$projectBtn.on('click', function(){
-		/*console.log( this );
-		return false;*/
 	});
 	
 	// 点击新建项目时触发的事件
@@ -598,26 +564,33 @@ $(function(){
 						/**
 						 * 如果异步验证返回的是success，则表明此项目该用户还没创建过，表示可以创建
 						 */
-						console.log( 'success' );
+						 // 项目名异步验证成功时不处理
 
 					} else if ( result === 'fail' ) {
 
 						/**
 						 * 如果异步验证返回的是fail，则表明此项目该用户已经创建过，不可再创建
 						 */
-						console.log( 'fail' );
+						// 提示该项目名已创建
+						layer.msg( '项目名已存在', {
+							time: 1500
+						});
 
 					} else if ( result === 'illegal' ) {
 
 						/**
-						 * 如果异步验证返回的是illegal，则表明此项目名格式错误，应该提醒用户重新输入项目名
-						 */
-						 console.log( 'illegal' );
+						* 如果异步验证返回的是illegal，则表明此项目名格式错误，应该提醒用户重新输入项目名
+						*/
+						// 格式错误时也提示用户
+						layer.msg( '项目名格式错误', {
+							time: 1500
+						});
 					}
 				}
 			});
 
 			event.preventDefault();
+			event.stopPropagation();
 		});
 
 		// 点击取消按钮事件
@@ -662,7 +635,7 @@ $(function(){
 							/**
 							 * 如果创建成功，则显示相应的小提示框显示创建成功
 							 */
-							var $tmpdiv = $('<div>'),
+							/*var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>项目创建成功</span>';
 
 							// 小提示层的提示文字以及样式
@@ -686,13 +659,23 @@ $(function(){
 									window.location.href = window.location.protocol + "\/\/" + 
 										window.location.host + "\/ShowDoc\/" + "project\/showProject.action";
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});*/
+
+							// 小提示框提示创建成功
+							layer.msg( '项目已创建成功', {
+								time: 1000
+							}, function(){
+								iscreatingPro = false;		// 表示可以接受下次点击事件了
+								// 删除后要重新进行跳转
+								window.location.href = window.location.protocol + "\/\/" + 
+								window.location.host + "\/ShowDoc\/" + "project\/showProject.action";
 							});
 						} else if ( res[0] === "fail" ) {
 
 							/**
 							 * 如果创建失败，则显示相应的小提示框显示创建失败
 							 */
-							var $tmpdiv = $('<div>'),
+							/*var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>项目创建时出错</span>';
 
 							// 小提示层的提示文字以及样式
@@ -713,13 +696,21 @@ $(function(){
 									document.body.removeChild($tmpdiv[0]);
 									iscreatingPro = false;		// 表示可以接受下次点击事件了
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});*/
+
+							// 小提示框提示创建失败的原因
+							layer.msg( '项目创建时出错', {
+								time: 1500
+							}, function(){
+								iscreatingPro = false;		// 表示可以接受下次点击事件了
 							});
+
 						} else if ( res[0] === "illegal") {
 
 							/**
 							 * 如果创建项目时，返回 illegal的结果，则说明创建项目的表单出现不合格的字段
 							 */
-							var $tmpdiv = $('<div>'),
+							/*var $tmpdiv = $('<div>'),
 								tmpStrDom = '<span>' + res[1] + '</span>';
 
 							// 小提示层的提示文字以及样式
@@ -740,6 +731,13 @@ $(function(){
 									document.body.removeChild($tmpdiv[0]);
 									iscreatingPro = false;		// 表示可以接受下次点击事件了
 								},1200); // 显示 0.7s 后隐藏提示框并且从文档流中移除
+							});*/
+
+							// 小提示框提示项目创建时失败时，后台返回的原因
+							layer.msg( res[1], {
+								time: 1500
+							}, function(){
+								iscreatingPro = false;		// 表示可以接受下次点击事件了
 							});
 						} else {
 

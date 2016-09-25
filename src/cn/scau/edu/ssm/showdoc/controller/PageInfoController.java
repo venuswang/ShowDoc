@@ -72,10 +72,10 @@ public class PageInfoController {
 	
 	
 	//根据subprojectid来查询其底下的所有page页面信息
-	@RequestMapping(value="/selectPageByPid/{subprojectid}")
-	public @ResponseBody List<PageExtendClass> selectPageByPid(HttpServletRequest request, @PathVariable("subprojectid") Integer subprojectid) throws Exception{
+	@RequestMapping(value="/selectPageByPid/{subprojectid}/{projectid}")
+	public @ResponseBody List<PageExtendClass> selectPageByPid(HttpServletRequest request, @PathVariable("subprojectid") Integer subprojectid, @PathVariable("projectid") Integer projectid) throws Exception{
 		List<PageExtendClass> pageExtendClass = null;
-		if(subprojectid == null) {
+		if(subprojectid == null || projectid == null) {
 			pageExtendClass = new ArrayList<PageExtendClass>();
 			return pageExtendClass;
 		}
@@ -88,6 +88,7 @@ public class PageInfoController {
 		PageExtendClass pec = new PageExtendClass();
 		pec.setPageauthorname(usname);
 		pec.setPagesubprejectid(subprojectid);
+		pec.setPageprojectid(projectid);
 		pec.setPagestatu(1);
 		pageExtendClass = pageInfoService.selectPages(pec);
 		return pageExtendClass;

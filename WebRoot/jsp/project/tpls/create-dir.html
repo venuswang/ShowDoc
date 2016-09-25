@@ -1,0 +1,35 @@
+<div class="create-dir-container">
+	<!-- title -->
+	<h2 class="title">新建目录</h2>
+	<!-- create dir form -->
+	<form class="create-dir-form">
+		<!-- 目录名 -->
+		<div class="form-item">
+			<label for="_dirname" class="item-label">目<span class="space">录</span>名</label>
+			<input type="text" id="_dirname" class="item-value" placeholder="目录名" name="dirname" />
+		</div>
+		<!-- 序号 -->
+		<div class="form-item">
+			<label for="_dirnum" class="item-label">序<span class="space-more">号</span></label>
+			<input type="number" id="_dirnum" placeholder="可选：顺序数字" class="item-value" name="dirnum">
+		</div>
+		<!-- 父级目录 -->
+		<div class="form-item">
+			<label for="_dirparname" class="item-label">上级目录</label>
+			<select name="dirparname" class="item-value" id="_dirparname" placeholder="请选择父级目录">
+				
+			</select>
+		</div>
+		<!-- 表单操作 -->
+		<div class="form-operation">
+			<input type="submit" value="创建" class="form-submit" data-event="createdir" />
+		</div>
+	</form><!-- end create dir form -->
+	<!-- 该项目下已经存在的目录 -->
+	<div class="exited-dir">
+		<h1 class="title">目录列表<span class="info">(点击可编辑)</span></h1>
+		<ul class="dir-list">
+			
+		</ul>
+	</div><!-- end 该项目下已经存在的目录 -->
+</div>

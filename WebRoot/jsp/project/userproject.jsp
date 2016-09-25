@@ -15,16 +15,13 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 	<link rel="stylesheet" href='<%=basePath + "css/userProject.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/sumoselect.min.css" %>' />
 	<link rel="stylesheet" href='<%=basePath + "css/create.project.min.css" %>' />
-	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
-	<script src="<%=basePath + "js/jquery.sumoselect.min.js" %>"></script>
-	<script src="<%=basePath + "js/jquery.validate.min.js" %>"></script>
-	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
+	<link href="http://cdn.bootcss.com/layer/2.4/skin/layer.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1 class="modify-info-result">${requestScope.messages}</h1>
 	<header id="header">
 		<div class="common-left">
-			<h1 class="left-title">ShowDoc</h1>
+			<h1 class="left-title"><a href=<%=basePath + "index.jsp" %> class="sub-btn">ShowDoc</a></h1>
 		</div>
 		<div class="common-middle">
 			<nav class="showdoc-nav">
@@ -41,9 +38,9 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 							<li class="sub-item">
 								<a href="javascript:void(0);" class="sub-btn" data-dist="modify-person-password">修改密码</a>
 							</li>
-							<li class="sub-item">
+							<%-- <li class="sub-item">
 								<a href=<%=basePath + "index.jsp" %> class="sub-btn">网站首页</a>
-							</li>
+							</li> --%>
 						</ul>			
 					</li>
 					<li class="nav-item" id="user-exit">
@@ -57,7 +54,7 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 		<ul class="project-list">
 			<c:forEach items="${requestScope.projects}" var="project">
 				<li class="project-item">
-					<a href="<%=basePath %>jsp/project/showproject.jsp" class="project-btn btn-detail">
+					<a href="<%=basePath %>jsp/project/showproject.jsp?id=${project.id}&projectname=${project.projectname}&check=${project.projectpassword}" class="project-btn btn-detail">
 						<p class="item-content-project">${project.projectname }</p>
 						<p class="item-content-author">项目所有者&nbsp;${project.authorname }</p>
 					</a>
@@ -72,11 +69,11 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 		<!-- 个人信息 -->
 		<div id="person-info" data-user="${sessionScope.userid}">
 			<ul class="info-list">
-				<li class="info-item">
+				<li class="info-item deal-overflow">
 					<span class="item-name-title">用户名</span>
 					<span class="item-name-content">张作豪</span>
 				</li>
-				<li class="info-item">
+				<li class="info-item deal-overflow">
 					<span class="item-email-title">邮箱</span>
 					<span class="item-email-content">2456898390@qq.com</span>
 				</li>
@@ -212,5 +209,12 @@ String local = request.getScheme()+"://"+request.getServerName()+":"+request.get
 			</div>
 		</form>
 	</div>
+	<script src="<%=basePath + "js/jquery-1.12.3.min.js" %>"></script>
+	<script src="<%=basePath + "js/jquery.sumoselect.min.js" %>"></script>
+	<script src="<%=basePath + "js/jquery.validate.min.js" %>"></script>
+	<!-- CDN resources -->
+	<script src="http://cdn.bootcss.com/layer/2.4/layer.min.js"></script>
+	<!-- end CDN resources -->
+	<script src="<%=basePath + "js/user.project.min.js" %>"></script>
 </body>
 </html>

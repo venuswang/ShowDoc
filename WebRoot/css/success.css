@@ -32,13 +32,13 @@
 }
 .container .btn-back {
   padding: 6px 10px;
-  background-color: #79DABC;
-  color: #F3EFEF;
+  background-color: #44D8F2;
+  color: #fafafa;
   text-decoration: none;
   border-radius: 3px;
   margin: 15px;
 }
 .container .btn-back:hover {
-  background-color: #3FF6DE;
-  color: #FFFFFF;
+  background-color: #14BAD7;
+  color: #fff;
 }

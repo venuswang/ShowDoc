@@ -1,23 +1,19 @@
+
 *{
     margin: 0px;
     padding: 0px;
 }
 
 #container{
-    width: auto;
-    height: auto;
     background-color: #FFFFFF;
 }
 
 .top{
-    width: 100%;
-    min-width:1300px;
     height: 80px;
     background-color: #FFFFFF;
 }
 
 .top_content{
-    width: 1300px;
     height: 80px;
     background-color: #FFFFFF;
     margin:0 auto;
@@ -62,41 +58,48 @@
     right: 20px;
     bottom: 20px;
     z-index: 5;
+    background-color: #4FB2FC;
 }
 
-.navigation_col li{
+.navigation_col_li{
     display: block;
     width: 60px;
     height: 66px;
-    background-color: #4FB2FC;
     line-height: 66px;
     text-align: center;
     font-family: "幼圆";
-
 }
 
-.navigation_col li:hover{
-    background-color: #3B97F5;
-    cursor: pointer;
+.navigation_col_li_normal{
+    background: #4FB2FC;
 }
-.navigation_col li:active{
-    background-color: #3B97F5;
-    cursor: pointer;
+
+.navigation_col_li_active{
+    background: #3B97F5;
 }
+
+.navigation_col_li:hover{
+    background: #3B97F5;
+    cursor:pointer;
+}
+
 
 .login{
     width: 100%;
-    min-width:1300px;
-    height: 550PX;
+    height: 550px;
     background-color: #E0F2FF;
 }
 .login_content{
-    width: 1300px;
     height: 550px;
     margin:0 auto;
     position: relative;
     background:url(../images/login_bg.fw.png);
     background-repeat: no-repeat;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    background-position: top left;
+    -webkit-background-origin: padding-box;
+    background-origin: padding-box;
 }
 
 .login_box{
@@ -195,6 +198,7 @@
     display:inline-block;
     text-decoration:none;
     margin-top: 7px;
+    cursor: pointer;
 }
 
 .btn:hover{
@@ -216,7 +220,6 @@
 
 .introduction1,.introduction2{
     width: 100%;
-    min-width:1300px;
     height: 400px;
 }
 
@@ -229,41 +232,39 @@
 }
 
 .introduction1_content{
-    width: 1300px;
     height: 400px;
     margin:0 auto;
     background: url("../images/introduction1_bg.fw.png");
     background-repeat: no-repeat;
+    -webkit-background-size: 100%;
+    background-size: 100%;
 }
 
 .introduction2_content{
-    width: 1300px;
     height: 400px;
     margin:0 auto;
     background: url("../images/introduction2_bg.fw.png");
     background-repeat: no-repeat;
+    -webkit-background-size: 100%;
+    background-size: 100%;
 }
 
 .help{
     width: 100%;
-    min-width:1300px;
     height: 120px;
     background-color: #FFFFFF;
 }
 .help_content{
-    width: 1300px;
     height: 120px;
     margin:0 auto;
 }
 
 .about{
     width: 100%;
-    min-width:1300px;
     height: 160px;
     background-color:#F5F6F9;
 }
 .about_content{
-    width: 1300px;
     height: 80px;
     margin:0 auto;
     text-align: center;
@@ -386,8 +387,18 @@
 #navigation_index {
     color: #3091F2;
 }
-#navigation_col_index{
-    background-color: #3B97F5;
+.login-item {
+	position: relative;
+}
+.login-item #show-checkImg {
+  height: 34px;
+  width: 85px;
+  border-radius: 0 3px 3px 0;
+  position: absolute;
+  right: 23px;
+  top: 20px;
+  border: none;
+  cursor: pointer;
 }
 
 

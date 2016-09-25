@@ -73,6 +73,6 @@
   </insert>
   
   <select id="selectPageByPid" parameterType="cn.scau.edu.ssm.showdoc.po.PageExtendClass" resultType="cn.scau.edu.ssm.showdoc.po.PageExtendClass">
-  	select pageid, pagetitle from page where pagesubprejectid = #{pagesubprejectid} and pagestatu = #{pagestatu} <!-- and pageauthorname = #{pageauthorname} -->
+  	select pageid, pagetitle from page where pagesubprejectid = #{pagesubprejectid} and pagestatu = #{pagestatu} and pageprojectid = #{pageprojectid} <!-- and pageauthorname = #{pageauthorname} -->
   </select>
 </mapper>
