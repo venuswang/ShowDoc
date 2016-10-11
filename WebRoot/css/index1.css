@@ -10,11 +10,13 @@
 
 .top{
     height: 80px;
+    min-width:1300px;
     background-color: #FFFFFF;
 }
 
 .top_content{
     height: 80px;
+    width: 1300px;
     background-color: #FFFFFF;
     margin:0 auto;
     padding-left: 50px;
@@ -86,11 +88,13 @@
 
 .login{
     width: 100%;
+    min-width:1300px;
     height: 550px;
     background-color: #E0F2FF;
 }
 .login_content{
     height: 550px;
+    width: 1300px;
     margin:0 auto;
     position: relative;
     background:url(../images/login_bg.fw.png);
@@ -221,6 +225,7 @@
 .introduction1,.introduction2{
     width: 100%;
     height: 400px;
+    min-width:1300px;
 }
 
 .introduction1{
@@ -233,6 +238,7 @@
 
 .introduction1_content{
     height: 400px;
+    width: 1300px;
     margin:0 auto;
     background: url("../images/introduction1_bg.fw.png");
     background-repeat: no-repeat;
@@ -242,6 +248,7 @@
 
 .introduction2_content{
     height: 400px;
+    width: 1300px;
     margin:0 auto;
     background: url("../images/introduction2_bg.fw.png");
     background-repeat: no-repeat;
@@ -251,21 +258,25 @@
 
 .help{
     width: 100%;
+    min-width:1300px;
     height: 120px;
     background-color: #FFFFFF;
 }
 .help_content{
     height: 120px;
+    width: 1300px;
     margin:0 auto;
 }
 
 .about{
     width: 100%;
+    min-width:1300px;
     height: 160px;
     background-color:#F5F6F9;
 }
 .about_content{
     height: 80px;
+    width: 1300px;
     margin:0 auto;
     text-align: center;
 }
